@@ -1,0 +1,62 @@
+\subsection{Plasmid-properties guided flow}\label{meth:plasmid_properties_guided_flow}
+
+The second stage consists is a reference fine-grain approach to extract plasmid fragments in the pan-assembly subgraph induced by the solution given by \MCF{}.
+We refer to this problem by the \enquote{Plasmid-Properties Guided Flow} problem (\PPGF{}).
+
+\begin{todobox}
+    Explain GC content interval set \(K\).
+\end{todobox}
+
+\begin{todobox}
+    Finding best plasmid score flow under max flow constraint
+\end{todobox}
+
+\begin{definition}{\PPGF{} MILP variables}{milp:ppgf_vars}
+    In addition to the variables in \Cref{definition:milp:common_variables}, we define the following decision variables:
+    \begin{itemize}
+        \item \(\plmbonus{j} \in \mathbb{R}_{\geq 0} \, \forall j \in \Fragments{} \mid j \text{ is a share}\) corresponding to the best correction \(\dplm{c}{j}\) among the contigs in \(\ContigSet(j)\) participating in the solution.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}{\PPGF{} MILP constraints}{milp:ppgf_constraints}
+    We add the next constraints to the constraints in \Cref{definition:milp:common_constraints}.
+
+    The total flow value must be near to the total flow value \(\Phi\) found in \MCF{}:
+    \begin{equation}
+        \gamma \Phi \leq  F \quad \gamma \in (0.5, 1]
+    \end{equation}
+
+    The total GC content penalty should not be so much worst than the total GC content penalty \(\Psi\) found in \MCF{}:
+    \begin{equation}
+       GCPenalties \leq (1 + \epsilon) \Psi \quad \epsilon \in [0, 0.5)
+    \end{equation}
+
+    \begin{refactorbox}
+        \begin{fixmebox}
+            Argument order
+        \end{fixmebox}
+        For each share \(j \in \Fragments{}\), \(\plmbonus{j}\) is the best correction \(\dplm{c}{j}\) among the contigs in \(\Contigs(j)\) participating in the solution:
+        \begin{equation}
+          \plmbonus{j} \leq \sum_{\substack{ d \in \Contigs(j) \\ \dplm{d}{j} \geq \dplm{c}{j} }} \dplm{d}{j} x_d \quad \forall (j, c) \in \Fragments{}\times\Contigs{}(j), j \text{ is a share}
+        \end{equation}
+    
+        \begin{notebox}
+          When \(c\) is the contig with the best correction among the contigs that participate in the solution, the constraint for \(c\) becomes \(\plmbonus{j} \leq \dplm{c}{j}\). As adding this correction to the objective function raises the objective value, \(\plmbonus{j} = \dplm{c}{j}\).
+        \end{notebox}
+    \end{refactorbox}
+\end{definition}
+
+
+\begin{definition}{\PPGF{} objective function}{milp:ppgf_objective}
+    The objective function aims to maximize the plasmidness:
+        \begin{equation}
+        \begin{split}
+            TotalPlasmidness & = \sum_{i \in \Fragments{}} (\plm{i} - 0.5) x_i \\
+            & + \sum_{\substack{ j \in \Fragments{} \\ j \text{ is a share} }} \plmbonus{j}
+        \end{split}
+        \end{equation}
+    It results in the objective function:
+    \begin{equation}
+        \max ~ TotalPlasmidness
+    \end{equation}
+\end{definition}

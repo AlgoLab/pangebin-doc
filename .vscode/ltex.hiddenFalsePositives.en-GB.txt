@@ -1,0 +1,1 @@
+{"rule":"THE_CC","sentence":"^\\QThe if and only if statement does not need to be completely written because of the objective function behaviour, see later.\\E$"}

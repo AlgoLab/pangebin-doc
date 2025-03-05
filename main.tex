@@ -1,0 +1,42 @@
+\documentclass{article}
+
+\input{pkg/_index}
+
+\input{custom/_index}
+
+\input{glossary/_index}
+
+\usepackage{todonotes}
+\newcommand{\gdv}[1]{\todo[inline,backgroundcolor=yellow]{\textbf{GDV} #1}}
+\newcommand{\gdvi}[1]{\todo[backgroundcolor=yellow]{\textbf{GDV} #1}}
+
+\title{Pangebin v2}
+\author{Victor Epain, Mattia Sgr\`o}
+\date{\today}
+
+\addbibresource{pangebin.bib}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents%
+
+\section{Introduction}
+
+\input{pan-assembly_graph/_index}
+
+\input{pangebin/_index.tex}
+
+\input{discussions}
+
+\printbibliography%
+
+\clearpage%
+\pagenumbering{Roman}
+
+\appendix%
+
+\input{appendix/_index}
+
+\end{document}

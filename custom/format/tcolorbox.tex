@@ -1,0 +1,146 @@
+% ============================================================================ %
+%                                    STYLES                                    %
+% ============================================================================ %
+\usepackage{tcolorbox}
+\usepackage{booktabs} % for rule properties
+
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+
+\tcbset{
+  booktabsindent/.style={
+    empty,
+    breakable,
+    % Title ---
+    before title={\(\blacktriangleright{}\)},
+    coltitle=black,
+    fonttitle=\sffamily\bfseries,
+    % Spaces ---
+    left=0pt,
+    toptitle=\aboverulesep,
+    bottomtitle=\belowrulesep,
+    % Inner text ---
+    parbox=false,
+    fontupper=\sffamily,
+    % Border line ---
+    titlerule style={black!75!white},
+    titlerule=\lightrulewidth,
+    leftrule=0pt, rightrule=0pt,% they hide titlerule
+    borderline horizontal={\heavyrulewidth}{0pt}{black!75!white},
+  },
+  booktabsnoindent/.style={
+    empty,
+    boxsep=0pt,
+    coltitle=black, fonttitle=\sffamily\bfseries,
+    left=0mm, right=0mm,
+    leftrule=0pt, rightrule=0pt,
+    toptitle=\aboverulesep+1mm,
+    bottomtitle=\belowrulesep+1mm,
+    borderline horizontal={\heavyrulewidth}{0pt}{black!75!white},
+    titlerule style={black!75!white},
+    titlerule=\lightrulewidth%
+  },
+  roundbox/.style={
+    enhanced jigsaw,
+    boxsep=0pt,
+    colframe=black!75!white,
+    colback=white,
+    boxrule=\heavyrulewidth,
+    colbacktitle=white,
+    sharp corners, rounded corners=all,
+    coltitle=black, fonttitle=\sffamily\bfseries,
+    toptitle=\aboverulesep+1mm,
+    bottomtitle=\belowrulesep+1mm,
+    titlerule style={black!75!white},
+    titlerule=\lightrulewidth%
+  },
+  boxtitle/.style={
+    enhanced,
+    attach boxed title to top center={yshift*=-\tcboxedtitleheight/2},
+    boxed title style={colback=white, boxrule=\lightrulewidth},
+    boxsep=0pt,
+    colframe=black!75!white,
+    colback=white,
+    boxrule=\heavyrulewidth,
+    colbacktitle=white,
+    sharp corners, rounded corners=all,
+    coltitle=black, fonttitle=\sffamily\bfseries,
+    toptitle=\aboverulesep+1mm,
+    bottomtitle=\belowrulesep+1mm,
+    titlerule style={black!75!white}
+  },
+  boxtitlenoindent/.style={
+    empty,
+    attach boxed title to top text left={yshift*=-\tcboxedtitleheight/2},
+    boxed title style={
+      skin=enhanced, colback=white, boxrule=\lightrulewidth,
+      sharp corners, rounded corners=all, colframe=black!75!white
+    },
+    boxsep=0pt,
+    coltitle=black, fonttitle=\sffamily\bfseries,
+    left=0mm, right=0mm,
+    leftrule=0pt, rightrule=0pt,
+    toptitle=\aboverulesep+1mm,
+    bottomtitle=\belowrulesep+1mm,
+    borderline horizontal={\heavyrulewidth}{0pt}{black!75!white},
+    titlerule=\lightrulewidth%
+  },
+  % leftlineindent/.style={
+  %   empty,
+  %   breakable,
+  %   % Title ---
+  %   minipage boxed title,
+  %   attach boxed title to top left,
+  %   boxed title style={
+  %     empty,
+  %     left*=0pt,
+  %   },
+  %   coltitle=black,
+  %   fonttitle=\sffamily\bfseries,
+  %   before title={\(\blacktriangleright{}\)},
+  %   % Inner text ---
+  %   parbox=false,
+  %   fontupper=\sffamily,
+  %   % Border line ---
+  %   borderline west={\heavyrulewidth}{4pt}{black!75!white},
+  % },
+  leftlineindent/.style={
+    empty,
+    breakable,
+    % Title ---
+    % minipage boxed title,
+    % attach boxed title to top left,
+    % boxed title style={
+    %   empty,
+    %   left*=0pt,
+    % },
+    coltitle=black,
+    fonttitle=\sffamily\bfseries,
+    before title={\(\blacksquare{}\)~},
+    % before title={\(\blacktriangleright{}\)},
+    % Inner text ---
+    parbox=false,
+    fontupper=\sffamily,
+    % Border line ---
+    % borderline west={\heavyrulewidth}{4pt}{black!75!white},
+    borderline west={\heavyrulewidth}{0pt}{black!75!white},
+  },
+  proofempty/.style={
+    empty,
+    breakable,
+    % Title ---
+    attach boxed title to top left,
+    boxed title style={
+      empty,
+      left*=0pt,
+    },
+    coltitle=black,
+    fonttitle=\sffamily,
+    title=\(\rhd{}\) Proof,
+    % Inner text ---
+    parbox=false,
+    fontupper=\itshape,
+    % End of box ---
+    after upper={\par\hfill \(\lhd{}\)},
+  },
+}

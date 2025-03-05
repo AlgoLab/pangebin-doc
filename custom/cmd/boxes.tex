@@ -1,0 +1,46 @@
+% Require:
+% \input{custom/format/color}
+
+\usepackage{fontawesome5}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+
+%
+% USAGE:
+%
+%   \boxfactory{boxname}{title}{color}
+\newcommand{\boxfactory}[3]{
+    \newtcolorbox{#1}{
+      empty,
+      breakable,
+      % Title ---
+      boxed title style={
+        empty,
+        left*=0pt,
+      },
+      title=#2,
+      coltitle=#3,
+      fonttitle=\sffamily\bfseries,
+      % Inner text ---
+      parbox=false,
+      coltext=drawio_grey,
+      fontupper=\sffamily,
+      % Border line ---
+      borderline west={2\heavyrulewidth}{0pt}{#3},
+    }
+}
+
+\boxfactory{notebox}{\faIcon{pencil-alt} Note}{drawio_grey}
+\boxfactory{infobox}{\faIcon{info-circle} Info}{drawio_darkblue}
+\boxfactory{warningbox}{\faIcon{exclamation-triangle} Warning}{drawio_orange}
+\boxfactory{questionbox}{\faIcon{question-circle} Question}{drawio_purple}
+\boxfactory{ideabox}{\faIcon{lightbulb} Idea}{drawio_yellow}
+\boxfactory{errorbox}{\faIcon{times-circle} Error}{drawio_red}
+\boxfactory{todobox}{\faIcon{check-circle} To-do}{drawio_darkgreen}
+\boxfactory{missingproofbox}{\faIcon{stop} Missing proof}{drawio_turquoise}
+\boxfactory{refactorbox}{\faIcon{recycle} Refactor}{drawio_darkgreen}
+\boxfactory{fixmebox}{\faIcon{wrench} Fix-me}{drawio_red}
+\boxfactory{newfeatbox}{\faIcon{star} New feature}{drawio_yellow}

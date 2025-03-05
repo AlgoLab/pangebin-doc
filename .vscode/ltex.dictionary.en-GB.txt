@@ -1,0 +1,9 @@
+contig
+subcontig
+contigs
+Pangenome
+plasmidness
+Skesa
+Unicycler
+pangenome
+Unicyler

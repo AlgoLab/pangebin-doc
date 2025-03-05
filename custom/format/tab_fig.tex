@@ -1,0 +1,95 @@
+% ============================================================================ %
+%                                    CAPTION                                   %
+% ============================================================================ %
+\usepackage{caption}
+\usepackage{subcaption}
+% ---------------------------------------------------------------------------- %
+%                                      All                                     %
+% ---------------------------------------------------------------------------- %
+\captionsetup{labelfont=bf,font=sf}
+
+% ---------------------------------------------------------------------------- %
+%                                     Main                                     %
+% ---------------------------------------------------------------------------- %
+\captionsetup[figure]{%
+    position=bottom,
+    name={\textcolor{\accentcolor}{\(\blacksquare\)} Figure},
+    labelsep=endash%
+}
+\captionsetup[table]{%
+    position=top,
+    name={\textcolor{\accentcolor}{\(\blacksquare\)} Table},
+    labelsep=endash%
+}
+\captionsetup[longtable]{%
+    position=top,
+    name={\textcolor{\accentcolor}{\(\blacksquare\)} Table},
+    labelsep=endash%
+}
+%
+% Figure and table captions format
+%
+\newcommand{\figurecaption}[2]{%
+    \caption[#1]{%
+        \textbf{#1}%
+        \ifstrempty{#2}
+        {\ignorespaces}
+        {\\ #2}%
+    }%
+}
+\newcommand{\tablecaption}[2]{%
+    \caption[#1]{%
+        \textbf{#1}%
+        \ifstrempty{#2}
+        {\ignorespaces}
+        {\\ #2}%
+    }%
+}
+\newcommand{\longtablecaption}[2]{%
+    \caption[#1]{%
+        \textbf{#1}%
+        \ifstrempty{#2}
+        {\ignorespaces}
+        {\\ #2}%
+    }%
+}
+%
+%   - captionof
+%
+\newcommand{\figurecaptionof}[2]{%
+    \captionof{figure}[#1]{%
+        \textbf{#1}%
+        \ifstrempty{#2}
+        {\ignorespaces}
+        {\\ #2}%
+    }%
+}
+% #XXX don't know why, but \tablecaption won't work and \tablecaptionof  must be use.
+%   More surprisingly, \tablecaption must be kept in order to \tablecaptionof works!
+%   But it works for \longtablecaption (according to caption pkg, captionof does not work for longtable)
+\newcommand{\tablecaptionof}[2]{%
+    \captionof{table}[#1]{%
+        \textbf{#1}%
+        \ifstrempty{#2}
+        {\ignorespaces}
+        {\\ #2}%
+    }%
+}
+
+% ---------------------------------------------------------------------------- %
+%                                      Sub                                     %
+% ---------------------------------------------------------------------------- %
+\captionsetup[subfigure]{position=bottom, labelfont=bf}
+\captionsetup[subtable]{position=top, labelfont=bf}
+%
+% To use to describe subfigure in caption
+%
+\DeclareCaptionLabelFormat{parenth}{(#2)}
+\captionsetup{subrefformat=parenth}
+\newcommand{\Subref}[1]{\textbf{\subref{#1}}}
+
+% ============================================================================ %
+%                                 TABLE HEADERS                                %
+% ============================================================================ %
+\newcommand{\tabhtxt}[1]{\textbf{\sffamily{#1}}}
+\newcommand{\tabhmath}[1]{\ensuremath{\mathsf{#1}}}

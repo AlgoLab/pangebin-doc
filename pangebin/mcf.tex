@@ -1,0 +1,107 @@
+\subsection{The Maximum Coverage-likelihood Flow problem \MCF{}}\label{meth:max_coverage_flow}
+
+The first binning stage consists in finding a flow maximizing the use of fragment coverage.
+We refer to this subproblem as the \enquote{Maximum Coverage-likelihood Flow} problem (\MCF{}).
+As a coarse-grain strategy, it consists in finding a connected component explaining the coverages, large enough to contain all the fragments of the in-building solution bin.
+Indeed, passing through a loop or a cycle will not change the flow value. Only maximizing the flow can lead to use a minimum of fragments.
+To overcome this bias, we score the use of the fragment coverages and maximize their total.
+Bellow we describe the MILP model.
+
+\begin{newfeatbox}
+    Here we maximize the coverage scores, not only the coverage flow.
+\end{newfeatbox}
+
+\begin{definition}{\MCF{} MILP variables}{milp:mcf_variables}
+    \begin{itemize}
+        \item \(x_i \in \Reals_{\geq 0} \, \forall i \in \Fragments{}\) denoting whether the fragment \(i\) is active or not. With the constraints it acts as a binary.
+        \item \(y_a \in \Set{0, 1} \, \forall a \in A'_\Links{}\) denoting whether the link-arc \(a\) is active or not.
+        \item \(f_a \in \Reals_{\geq 0} \, \forall a \in A'_\Links{}\) corresponding to the flow amount passing through the link-arc \(a\).
+        \item \(F \in \Reals_{\geq 0}\) corresponding to the overall flow.
+        \item \(F_a \in \Reals_{\geq 0} \, \forall a \in A'_\Links{}\) playing the role of an intermediary variable to force the flow on each link-arc to be equal to the total flow.
+    \end{itemize}
+\end{definition}
+
+
+\begin{definition}{\MCF{} MILP constraints}{milp:mcf_constraints}
+
+    Exactly one link-arc outs of \(s\) is part of the solution (necessary to ensure the solution induced subgraph has only one connected component):
+    \begin{todobox}
+        Describe why it is not sufficient to have only one connected component
+    \end{todobox}
+    \begin{equation}
+        \sum_{a \in \Set{(s, v) \given v \in \VSeed{}}} y_a = 1
+    \end{equation}
+    
+    The flow through a link-arc \(a \in A'_\Links{}\) is non-zero if \(a\) is active and cannot exceed its capacity: 
+    \begin{equation}
+        f_a \leq \capacity{a} y_a \quad \forall a \in A'_\Links{}
+    \end{equation}
+
+    The cumulative flow through a fragment \(i \in \Fragments{}\) cannot exceed its read coverage:
+    \begin{equation}
+        inflow(i) \leq \cov{i} \quad \forall i \in \Fragments{}
+    \end{equation} 
+    Where \(\displaystyle inflow(i) = \sum_{a \in A'^-_{V_t(i)} \cup A'^-_{V_h(i)}} f_a\), \(A'^-_{V_t(i)}\) and \(A'^-_{V_h(i)}\) are the sets of incoming link-arcs in \(A'_\Links{}\) for respectively the tail and the head vertices of fragment \(i\).
+
+    The cumulative flow into a fragment \(i\) should be equal to the cumulative flow out of it. Conversely for the reverse \(i^-\):
+    \begin{align}
+        \sum_{a \in A'^-_{V_t(i)}} f_a & = \sum_{a \in A'^+_{V_h(i)}} f_a & \forall i \in \Fragments{} \\
+        \sum_{a \in A'^-_{V_h(i)}} f_a & = \sum_{a \in A'^+_{V_t(i)}} f_a & \forall i \in \Fragments{}
+    \end{align}
+
+    The total flow value \(F\) equals to the flow out of \(s\) and into \(t\):
+    \begin{align}
+        F & = \sum_{a \in \Set{(s, v) \given v \in \VSeed{}}} f_a \\
+        F & = \sum_{a \in \Set{(v, t) \given v \in V}} f_a
+    \end{align}
+
+    The fragments involved in an active link-arc must also be active:
+    \begin{equation}
+        y_{uv} \leq \min\Set{x_i, x_j} \quad \forall (u, v) \in A'_\Links{}, i = vfrag(u), j = vfrag(v) 
+    \end{equation}
+
+    An active fragment implies at least one link-arc incident to one of the its extremities is active:
+    \begin{equation}
+        x_i \leq \sum_{a \in A'^-_{V_t(i)} \cup A'^-_{V_h(i)}} y_a
+    \end{equation}
+
+    An active link-arc has a flow at least \(F\).
+    \begin{align}
+        F_a & \geq F - (1 - y_a) \max_{\substack{v \in \VSeed{} \\ i = vfrag(v)}}\Set{\cov{i}} & \forall a \in A'_\Links{} \\
+        F_a & \leq F & \forall a \in A'_\Links{} \\
+        F_a & \leq f_a & \forall a \in A'_\Links{} \label{const:arc_flow_at_least_total_flow}
+    \end{align}
+    \begin{infobox}
+        The above constraints minimize the number of out link-arcs for each fragment.
+    \end{infobox}
+    \begin{missingproofbox}
+        If several link-arcs out of a given fragment,
+        then this fragment is repeated (immediate).
+    \end{missingproofbox}
+    \begin{questionbox}
+        What is the meaning for a fragment to have a cumulative flow that is not a multiple of \(F\)?
+        By keeping the flow real, can we smartly force the cumulative flow to be a multiple of \(F\)? 
+
+        \begin{notebox}
+            Because the sequencing coverage does not represent an integer number of copy of the sequenced genome.
+        \end{notebox}
+    \end{questionbox}
+
+    \begin{todobox}
+        Describe the connected component set of constraints.
+        \begin{notebox}
+            These constraints will force variables x to take value either 0 or 1
+        \end{notebox}
+    \end{todobox}
+\end{definition}
+
+\begin{definition}{\MCF{} MILP objective function}{milp:mcf_objective}
+    The objective function aims to maximize the total coverage scores:
+    \begin{equation}
+        \max ~ CoverageScore
+    \end{equation}
+    where \(
+        \displaystyle CoverageScore = %
+            \sum_{i \in \Fragments{}} \parenth*{2 \frac{inflow(i)}{\cov{i}} - 1}
+    \).
+\end{definition}

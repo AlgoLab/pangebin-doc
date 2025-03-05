@@ -1,0 +1,16 @@
+\subsection{Fine-tuning the MILP formulations}
+
+\begin{warningbox}
+    This part is in development
+\end{warningbox}
+
+Because of the fragmentation, for a given attribute, we do not have a strict attribute-equivalence between each contig and its corresponding fragment path in the pan-assembly graph.
+Formally, if \(\alpha\) is an attribute defined either for the contigs and the fragments, 
+\(\exists c \in \Contigs{} \text{ s.t. } \alpha_c \neq \sum_{i \in \Fragments{}(c)} \alpha_i\).
+Especially when \(\alpha_c\) is inferior than the sum, if the flow passes through the fragment path corresponding to this contig, we would like to positively correct the sum to obtain \(\alpha_c\).
+
+In what follows, we associate new attributes to the fragments corresponding to the possible positive correction we may add to the objective values.
+We then adapt the MILP formulations for the corrections.
+
+\input{pangebin/fine_tune/attributes}
+% \input{pangebin/milp_fine_tune/mcf}

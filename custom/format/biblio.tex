@@ -1,0 +1,6 @@
+\usepackage{biblatex}
+\stdpunctuation% else biblatex-ieee will print the comma before the closing french quote
+\AtEveryCitekey{%
+  \clearfield{url}%
+  \clearfield{urlyear}%
+}

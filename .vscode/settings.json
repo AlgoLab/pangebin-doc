@@ -1,0 +1,175 @@
+{
+    "[latex]": {
+        "editor.formatOnSave": true
+    },
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux",
+        "*.bbl",
+        "*.blg",
+        "*.idx",
+        "*.ind",
+        "*.lof",
+        "*.lot",
+        "*.out",
+        "*.toc",
+        "*.acn",
+        "*.acr",
+        "*.alg",
+        "*.glg",
+        "*.glo",
+        "*.gls",
+        "*.fls",
+        "*.log",
+        "*.fdb_latexmk",
+        "*.snm",
+        "*.synctex(busy)",
+        "*.synctex.gz(busy)",
+        "*.nav",
+        "*.ilg",
+        "*.nlo",
+        "*.nls",
+        "*.gl*",
+        "*.sl*",
+        "*.ist"
+    ],
+    "latex-workshop.latex.outDir": "%DIR%/build",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "lualatex (speed)",
+            "tools": [
+                "lualatex"
+            ]
+        },
+        {
+            "name": "biber",
+            "tools": [
+                "biber"
+            ]
+        },
+        {
+            "name": "lualatex x2",
+            "tools": [
+                "lualatex",
+                "lualatex"
+            ]
+        },
+        {
+            "name": "lualatex & biber",
+            "tools": [
+                "lualatex",
+                "biber",
+                "lualatex",
+                "lualatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "args": [
+                "-d",
+                "build",
+                "%DOCFILE%"
+            ],
+            "command": "makeglossaries",
+            "env": {},
+            "name": "makeglossaries"
+        },
+        {
+            "args": [
+                "--synctex=1",
+                "--shell-escape",
+                "--interaction=nonstopmode",
+                "--file-line-error",
+                "--output-directory",
+                "build",
+                "%DOC%"
+            ],
+            "command": "lualatex",
+            "env": {},
+            "name": "lualatex"
+        },
+        {
+            "args": [
+                "build/%DOCFILE%"
+            ],
+            "command": "biber",
+            "env": {},
+            "name": "biber"
+        }
+    ],
+    "latex-workshop.view.outline.sections": [
+        "part",
+        "chapter",
+        "section|Section",
+        "subsection|Subsection",
+        "subsubsection"
+    ],
+    "todo-tree.filtering.excludeGlobs": [
+        "**/node_modules",
+        "**/.vscode/settings.json",
+        "**/.vscode/ltex.dictionary.*"
+    ],
+    "todo-tree.general.tags": [
+        "BUG",
+        "HACK",
+        "FIXME",
+        "TODO",
+        "XXX",
+        "OPTIMIZE",
+        "IDEA",
+        "DOCU",
+        "TOTEST",
+        "REFACTOR"
+    ],
+    "todo-tree.highlights.customHighlight": {
+        "BUG": {
+            "foreground": "#FF7F50",
+            "icon": "bug"
+        },
+        "DOCU": {
+            "foreground": "#008B8B",
+            "icon": "repo"
+        },
+        "FIXME": {
+            "foreground": "#B22222",
+            "icon": "flame"
+        },
+        "HACK": {
+            "foreground": "#2F4F4F",
+            "icon": "tools"
+        },
+        "IDEA": {
+            "foreground": "#FFD700",
+            "icon": "light-bulb"
+        },
+        "OPTIMIZE": {
+            "foreground": "#CD5C5C",
+            "icon": "rocket"
+        },
+        "REFACTOR": {
+            "foreground": "#8FBC8F",
+            "icon": "git-branch"
+        },
+        "TODO": {
+            "foreground": "#006400",
+            "icon": "circle"
+        },
+        "TOTEST": {
+            "foreground": "#ADD8E6",
+            "icon": "beaker"
+        },
+        "XXX": {
+            "foreground": "#2F4F4F",
+            "icon": "x"
+        }
+    },
+    "todo-tree.highlights.defaultHighlight": {
+        "background": "#1d1f23",
+        "fontStyle": "italic",
+        "foreground": "#006400",
+        "gutterIcon": true,
+        "type": "text-and-comment"
+    },
+    "latex-workshop.formatting.latex": "tex-fmt"
+}

@@ -1,0 +1,13 @@
+\subsection{The pan-assembly links}
+
+A link in the multi-link-edge set \(\ELinks{}\) is either of two types:
+\begin{description}[style=nextline]
+  \item[Pangenome link] A link connecting two fragments from the same contig, thus that can connect:
+    \begin{itemize}
+      \item two fragments from two contigs of different assemblers
+      \item two fragments from two contigs of the same assembler
+    \end{itemize}
+  \item[Assembly link] A link connecting two fragments from two contigs of the same assembler which were linked in the original assembly graph
+\end{description}
+
+\Cref{fig:panasm_multi-edges} illustrates some multi-edge cases.

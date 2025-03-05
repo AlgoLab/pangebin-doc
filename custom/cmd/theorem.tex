@@ -1,0 +1,67 @@
+% ============================================================================ %
+%                                 NEW THEOREMS                                 %
+% ============================================================================ %
+% Require
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+% Need: \input{custom/format/tcolorbox}
+% ---------------------------------------------------------------------------- %
+%                                   Algorithm                                  %
+% ---------------------------------------------------------------------------- %
+\newtcbtheorem[
+  crefname={algorithm}{algorithms},
+  list inside=algorithm,
+]{tcbalgo}{Algorithm}{booktabsindent,before upper*=\sf}{algo}
+% #XXX cleveref cannot ref a line in tcbalgo environment
+
+% ---------------------------------------------------------------------------- %
+%                                 Theorem Like                                 %
+% ---------------------------------------------------------------------------- %
+\newtcbtheorem[
+  number within=section,
+  crefname={definition}{definitions},
+  list inside=definition
+]{definition}{Definition}{leftlineindent}{definition}
+
+\newtcbtheorem[
+  number within=section,
+  crefname={property}{properties},
+  list inside=property
+]{property}{Property}{leftlineindent}{property}
+
+\newtcbtheorem[
+  number within=section,
+  crefname={axiom}{axioms},
+  list inside=axiom
+]{axiom}{Axiom}{leftlineindent}{axiom}
+
+\newtcbtheorem[
+  number within=section,
+  crefname={postulate}{postulates},
+  list inside=postulate
+]{postulate}{Postulate}{leftlineindent}{postulate}
+
+\newtcbtheorem[
+  number within=section,
+  crefname={theorem}{theorems},
+  list inside=theorem
+]{theorem}{Theorem}{leftlineindent}{theorem}
+
+\newtcbtheorem[
+  number within=section,
+  crefname={proposition}{propositions},
+  list inside=proposition
+]{proposition}{Proposition}{leftlineindent}{proposition}
+
+\newtcbtheorem[
+  number within=section,
+  crefname={lemma}{lemmas},
+  list inside=lemma
+]{lemma}{Lemma}{leftlineindent}{lemma}
+
+% ---------------------------------------------------------------------------- %
+%                                     Proof                                    %
+% ---------------------------------------------------------------------------- %
+\renewenvironment{proof}{
+\begin{tcolorbox}[proofempty]}{
+\end{tcolorbox}}

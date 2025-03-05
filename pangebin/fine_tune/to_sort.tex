@@ -1,0 +1,78 @@
+\begin{definition}{\MCF{} fine-tune variables}{milp:mcf_fine_tune_variables}
+    \begin{itemize}
+        \item \(x_c \in \Set{0, 1} \, \forall c \in \Contigs{}\) denoting whether the contig \(c\) is active or not.
+        \item \(\ctggc{c}{b} \in \Set{0, 1} \, \forall (c, b) \in \Contigs{} \times K\) denoting whether the contig \(c\) participates in the solution and the plasmid GC content is in the interval \(b\) or not. 
+        \item \(\gcbonus{j} \in \Reals_{>=0} \, \forall \text{ share } j \in \Fragments{}\) corresponding to the best GC bonus over the GC content penalty for the share \(j\) when several of its contigs are active.
+    \end{itemize}
+\end{definition}
+
+
+\begin{definition}{\MCF{} fine-tune constraint}{milp:mcf_fine_tune_constraints}
+    A contig \(c \in \Contigs{}\), is active if and only if all the link-arcs defining \(c\) (or its reverse) are active:
+    \begin{align}
+      |A(c)|x_c & \leq \sum_{a \in A(c)} y_a \\
+      |A(c^-)|x_c & \leq \sum_{a \in A(c^-)} y_a
+    \end{align}
+    
+    \begin{notebox}
+      The \enquote{if and only if} statement does not need to be completely written because of the objective function behaviour, see later.
+    \end{notebox}
+
+    For each contig \(c \in \Contigs{}\), for each GC content interval \(b \in K\), \(\ctggc{c}{b} = 1\) if and only if contig \(c\) is active and the \(b\) is the solution GC content interval:
+    \begin{align}
+        \ctggc{c}{b} & \leq x_c & \forall (c, b) \in \Contigs{} \times K \\
+        \ctggc{c}{b} & \leq GC_b & \forall (c, b) \in \Contigs{} \times K \\
+        \ctggc{c}{b} & \geq x_c + GC_b - 1 & \forall (c, b) \in \Contigs{} \times K
+    \end{align}
+
+    For each share \(j \in \Fragments{}\), for each GC content interval \(b \in K\), \(\sgcbonus{j}{b}\) is the best correction \(\dsgcpen{j}{c}{b}\) among the active contigs in \(\Contigs(j)\):
+    \begin{equation}
+        \sgcbonus{j}{b} \leq \sum_{\substack{
+            d \in \Contigs(j) \\ \dsgcpen{j}{d}{b} \\ \geq \dsgcpen{j}{c}{b}
+        }} \dsgcpen{j}{d}{b} \ctggc{d}{b} \quad \begin{array}[t]{@{}l@{}}
+            \forall (j, c, b) \in \Fragments{} \times \Contigs{}(j) \times K \\ 
+            j \text{ is a share}
+        \end{array}
+    \end{equation}
+    
+\end{definition}
+
+
+
+\begin{definition}{\MCF{} objective function}{milp:mcf_objective}
+    The objective function aims to:
+    \begin{itemize}
+        \item maximize the total flow \(F\)
+        \item minimize the total GC content penalties, corrected by the bonuses:
+        \begin{align}
+            \begin{split}
+                GCPenalties = & \sum_{\substack{
+                    i \in \Fragments{} \\ 
+                    b \in K
+                }} \gcpen{i}{b} \fraggc{i}{b} \\
+                & - \sum_{\substack{
+                    c \in \Contigs{} \\ 
+                    b \in K
+                }} \dcgcpen{c}{b}\ctggc{c}{b} \\
+                & - \sum_{\substack{
+                    \text{share } j \in \Fragments{} \\
+                    b \in K
+                }} \sgcbonus{j}{b}
+            \end{split}
+        \end{align}
+    \end{itemize}
+    It results in the objective function:
+    \begin{equation}
+        \max ~ \parenth*{F - GCPenalties}
+    \end{equation}
+\end{definition}
+
+\begin{todobox}
+    Explain why we have added the \(GCPenalties\) in the \MCF{} objective function.
+    
+    Because this first approach is \emph{de novo}, we also use the GC content (also a de novo attribute) to extract plasmid candidate fragments.
+
+    \begin{questionbox}
+        It may be more precise to define this approach more as a de novo than a coarse-grain, as the \(GCPenalties\) is a fine-grain strategy over the coverage flow which is a coarse-grain one.
+    \end{questionbox}
+\end{todobox}

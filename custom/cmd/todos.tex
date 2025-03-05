@@ -1,0 +1,64 @@
+% ============================================================================ %
+%                                   PACKAGES                                   %
+% ============================================================================ %
+% \input{custom/format/color}
+\usepackage{etoolbox}
+\usepackage{calc}
+\usepackage{soul}
+
+% ============================================================================ %
+%                                 TODO BUILDER                                 %
+% ============================================================================ %
+%
+% USAGE:
+%
+%   \todobuilder{\todoname}{todocolor_border}{todocolor_fill}
+%
+%   \todoname{toto text} % in the text
+%   \todoname[inline]{toto text} % in full line width
+%
+% NOTE:
+%
+%   If the command breaks, try to \protect any non-text object (e.g. commands)
+%   As an example:
+%   \todotosay{blabla~\protect\cite{bib_entry}}
+%
+\newcommand{\todobuilder}[3]{
+  \newcommand{#1}[2][]{%
+    \expandafter\ifstrequal\expandafter{##1}{inline}{%
+      \par\noindent
+      {\sffamily{\bfseries \sethlcolor{#2}\hl{[#3] }}{\sethlcolor{#2}\hl{##2}}}
+      \par
+    }{%
+      {\sffamily{\sethlcolor{#2}\hl{##2}}}%
+    }%
+  }
+}
+
+% ============================================================================ %
+%                                 NEW COMMANDS                                 %
+% ============================================================================ %
+% ---------------------------------------------------------------------------- %
+%                                    Remark                                    %
+% ---------------------------------------------------------------------------- %
+\todobuilder{\todoremark}{drawio_orangefill}{REMARK}
+
+% ---------------------------------------------------------------------------- %
+%                                     Error                                    %
+% ---------------------------------------------------------------------------- %
+\todobuilder{\todoerror}{drawio_redfill}{ERROR}
+
+% ---------------------------------------------------------------------------- %
+%                                     Proof                                    %
+% ---------------------------------------------------------------------------- %
+\todobuilder{\todoproof}{drawio_purplefill}{TO PROOF}
+
+% ---------------------------------------------------------------------------- %
+%                                    To Say                                    %
+% ---------------------------------------------------------------------------- %
+\todobuilder{\todotosay}{drawio_greenfill}{TO SAY}
+
+% ---------------------------------------------------------------------------- %
+%                                  To Arrange                                  %
+% ---------------------------------------------------------------------------- %
+\todobuilder{\todoarrange}{drawio_bluefill}{TO REFACTOR}
