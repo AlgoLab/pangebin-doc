@@ -4,7 +4,9 @@
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
 		"Gruntfuggly.todo-tree",
-		"James-Yu.latex-workshop"
+		"James-Yu.latex-workshop",
+		"ltex-plus.vscode-ltex-plus",
+		"iamhyc.overleaf-workshop",
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": []
