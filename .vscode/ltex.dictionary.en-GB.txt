@@ -3,7 +3,6 @@ subcontig
 contigs
 Pangenome
 plasmidness
-Skesa
+SKESA
 Unicycler
 pangenome
-Unicyler
