@@ -1,17 +1,15 @@
 # Pangebin-doc
 
-```{note}
-This document is hosted on Overleaf.
-```
+> [!NOTE]
+> This document is hosted on Overleaf.
 
-```{warning}
-Do not clone this repository if you want to modify this document.
-You modify it with:
-
-* The Overleaf web interface
-* The VSCode Overleaf remote extension `iamhyc.overleaf-workshop` (see sections below)
-  * Contact `vepain` if you really want to use git
-```
+> [!WARNING]
+> Do not clone this repository if you want to modify this document.
+> You modify it with:
+>
+> * The Overleaf web interface
+> * The VSCode Overleaf remote extension `iamhyc.overleaf-workshop` (see sections below)
+>   * Contact `vepain` if you really want to use git
 
 ## Modifying remotly this document with VSCode
 
