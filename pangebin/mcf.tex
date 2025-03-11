@@ -17,9 +17,9 @@ Bellow we describe the MILP model.
     \item \(F_a \in \Reals_{\geq 0} \, \forall a \in A_\Links{}\) playing the role of an intermediary variable to force the flow on each link-arc to be equal to the total flow.
     \item \(\alpha \in \Reals{}\) is the number of \emph{oriented} fragments in the solution connected graph, plus the source and the sink. With the constraints it acts as a positive integer.
     \item \(\beta_a \in \Reals_{\leq 0} \, \forall a \in A_\Links{}\) is strictly negative if the link-arc \(a\) participates in one of the solution subgraph's exploration tree.
-      It acts as a negative integer, where the absolute value correspond to the depth of the subtree defined by the successor.
+      It acts as a negative integer, where the absolute value corresponds to the depth of the subtree defined by the successor.
   \end{itemize}
-  Variables \(\alpha{}\) and the \(\beta_{A_\Links{}}\) serves to model the solution subgraph connectivity.
+  Variables \(\alpha{}\) and the \(\beta_{A_\Links{}}\) serve to model the solution subgraph connectivity.
 \end{definition}
 
 \begin{definition}{\MCF{} MILP constraints}{milp:mcf_constraints}
@@ -35,8 +35,17 @@ Bellow we describe the MILP model.
   The flow through a link-arc \(a \in A_\Links{}\) is non-zero if \(a\) is active and cannot exceed its capacity:
   \begin{equation}
     \begin{split}
-      f_{uv} \leq \min\Set*{\cov{i}, \cov{j}} y_{uv} \quad \forall (u, v) \in A_\Links{} \\
-      i, j = vfrag(u), vfrag(v)
+      f_{uv} \leq
+      \begin{cases}
+        \cov{j} y_{uv} & \text{if \(u = s\)} \\
+        \cov{i} y_{uv} & \text{if \(v = t\)} \\
+        \min\Set*{\cov{i}, \cov{j}} y_{uv} & \text{otherwise}
+      \end{cases} \quad
+      \begin{split}
+        \forall (u, v) \in A_\Links{} \\
+        i = vfrag(u) \\
+        j = vfrag(v)
+      \end{split}
     \end{split}
   \end{equation}
 
@@ -46,7 +55,7 @@ Bellow we describe the MILP model.
   \end{equation}
   Where \(\displaystyle inflow(i) = \sum_{(u, i_t) \in A_\Links{}} f_{ui_t} + \sum_{(u, i_h) \in A_\Links{}} f_{ui_h}\) where \(i_t\) and \(i_h\) respectively stand for the tail and the head vertices of fragment \(i\).
 
-  The cumulative flow into a fragment \(i\) should be equal to the cumulative flow out of it. Conversely for the reverse \(i^-\):
+  The cumulative flow into a fragment \(i\) should be equal to the cumulative flow out of it. Same for the reverse \(i^-\):
   \begin{align}
     \sum_{(u, i_t) \in A_\Links{}} f_{u i_t} & = \sum_{(i_h, w) \in A_\Links{}} f_{i_h w} & \forall i \in \Fragments{} \\
     \sum_{(u, i_h) \in A_\Links{}} f_{u i_h} & = \sum_{(i_t, w) \in A_\Links{}} f_{i_t w} & \forall i \in \Fragments{}
@@ -69,6 +78,9 @@ Bellow we describe the MILP model.
   \end{equation}
 
   An active vertex implies at least one active link-arc incoming to it:
+  \begin{questionbox}
+    Are these constraints necessary?
+  \end{questionbox}
   \begin{equation}
     x_v \leq \sum_{(u, v) \in A_\Links{}} y_{u v} \quad \forall v \in V \setminus \Set{s, t}
   \end{equation}
