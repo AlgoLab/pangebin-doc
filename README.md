@@ -10,6 +10,7 @@
 > * The Overleaf web interface
 > * The VSCode Overleaf remote extension `iamhyc.overleaf-workshop` (see sections below)
 >   * Contact `vepain` if you really want to use git
+>   * `vepain` is happy to see other people are also doing strange things: <https://stackoverflow.com/a/67243618/12375779>
 
 ## Modifying remotly this document with VSCode
 
