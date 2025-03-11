@@ -2,6 +2,7 @@
     "[latex]": {
         "editor.formatOnSave": true
     },
+    "latex-workshop.formatting.latex": "tex-fmt",
     "latex-workshop.latex.autoBuild.run": "never",
     "latex-workshop.latex.clean.fileTypes": [
         "*.aux",
@@ -170,6 +171,5 @@
         "foreground": "#006400",
         "gutterIcon": true,
         "type": "text-and-comment"
-    },
-    "latex-workshop.formatting.latex": "tex-fmt"
+    }
 }
