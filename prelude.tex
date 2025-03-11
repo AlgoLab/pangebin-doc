@@ -1,6 +1,35 @@
 \section*{Prelude}\label{sec:prelude}
 \addcontentsline{toc}{section}{\nameref{sec:prelude}}
 
+\subsection*{Aims}\label{sec:prelude:aims}
+\addcontentsline{toc}{subsection}{\nameref{sec:prelude:aims}}
+
+\begin{itemize}
+  \item Comparing PlasBin-flow and Pangebin:
+    \begin{itemize}
+      \item with only one assembler as input (contig binning)
+      \item with two assemblers as inputs (pangenome fragment binning)
+    \end{itemize}
+  \item Continue the idea of correcting the plasmidness for the fragments if we pass through an entire contig.
+\end{itemize}
+
+\begin{newfeatbox}
+  Done since last times:
+
+  \begin{CheckList}{Task}
+    \Task{done}{Model a connected-flow in MILP to avoid iteratively resolving the problem until the solution subgraph has only one connected component. This answers one point of the PlasBin-flow discussion (\Cref{sec:method:mcf})}
+    \Task{done}{Formaly define the panassembly network (\Cref{definition:panassembly_network})}
+    \Task{done}{Simplify notations for the MILP}
+  \end{CheckList}
+\end{newfeatbox}
+
+\subsection*{To-dos}\label{sec:prelude:to-dos}
+\addcontentsline{toc}{subsection}{\nameref{sec:prelude:to-dos}}
+
+\begin{todobox}
+  Adapt PlasBin-flow to have two main indoors: one for SKESA/Unicycler asm graphs and one for both
+\end{todobox}
+
 \begin{todobox}
   Generalize gene density to plasmidness score (the plasmidness):
 
