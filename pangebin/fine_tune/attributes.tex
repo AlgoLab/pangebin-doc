@@ -1,65 +1,65 @@
 \subsubsection{Fragment correction attributes}
 
 \begin{fixmebox}
-    Because of the new attributes definitions, the corrections introductions and definitions must be adapted.
+  Because of the new attributes definitions, the corrections introductions and definitions must be adapted.
 \end{fixmebox}
 
 \begin{definition}{GC probability score bonus}{frag_gc_bonus}
-    \begin{fixmebox}
-        The GC penalty become GC prob. score: adapt the following definition.
-    \end{fixmebox}
-    Given a contig \(c \in \Contigs{}\) and a GC content interval \(b \in K\), we define \(\dcgcscore{c}{b}\) as the as a positive GC probability score bonus for the subcontigs of \(c\):
-    \[
-        \dcgcscore{c}{b} = \max \Set*{
-            0, 
-            \sum_{\substack{
-                i \in \Fragments{}(c) \\ i \text{ a subcontig}
-            }} 
-            \parenth*{
-                \frac{|i|}{|c|}\gcscore{c}{b} - \gcscore{i}{b}
-            }
-        } 
-    \]
-    The bonus for the share depends on which contigs they belong.
-    Given a share \(j \in \Fragments{}\) and a GC content interval \(b \in K\), we define \(\dsgcscore{j}{c}{b}\) as the positive difference between the GC penalty from the normalization of the fragment penalty according to the contig and the fragment penalty computed independently of the contigs it belongs:
-    \[
-        \dsgcscore{j}{c}{b} = \max \Set*{
-            0,
-            \frac{|j|}{|c|} \gcscore{c}{b} - \gcscore{j}{b}
-        }
-    \]
-    \begin{questionbox}
-        A real equivalence between a contig and the sequence of its fragments should imply the \enquote{bonus} to be possibly negative.
-        How to argue in favour of a positive bonus rather than a real correction?
+  \begin{fixmebox}
+    The GC penalty become GC prob.\ score: adapt the following definition.
+  \end{fixmebox}
+  Given a contig \(c \in \Contigs{}\) and a GC content interval \(b \in K\), we define \(\dcgcscore{c}{b}\) as the as a positive GC probability score bonus for the subcontigs of \(c\):
+  \[
+    \dcgcscore{c}{b} = \max \Set*{
+      0,
+      \sum_{\substack{
+          i \in \Fragments{}(c) \\ i \text{ a subcontig}
+      }}
+      \parenth*{
+        \frac{|i|}{|c|}\gcscore{c}{b} - \gcscore{i}{b}
+      }
+    }
+  \]
+  The bonus for the share depends on which contigs they belong.
+  Given a share \(j \in \Fragments{}\) and a GC content interval \(b \in K\), we define \(\dsgcscore{j}{c}{b}\) as the positive difference between the GC penalty from the normalization of the fragment penalty according to the contig and the fragment penalty computed independently of the contigs it belongs:
+  \[
+    \dsgcscore{j}{c}{b} = \max \Set*{
+      0,
+      \frac{|j|}{|c|} \gcscore{c}{b} - \gcscore{j}{b}
+    }
+  \]
+  \begin{questionbox}
+    A real equivalence between a contig and the sequence of its fragments should imply the \enquote{bonus} to be possibly negative.
+    How to argue in favour of a positive bonus rather than a real correction?
 
-        Be aware that if the deltas can be negatives, then we must change the associated constraints
-    \end{questionbox}
+    Be aware that if the deltas can be negatives, then we must change the associated constraints
+  \end{questionbox}
 \end{definition}
 
 \begin{ideabox}
-    As for a contig \(c\), 
-    \[
+  As for a contig \(c\),
+  \[
     \gcscore{c}{b} \leq \dcgcscore{c}{b} + \sum_{\substack{
         j \in \Fragments{}(c) \\
         j \text{ is a share}
     }}\dsgcscore{j}{c}{b}
-    \]
-    If we don't want to count twice the share participations, we should define:
-    \[
+  \]
+  If we don't want to count twice the share participations, we should define:
+  \[
     \dcgcscore{c}{b} = \max \Set*{
-            0, 
-            \gcscore{c}{b} - \sum_{i \in \Fragments{}(c)} \gcscore{i}{b}
-        } 
-    \]
-    and if a better contig is active, remove the share participation of the worst.
+      0,
+      \gcscore{c}{b} - \sum_{i \in \Fragments{}(c)} \gcscore{i}{b}
+    }
+  \]
+  and if a better contig is active, remove the share participation of the worst.
 
-    \begin{questionbox}
-        What should we not count twice a share participation, while if it is counted twice, it is because it is used several times (a repeat).
+  \begin{questionbox}
+    What should we not count twice a share participation, while if it is counted twice, it is because it is used several times (a repeat).
 
-        Perhaps the best thing is just to add a bonus (or correct, negatively too)
-    \end{questionbox}
+    Perhaps the best thing is just to add a bonus (or correct, negatively too)
+  \end{questionbox}
 \end{ideabox}
 
 \begin{notebox}
-    The constraints were written but as the discussions are changing a lot, I don't put them in the doc now (see \url{pangebin/fine_tune/to_sort.tex} file).  
+  The constraints were written but as the discussions are changing a lot, I don't put them in the doc now (see \url{pangebin/fine_tune/to_sort.tex} file).
 \end{notebox}

@@ -25,7 +25,7 @@
 %
 \newcommand{\todobuilder}[3]{
   \newcommand{#1}[2][]{%
-    \expandafter\ifstrequal\expandafter{##1}{inline}{%
+    \ifstrequal{##1}{inline}{%
       \par\noindent
       {\sffamily{\bfseries \sethlcolor{#2}\hl{[#3] }}{\sethlcolor{#2}\hl{##2}}}
       \par

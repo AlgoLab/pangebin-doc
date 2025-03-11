@@ -5,44 +5,46 @@ We refer to this subproblem as the \enquote{Maximum GC Probability Score} proble
 In the following we describe the MILP model.
 
 \begin{definition}{\MGC{} MILP variables}{milp:mgc_variables}
-    We complete \Cref{definition:milp:mcf_variables} with the following variables:
-    \begin{itemize}
-        \item \(GC_b \in \Set{0, 1} \, \forall b \in K\) denoting whether the plasmid GC content is in the GC content interval \(b\) or not.
-        \item \(\fraggc{i}{b} \in \Set{0, 1} \, \forall (i, b) \in \Fragments{} \times K\) denoting whether the fragment \(i\) is active and the plasmid GC content is in the interval \(b\) or not.
-    \end{itemize}
+  We complete \Cref{definition:milp:mcf_variables} with the following variables:
+  \begin{itemize}
+    \item \(GC_b \in \Set{0, 1} \, \forall b \in K\) denoting whether the plasmid GC content is in the GC content interval \(b\) or not.
+    \item \(\fraggc{i}{b} \in \Set{0, 1} \, \forall (i, b) \in \Fragments{} \times K\) denoting whether the fragment \(i\) is active and the plasmid GC content is in the interval \(b\) or not.
+  \end{itemize}
 \end{definition}
 
-
 \begin{definition}{\MGC{} MILP constraints}{milp:mgc_constraints}
-    To the constraints in \Cref{definition:milp:mcf_constraints} we add the following:
+  To the constraints in \Cref{definition:milp:mcf_constraints} we add the following:
 
-    The coverage score must be near to the optimal coverage score \(\Phi\) found in \MCF{}:
-    \begin{equation}
-        \gamma_1 \Phi \leq  CoverageScore \quad \gamma_1 \in (0.5, 1]
-    \end{equation}
+  \phantom{text}
 
-    The plasmid GC content is in exactly one GC content interval \(b \in K\):
-    \begin{equation}
-        \sum_{b \in K} GC_b = 1 
-    \end{equation}
+  The coverage score must be near to the optimal coverage score \(\Phi{}\) found in \MCF{}:
+  \begin{equation}
+    \gamma_1 \Phi \leq CoverageScore \quad \gamma_1 \in (0.5, 1]
+  \end{equation}
 
-    For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\fraggc{i}{b} = 1\) if and only if fragment \(i\) is active and the \(b\) is the solution GC content interval:
-    \begin{align}
-        \fraggc{i}{b} & \leq x_i & \forall (i, b) \in \Fragments{} \times K \\
-        \fraggc{i}{b} & \leq GC_b & \forall (i, b) \in \Fragments{} \times K \\
-        \fraggc{i}{b} & \geq x_i + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K
-    \end{align}
+  The plasmid GC content is in exactly one GC content interval \(b \in K\):
+  \begin{equation}
+    \sum_{b \in K} GC_b = 1
+  \end{equation}
+
+  For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\fraggc{i}{b} = 1\) if and only if fragment \(i\) is active and the \(b\) is the solution GC content interval:
+  \begin{align}
+    \fraggc{i}{b} & \leq x_{i_t} + x_{i_h} & \forall (i, b) \in \Fragments{} \times K \\
+    \fraggc{i}{b} & \leq GC_b & \forall (i, b) \in \Fragments{} \times K \\
+    \fraggc{i}{b} & \geq x_{i_t} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \\
+    \fraggc{i}{b} & \geq x_{i_h} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K
+  \end{align}
 \end{definition}
 
 \begin{definition}{\MGC{} MILP objective function}{milp:mgc_objective}
-    The objective function aims to maximize the GC probability score:
-    \begin{equation}
-        \max ~ GCProbabilityScore
-    \end{equation}
-    where \(
-        \displaystyle GCProbabilityScore = \sum_{\substack{
-            i \in \Fragments{} \\
-            b \in K
-        }} \gcscore{i}{b} \fraggc{i}{b}%
-    \).
+  The objective function aims to maximize the GC probability score:
+  \begin{equation}
+    \max ~ GCProbabilityScore
+  \end{equation}
+  where \(
+    \displaystyle GCProbabilityScore = \sum_{\substack{
+        i \in \Fragments{} \\
+        b \in K
+    }} \gcscore{i}{b} \fraggc{i}{b}%
+  \).
 \end{definition}

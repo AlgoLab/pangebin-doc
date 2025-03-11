@@ -5,23 +5,30 @@ We refer to this subproblem as the \enquote{Maximum Gene Density} problem (\MGD{
 In the following we describe the MILP model.
 
 \begin{definition}{\MGD{} MILP variables}{milp:mgd_variables}
-    The variables are the same as in \Cref{definition:milp:mgc_variables} (itself a superset of variables in \Cref{definition:milp:mcf_variables}.
+  We complete \Cref{definition:milp:mgc_variables} with the following variables:
+  \(\frag{i} \in [0, 1] \, \forall i \in \Fragments{}\) denoting whether fragment \(i\) is active or not. With the constraint it acts as a binary.
 \end{definition}
 
-
 \begin{definition}{\MGC{} MILP constraints}{milp:mgd_constraints}
-    To the constraints in \Cref{definition:milp:mgc_constraints} we add the following:
+  To the constraints in \Cref{definition:milp:mgc_constraints} we add the following:
 
-    The total GC probability score value must be near to the total GC probability score value \(\Psi\) found in \MGC{}:
-    \begin{equation}
-        \gamma_2 \Psi \leq GCProbabilityScore \quad \gamma_2 \in (0.5, 1]
-    \end{equation}
+  The total GC probability score value must be near to the total GC probability score value \(\Psi{}\) found in \MGC{}:
+  \begin{equation}
+    \gamma_2 \Psi \leq GCProbabilityScore \quad \gamma_2 \in (0.5, 1]
+  \end{equation}
+
+  The fragment is active if at least one of its extremities is active:
+  \begin{align}
+    \frag{i} \leq x_{i_t} + x_{i_h} \quad \forall i \in \Fragments{} \\
+    x_{i_t} \leq \frag{i} \quad \forall i \in \Fragments{} \\
+    x_{i_h} \leq \frag{i} \quad \forall i \in \Fragments{}
+  \end{align}
 \end{definition}
 
 \begin{definition}{\MGC{} MILP objective function}{milp:mgd_objective}
-    The objective function aims to maximize the gene densities:
-    \begin{equation}
-        \max ~ GeneDensity
-    \end{equation}
-    where \(\displaystyle GeneDensity = \sum_{i \in \Fragments{}} \gd{i} x_i\).
+  The objective function aims to maximize the gene densities:
+  \begin{equation}
+    \max ~ GeneDensity
+  \end{equation}
+  where \(\displaystyle GeneDensity = \sum_{i \in \Fragments{}} \gd{i} \frag{i}\).
 \end{definition}

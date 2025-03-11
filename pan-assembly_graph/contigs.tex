@@ -22,32 +22,34 @@ Each contig is associated with three properties: its coverage, its plasmidness a
 In the following, \(c \in \Contigs{}\) is a contig.
 
 \begin{definition}{Contig coverage}{contig_coverage}
-    By \(\cov{c} \in \Reals_{>0}\) we denote the coverage of \(c\).
-    It corresponds to the average base coverage of the contig normalized by the median coverage of the contigs in the whole assembly.
+  By \(\cov{c} \in \Reals_{>0}\) we denote the coverage of \(c\).
+  It corresponds to the average base coverage of the contig normalized by the median coverage of the contigs in the whole assembly.
 \end{definition}
 
 \begin{definition}{Contig GC probability score}{contig_GC_score}
-    Let \(c \in \Contigs{}\) be a contig and \(b\) be a GC content interval.
-    By \(\gcscore{c}{b} \in [-1, 1]\) we denote the GC probability score of the contig \(c\) according to the GC content interval \(b\):
-    \[
-    \gcscore{c}{b} = 2 \frac{Pr(n|b,l)Pr(b)}{\max\limits_{b' \in K}\Set*{Pr(n|b',l)Pr(b')}} - 1
-    \]
-    Where \(K\) is the set of GC content intervals, \(n\) is the number of GC in the contig of length \(l\), and \(Pr(n|b,l)\) is calculated as described in \cite{manePlasBinflowFlowbasedMILP2023}, Section 2.5.1.
+  \begin{newfeatbox}
+    We do not normalize the probabilities by the sum of the \(P(b|n,l)\) over all \(b \in K\) as in~\cite{manePlasBinflowFlowbasedMILP2023}. We normalize them according to the maximum among them.
+  \end{newfeatbox}
+  Let \(c \in \Contigs{}\) be a contig and \(b\) be a GC content interval.
+  By \(\gcscore{c}{b} \in [-1, 1]\) we denote the GC probability score of the contig \(c\) according to the GC content interval \(b\):
+  \[
+    \gcscore{c}{b} = 2 \frac{\Pr(n|b,l)\Pr(b)}{\max\limits_{b' \in K}\Set*{\Pr(n|b',l)\Pr(b')}} - 1
+  \]
+  Where \(K\) is the set of GC content intervals, \(n\) is the number of GC in the contig of length \(l\), and \(\Pr(n|b,l)\) is calculated as described in~\cite{manePlasBinflowFlowbasedMILP2023}, Section 2.5.1.
 
-      \begin{fixmebox}
-        Adapt the correction constraints according to the new score definition.
-    \end{fixmebox}
+  \begin{fixmebox}
+    Adapt the correction constraints according to the new score definition.
+  \end{fixmebox}
 \end{definition}
 
-\begin{newfeatbox}
-    We do not normalize the probabilities by the sum of the \(P(b|n,l)\) over all \(b \in K\) as in \cite{manePlasBinflowFlowbasedMILP2023}. We normalize them according to the maximum among them.
-\end{newfeatbox}
-
 \begin{definition}{Contig gene density}{contig_gene_density}
-    Let \(c \in \Contigs{}\) be a contig.
-    By \(\gd{c} \in [0, 1]\) we denote its gene density:
-    \[
+  \begin{refactorbox}
+    Generalize gene density to plasmidness score
+  \end{refactorbox}
+  Let \(c \in \Contigs{}\) be a contig.
+  By \(\gd{c} \in [0, 1]\) we denote its gene density:
+  \[
     \gd{c} = \frac{ \ncovnuc{c} }{ |c| }
-    \]
-    Where \(\ncovnuc{c}\) is the number of nucleotides of contig \(c\) covered by gene mapping matches.
+  \]
+  Where \(\ncovnuc{c}\) is the number of nucleotides of contig \(c\) covered by gene mapping matches.
 \end{definition}

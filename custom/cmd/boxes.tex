@@ -13,24 +13,24 @@
 %
 %   \boxfactory{boxname}{title}{color}
 \newcommand{\boxfactory}[3]{
-    \newtcolorbox{#1}{
+  \newtcolorbox{#1}{
+    empty,
+    breakable,
+    % Title ---
+    boxed title style={
       empty,
-      breakable,
-      % Title ---
-      boxed title style={
-        empty,
-        left*=0pt,
-      },
-      title=#2,
-      coltitle=#3,
-      fonttitle=\sffamily\bfseries,
-      % Inner text ---
-      parbox=false,
-      coltext=drawio_grey,
-      fontupper=\sffamily,
-      % Border line ---
-      borderline west={2\heavyrulewidth}{0pt}{#3},
-    }
+      left*=0pt,
+    },
+    title=#2,
+    coltitle=#3,
+    fonttitle=\sffamily\bfseries,
+    % Inner text ---
+    parbox=false,
+    coltext=drawio_grey,
+    fontupper=\sffamily,
+    % Border line ---
+    borderline west={2\heavyrulewidth}{0pt}{#3},
+  }
 }
 
 \boxfactory{notebox}{\faIcon{pencil-alt} Note}{drawio_grey}
@@ -44,3 +44,4 @@
 \boxfactory{refactorbox}{\faIcon{recycle} Refactor}{drawio_darkgreen}
 \boxfactory{fixmebox}{\faIcon{wrench} Fix-me}{drawio_red}
 \boxfactory{newfeatbox}{\faIcon{star} New feature}{drawio_yellow}
+\boxfactory{cleanupbox}{\faIcon{broom} Clean-up}{drawio_yellow}
