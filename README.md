@@ -25,6 +25,9 @@
 * Install VSCode extension `iamhyc.overleaf-workshop`
 * Login with cookies: <https://github.com/iamhyc/overleaf-workshop#how-to-login-with-cookies>
 * Open the project as a local sync copy: <https://github.com/iamhyc/Overleaf-Workshop/blob/master/docs/wiki.md#open-project-locally>
+* (if not using `git clone`) Copy from the Git repo <https://github.com/AlgoLab/pangebin-doc> to your local copy sync with Overleaf:
+  * Folder `.vscode`
+  * File `.latexmkrc`
 
 ### Limitation
 
