@@ -42,14 +42,8 @@ In the following, \(c \in \Contigs{}\) is a contig.
   \end{fixmebox}
 \end{definition}
 
-\begin{definition}{Contig gene density}{contig_gene_density}
-  \begin{refactorbox}
-    Generalize gene density to plasmidness score
-  \end{refactorbox}
+\begin{definition}{Contig plasmidness}{contig_plasmidness}
   Let \(c \in \Contigs{}\) be a contig.
-  By \(\gd{c} \in [0, 1]\) we denote its gene density:
-  \[
-    \gd{c} = \frac{ \ncovnuc{c} }{ |c| }
-  \]
-  Where \(\ncovnuc{c}\) is the number of nucleotides of contig \(c\) covered by gene mapping matches.
+  By \(\plm{c} \in [0, 1]\) we denote its plasmidness score.
+  A plasmid sequence classifier can provid these scores.
 \end{definition}

@@ -6,3 +6,6 @@ plasmidness
 SKESA
 Unicycler
 pangenome
+Epain
+Sgrò
+Pangebin

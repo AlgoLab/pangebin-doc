@@ -10,7 +10,7 @@
   \begin{enumerate}[label=\roman*.]
     \item Find max flow
     \item With flow near to max flow, find best GC score
-    \item With flow near to max flow, with GC score near to best GC score, find best gene density
+    \item With flow near to max flow, with GC score near to best GC score, find best plasmidness score
     \item \textbf{[Future]} With blabla, find best plasmid-type subgraph
   \end{enumerate}
 \end{todobox}
@@ -26,10 +26,10 @@ However, Pangebin tackles the binning of the fragments with a coarse-to-fine-gra
 \begin{enumerate}[label=\roman*.]
   \item Find the maximum coverage flow (\MCF{} problem, \Cref{sec:method:mcf})
   \item Find the maximum GC probability score (\MGC{} problem)
-  \item Find the maximum gene density score (\MGD{} problem)
+  \item Find the maximum plasmidness score (\MPS{} problem)
 \end{enumerate}
 
-We model these three subproblems as dedicated flow formulations with Mixed Integer Linear Programming (MILP):
+We model these three subproblems as dedicated flow formulations in the panassembly network (\Cref{definition:panassembly_network}) with Mixed Integer Linear Programming (MILP):
 
 \begin{itemize}
   \item To keep the direction of the flow along the link-edges in \(E_\Links{}\), we transform each link-edge to two link-arcs with the function \(etoa \colon \Set*{u, v} \mapsto \Set*{(u, v), (v, u)}\).
@@ -39,7 +39,7 @@ We model these three subproblems as dedicated flow formulations with Mixed Integ
 \end{itemize}
 
 \begin{definition}{Pan-assembly network}{panassembly_network}
-  Let \(N = (V, A_\Fragments{} \cup A_\Links{}, s, t, \cov{\Fragments{}}, \gcscore{\Fragments{}}{K}, \gd{\Fragments{}})\) be the pan-assembly network, where:
+  Let \(N = (V, A_\Fragments{} \cup A_\Links{}, s, t, \cov{\Fragments{}}, \gcscore{\Fragments{}}{K}, \plm{\Fragments{}})\) be the pan-assembly network, where:
 
   \begin{itemize}
     \item \(V = V_t \cup V_h \cup \Set*{s, t}\) is the set of vertices with the source \(s\) and the sink \(t\);
@@ -47,7 +47,7 @@ We model these three subproblems as dedicated flow formulations with Mixed Integ
     \item \(A_\Links{} = \bigcup_{e \in E_\Links{}} etoa(e) \cup \Set{(s, v) \given v \in \VSeed{}} \cup \Set{(v, t) \given v \in V}\) is the set of link-arcs augmented with the seed-arcs and the sink-arcs;
     \item \(\cov{\Fragments{}} \colon \Fragments{} \to \Reals{}_{> 0}\) is the coverage function;
     \item \(\gcscore{\Fragments{}}{K} \colon \Fragments{} \times K \to [-1, 1]\) is the GC score function;
-    \item \(\gd{\Fragments{}} \colon \Fragments{} \to \Reals{}_{\geq 0}\) is the gene density function.
+    \item \(\plm{\Fragments{}} \colon \Fragments{} \to [0, 1]\) is the plasmidness function.
   \end{itemize}
 \end{definition}
 
@@ -76,7 +76,7 @@ Furthermore, Pangebin answers one of the PlasBin-flow discussion point: we ensur
 
 \input{pangebin/mgc}
 
-\input{pangebin/mgd}
+\input{pangebin/mps}
 
 \input{pangebin/fine_tune/_index}
 
