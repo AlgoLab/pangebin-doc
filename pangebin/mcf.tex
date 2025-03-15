@@ -125,20 +125,12 @@ Bellow we describe the MILP model.
   \begin{infobox}
     These constraints do not force the arc flows to be a multiple of \(F\), see~\Cref{proposition:inflow_is_not_multiple_of_total_flow}.
   \end{infobox}
-  \begin{infobox}
-    The above constraints minimize the number of out link-arcs for each fragment.
-  \end{infobox}
   \begin{missingproofbox}
-    If several link-arcs out of a given fragment,
-    then this fragment is repeated (immediate).
+    The above constraints minimize the number of out link-arcs for each fragment.
   \end{missingproofbox}
   \begin{questionbox}
     What is the meaning for a fragment to have a cumulative flow that is not a multiple of \(F\)?
     By keeping the flow real, can we smartly force the cumulative flow to be a multiple of \(F\)?
-
-    \begin{notebox}
-      Because the sequencing coverage does not represent an integer number of copy of the sequenced genome.
-    \end{notebox}
   \end{questionbox}
 \end{definition}
 
