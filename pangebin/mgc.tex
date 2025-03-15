@@ -19,20 +19,22 @@ In the following we describe the MILP model.
 
   The coverage score must be near to the optimal coverage score \(\Phi{}\) found in \MCF{}:
   \begin{equation}
-    \gamma_1 \Phi \leq CoverageScore \quad \gamma_1 \in (0.5, 1]
+    \gamma_1 \Phi \leq CoverageScore \quad \gamma_1 \in (0.5, 1] % chktex 9
+    \cstlabel{mgc:cst:coverage_score_near_optimal} % chktex 25
   \end{equation}
 
   The plasmid GC content is in exactly one GC content interval \(b \in K\):
   \begin{equation}
     \sum_{b \in K} GC_b = 1
+    \cstlabel{mgc:cst:exactly_one_gc_content_interval} % chktex 25
   \end{equation}
 
   For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\fraggc{i}{b} = 1\) if and only if fragment \(i\) is active and the \(b\) is the solution GC content interval:
   \begin{align}
-    \fraggc{i}{b} & \leq x_{i_t} + x_{i_h} & \forall (i, b) \in \Fragments{} \times K \\
-    \fraggc{i}{b} & \leq GC_b & \forall (i, b) \in \Fragments{} \times K \\
-    \fraggc{i}{b} & \geq x_{i_t} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \\
-    \fraggc{i}{b} & \geq x_{i_h} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K
+    \fraggc{i}{b} & \leq x_{i_t} + x_{i_h} & \forall (i, b) \in \Fragments{} \times K \cstlabel{mgc:cst:active_fragment_gc_1} \\ % chktex 25
+    \fraggc{i}{b} & \leq GC_b & \forall (i, b) \in \Fragments{} \times K \cstlabel{mgc:cst:active_fragment_gc_2} \\ % chktex 25
+    \fraggc{i}{b} & \geq x_{i_t} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \cstlabel{mgc:cst:active_fragment_gc_3} \\ % chktex 25
+    \fraggc{i}{b} & \geq x_{i_h} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \cstlabel{mgc:cst:active_fragment_gc_4} % chktex 25
   \end{align}
 \end{definition}
 
@@ -40,6 +42,7 @@ In the following we describe the MILP model.
   The objective function aims to maximize the GC probability score:
   \begin{equation}
     \max ~ GCProbabilityScore
+    \objlabel{mgc:obj:max_gc_probability_score} % chktex 25 % chktex 35
   \end{equation}
   where \(
     \displaystyle GCProbabilityScore = \sum_{\substack{

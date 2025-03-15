@@ -14,14 +14,15 @@ In the following we describe the MILP model.
 
   The total GC probability score value must be near to the total GC probability score value \(\Psi{}\) found in \MGC{}:
   \begin{equation}
-    \gamma_2 \Psi \leq GCProbabilityScore \quad \gamma_2 \in (0.5, 1]
+    \gamma_2 \Psi \leq GCProbabilityScore \quad \gamma_2 \in (0.5, 1] % chktex 9
+    \cstlabel{mps:cst:gc_probability_score_near_optimal} % chktex 25
   \end{equation}
 
   The fragment is active if at least one of its extremities is active:
   \begin{align}
-    \frag{i} \leq x_{i_t} + x_{i_h} \quad \forall i \in \Fragments{} \\
-    x_{i_t} \leq \frag{i} \quad \forall i \in \Fragments{} \\
-    x_{i_h} \leq \frag{i} \quad \forall i \in \Fragments{}
+    \frag{i} \leq x_{i_t} + x_{i_h} \quad \forall i \in \Fragments{} \cstlabel{mps:cst:active_fragment_1} \\ % chktex 25
+    x_{i_t} \leq \frag{i} \quad \forall i \in \Fragments{} \cstlabel{mps:cst:active_fragment_2} \\ % chktex 25
+    x_{i_h} \leq \frag{i} \quad \forall i \in \Fragments{} \cstlabel{mps:cst:active_fragment_3} % chktex 25
   \end{align}
 \end{definition}
 
@@ -32,6 +33,7 @@ In the following we describe the MILP model.
   The objective function aims to maximize the plasmidness scores:
   \begin{equation}
     \max ~ PlasmidnessScore
+    \objlabel{mps:obj:max_plasmidness_score} % chktex 25 % chktex 35
   \end{equation}
   where \(\displaystyle PlasmidnessScore = \sum_{i \in \Fragments{}} 2 (\plm{i} - 0.5)\frag{i}\).
 \end{definition}

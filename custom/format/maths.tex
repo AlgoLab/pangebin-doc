@@ -8,3 +8,25 @@
 \renewcommand{\exists}{\oldexist{}\: }
 
 \newcommand{\existsu}{\oldexist! \: }
+
+% ============================================================================ %
+%                                   EQUATION                                   %
+% ============================================================================ %
+\usepackage{cleveref}
+
+%
+% Constraints
+%
+\newcounter{constraint}
+\crefalias{constraint}{const}
+\creflabelformat{const}{#2#1#3}
+\crefname{const}{constraint}{constraints}
+\newcommand{\cstlabel}[1]{\refstepcounter{constraint}\tag{\text{C\theconstraint}}\label[const]{#1}} % chktex 10 % chktex 9
+%
+% Objective functions
+%
+\newcounter{objective}
+\crefalias{objective}{obj}
+\creflabelformat{obj}{#2#1#3}
+\crefname{obj}{objective}{objectives}
+\newcommand{\objlabel}[1]{\refstepcounter{objective}\tag{\text{O\theobjective}}\label[obj]{#1}} % chktex 10 % chktex 9
