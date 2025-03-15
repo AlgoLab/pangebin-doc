@@ -123,6 +123,9 @@ Bellow we describe the MILP model.
     F_a & \leq f_a & \forall a \in A_\Links{} \label{const:arc_flow_at_least_total_flow}
   \end{align}
   \begin{infobox}
+    These constraints do not force the arc flows to be a multiple of \(F\), see~\Cref{proposition:inflow_is_not_multiple_of_total_flow}.
+  \end{infobox}
+  \begin{infobox}
     The above constraints minimize the number of out link-arcs for each fragment.
   \end{infobox}
   \begin{missingproofbox}
