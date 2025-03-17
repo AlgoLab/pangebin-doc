@@ -20,9 +20,7 @@ In the following we describe the MILP model.
 
   The fragment is active if at least one of its extremities is active:
   \begin{align}
-    \frag{i} \leq x_{i_t} + x_{i_h} \quad \forall i \in \Fragments{} \cstlabel{mps:cst:active_fragment_1} \\ % chktex 25
-    x_{i_t} \leq \frag{i} \quad \forall i \in \Fragments{} \cstlabel{mps:cst:active_fragment_2} \\ % chktex 25
-    x_{i_h} \leq \frag{i} \quad \forall i \in \Fragments{} \cstlabel{mps:cst:active_fragment_3} % chktex 25
+    \frag{i} = \sum_{b \in K} \fraggc{i}{b} \quad \forall i \in \Fragments{} \cstlabel{mps:cst:active_fragment} % chktex 25
   \end{align}
 \end{definition}
 
