@@ -58,7 +58,7 @@ Each fragment is associated with three properties: its coverage, its plasmidness
 \end{newfeatbox}
 
 \begin{definition}{Fragment GC probability score}{fragment_GC_score}
-  Let \(i \in \Fragments{}\) be a contig and \(b\) be a GC content interval.
+  Let \(i \in \Fragments{}\) be a fragment and \(b\) be a GC content interval.
   By \(\gcscore{i}{b} \in [-1, 1]\) we denote the GC probability score of the fragment \(i\) according to the GC content interval \(b\):
   \[
     \gcscore{i}{b} = 2 \frac{\Pr(n|b,l)\Pr(b)}{\max\limits_{b' \in K}\Set*{\Pr(n|b',l)\Pr(b')}} - 1
@@ -72,8 +72,10 @@ Each fragment is associated with three properties: its coverage, its plasmidness
 
 \begin{definition}{Fragment plasmidness}{fragment_plasmidness}
   Let \(i \in \Fragments{}\) be a fragment.
-  By \(\plm{i} \in [0, 1]\) we denote its plasmidness score.
-  A plasmid sequence classifier can provid these scores.
+  By \(\plm{i} \in [0, 1]\) we denote its plasmidness score, such that:
+  \[
+    \plm{i} = \frac{ 1 }{ |\Contigs{}(i)| } \sum_{c \in \Contigs{}(i)} \frac{ |i| }{ |c| }\plm{c}
+  \]
 \end{definition}
 
 \begin{definition}{Seed fragments}{seed_fragments}
