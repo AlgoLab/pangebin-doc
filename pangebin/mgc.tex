@@ -4,19 +4,21 @@ The second binning stage consists in finding a flow maximizing the GC probabilit
 We refer to this subproblem as the \enquote{Maximum GC Probability Score} problem (\MGC{}).
 In the following we describe the MILP model.
 
-\begin{definition}{\MGC{} MILP variables}{milp:mgc_variables}
-  We complete \Cref{definition:milp:mcf_variables} with the following variables:
+\begin{definition}{\MGC{} MILP variables}{milp:mgc:variables}
+  \begin{todobox}
+    Prove or invalidate that we can relax these two new variables
+  \end{todobox}
+  We complete \Cref{definition:milp:mcf:variables} with the following variables:
   \begin{itemize}
     \item \(GC_b \in \Set{0, 1} \, \forall b \in K\) denoting whether the plasmid GC content is in the GC content interval \(b\) or not.
     \item \(\fraggc{i}{b} \in \Set{0, 1} \, \forall (i, b) \in \Fragments{} \times K\) denoting whether the fragment \(i\) is active and the plasmid GC content is in the interval \(b\) or not.
   \end{itemize}
 \end{definition}
 
-\begin{definition}{\MGC{} MILP constraints}{milp:mgc_constraints}
-  To the constraints in \Cref{definition:milp:mcf_constraints} we add the following:
+\begin{definition}{\MGC{} MILP constraints}{milp:mgc:constraints}
+  To the constraints in \Cref{definition:milp:mcf:constraints} we add the following:
 
   \phantom{text}
-
   The coverage score must be near to the optimal coverage score \(\Phi{}\) found in \MCF{}:
   \begin{equation}
     \gamma_1 \Phi \leq CoverageScore \quad \gamma_1 \in (0.5, 1] % chktex 9
@@ -38,7 +40,7 @@ In the following we describe the MILP model.
   \end{align}
 \end{definition}
 
-\begin{definition}{\MGC{} MILP objective function}{milp:mgc_objective}
+\begin{definition}{\MGC{} MILP objective function}{milp:mgc:objective}
   The objective function aims to maximize the GC probability score:
   \begin{equation}
     \max ~ GCProbabilityScore

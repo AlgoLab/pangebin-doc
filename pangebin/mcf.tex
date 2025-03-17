@@ -7,7 +7,7 @@ Indeed, passing through a loop or a cycle will not change the flow value. Only m
 To overcome this bias, we score the use of the fragment coverages and maximize their total.
 Bellow we describe the MILP model.
 
-\begin{definition}{\MCF{} MILP variables}{milp:mcf_variables}
+\begin{definition}{\MCF{} MILP variables}{milp:mcf:variables}
   \begin{itemize}
     \item \(x_v \in [0, 1] \, \forall v \in V \setminus \Set*{s, t}\) denoting whether the vertex \(v\) is active or not.
       The vertex corresponding to the fragment tail is active if, and only if the fragment in forward direction is active. Respectively, the head vertex is active if, and only if the reverse fragment is active. With the constraints it acts as a binary.
@@ -22,7 +22,7 @@ Bellow we describe the MILP model.
   Variables \(\alpha{}\) and the \(\beta_{A_\Links{}}\) serve to model the solution subgraph connectivity.
 \end{definition}
 
-\begin{definition}{\MCF{} MILP constraints}{milp:mcf_constraints}
+\begin{definition}{\MCF{} MILP constraints}{milp:mcf:constraints}
 
   Exactly one link-arc outs of \(s\) is part of the solution (necessary to ensure the solution induced subgraph has only one connected component):
   \begin{todobox}
@@ -139,7 +139,7 @@ Bellow we describe the MILP model.
   \end{questionbox}
 \end{definition}
 
-\begin{definition}{\MCF{} MILP objective function}{milp:mcf_objective}
+\begin{definition}{\MCF{} MILP objective function}{milp:mcf:objective}
   \begin{newfeatbox}
     Here we maximize the coverage scores, not only the coverage flow.
   \end{newfeatbox}

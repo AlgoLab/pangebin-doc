@@ -1,0 +1,149 @@
+\subsubsection{Correct the GC content score}\label{sec:method:mgc:fine_tuned}
+
+The calculation of the GC probability score for a fragment \(i \in \Fragments{}\) does not rely to the belonging of \(i\) in its contigs \(c \in \Contigs{}(i)\).
+
+\begin{questionbox}
+  The plasmidness correction is simpler (see~\Cref{sec:method:mps:fine_tuned}) because in we just want to add a bonus.
+  Here the question is: if the GC probability scores of the contigs have to be considered, can we choose one or a subset of contigs from those active to correct the GC content score?
+  \begin{itemize}
+    \item The contig with the highest absolute GC probability score difference?
+    \item The contig with the highest GC Penalties probability score (bonus)?
+    \item The contig with the lowest GC Penalties probability score (penalty)?
+  \end{itemize}
+  On related issue here is: should we choose only one difference, or a subset?
+  The sum of relative GC probability score differences?
+
+  \begin{todobox}
+    Choose one and fix what follows
+  \end{todobox}
+\end{questionbox}
+
+\begin{fixmebox}
+  Because of the new attributes definitions, the corrections introductions and definitions must be adapted.
+\end{fixmebox}
+
+\begin{definition}{GC probability score bonus}{frag_gc_bonus}
+  \begin{fixmebox}
+    The GC penalty has became a GC prob.\ score: adapt the following definition.
+  \end{fixmebox}
+  Given a contig \(c \in \Contigs{}\) and a GC content interval \(b \in K\), we define \(\dcgcscore{c}{b}\) as the as a positive GC probability score bonus for the subcontigs of \(c\):
+  \[
+    \dcgcscore{c}{b} = \max \Set*{
+      0,
+      \sum_{\substack{
+          i \in \Fragments{}(c) \\ i \text{ a subcontig}
+      }}
+      \parenth*{
+        \frac{|i|}{|c|}\gcscore{c}{b} - \gcscore{i}{b}
+      }
+    }
+  \]
+  The bonus for the share depends on which contigs they belong.
+  Given a share \(j \in \Fragments{}\) and a GC content interval \(b \in K\), we define \(\dsgcscore{j}{c}{b}\) as the positive difference between the GC penalty from the normalization of the fragment penalty according to the contig and the fragment penalty computed independently of the contigs it belongs:
+  \[
+    \dsgcscore{j}{c}{b} = \max \Set*{
+      0,
+      \frac{|j|}{|c|} \gcscore{c}{b} - \gcscore{j}{b}
+    }
+  \]
+  \begin{questionbox}
+    A real equivalence between a contig and the sequence of its fragments should imply the \enquote{bonus} to be possibly negative.
+    How to argue in favour of a positive bonus rather than a real correction?
+
+    Be aware that if the deltas can be negatives, then we must change the associated constraints
+  \end{questionbox}
+\end{definition}
+
+\begin{ideabox}
+  As for a contig \(c\),
+  \[
+    \gcscore{c}{b} \leq \dcgcscore{c}{b} + \sum_{\substack{
+        j \in \Fragments{}(c) \\
+        j \text{ is a share}
+    }}\dsgcscore{j}{c}{b}
+  \]
+  If we don't want to count twice the share participations, we should define:
+  \[
+    \dcgcscore{c}{b} = \max \Set*{
+      0,
+      \gcscore{c}{b} - \sum_{i \in \Fragments{}(c)} \gcscore{i}{b}
+    }
+  \]
+  and if a better contig is active, remove the share participation of the worst.
+
+  \begin{questionbox}
+    What should we not count twice a share participation, while if it is counted twice, it is because it is used several times (a repeat).
+
+    Perhaps the best thing is just to add a bonus (or correct, negatively too)
+  \end{questionbox}
+\end{ideabox}
+
+\begin{notebox}
+  The constraints were written but as the discussions are changing a lot, I don't put them in the doc now (see \url{pangebin/fine_tune/to_sort.tex} file).
+\end{notebox}
+
+\begin{definition}{\MGC{} fine-tune variables}{mgc:milp:variables:fine_tune}
+  \begin{itemize}
+    \item \(x_c \in \Set{0, 1} \, \forall c \in \Contigs{}\) denoting whether the contig \(c\) is active or not.
+    \item \(\ctggc{c}{b} \in \Set{0, 1} \, \forall (c, b) \in \Contigs{} \times K\) denoting whether the contig \(c\) participates in the solution and the plasmid GC content is in the interval \(b\) or not.
+    \item \(\sgcbonus{j}{b} \in \Reals_{>=0} \, \forall \text{ share } j \in \Fragments{}, \forall b \in K\) corresponding to the best GC bonus over the GC content penalty for the share \(j\) when several of its contigs are active, given a GC content interval \(b\).
+  \end{itemize}
+\end{definition}
+
+\begin{definition}{\MGC{} fine-tune constraint}{milp:mcf:constraints:fine_tune}
+  A contig \(c \in \Contigs{}\), is active if and only if all the link-arcs defining \(c\) (or its reverse) are active:
+  \begin{align}
+    |A_\Links{}(c)|x_c & \leq \sum_{a \in A_\Links{}(c)} y_a \\
+    |A_\Links{}(c^-)|x_c & \leq \sum_{a \in A_\Links{}(c^-)} y_a
+  \end{align}
+
+  \begin{questionbox}
+    Depending of the question (bonus, penalty, relative correction), modelling the \enquote{if and only if} statement may be required.
+  \end{questionbox}
+
+  For each contig \(c \in \Contigs{}\), for each GC content interval \(b \in K\), \(\ctggc{c}{b} = 1\) if and only if contig \(c\) is active and the \(b\) is the solution GC content interval:
+  \begin{align}
+    \ctggc{c}{b} & \leq x_c & \forall (c, b) \in \Contigs{} \times K \\
+    \ctggc{c}{b} & \leq GC_b & \forall (c, b) \in \Contigs{} \times K \\
+    \ctggc{c}{b} & \geq x_c + GC_b - 1 & \forall (c, b) \in \Contigs{} \times K
+  \end{align}
+
+  For each share \(j \in \Fragments{}\), for each GC content interval \(b \in K\), \(\sgcbonus{j}{b}\) is the best correction \(\dsgcscore{j}{c}{b}\) among the active contigs in \(\Contigs(j)\):
+  \begin{equation}
+    \sgcbonus{j}{b} \leq \sum_{\substack{
+        d \in \Contigs(j) \\ \dsgcscore{j}{d}{b} \\ \geq \dsgcscore{j}{c}{b}
+    }} \dsgcscore{j}{d}{b} \ctggc{d}{b} \quad
+    \begin{array}[t]{@{}l@{}}
+      \forall (j, c, b) \in \Fragments{} \times \Contigs{}(j) \times K \\
+      j \text{ is a share}
+    \end{array}
+  \end{equation}
+
+\end{definition}
+
+\begin{definition}{\MGC{} objective function with correction}{milp:mcf:objective:fine_tune}
+  \begin{fixmebox}
+    Depending of the question (bonus, penalty, relative correction), the objective function must be adapted.
+  \end{fixmebox}
+  The objective function aims to maximize the corrected GC probability score:
+  \begin{equation}
+    \max ~ GCCorrectedScore
+  \end{equation}
+  Where
+  \begin{align}
+    \begin{split}
+      GCCorrectedScore = & \sum_{\substack{
+          i \in \Fragments{} \\
+          b \in K
+      }} \gcprob{i}{b} \fraggc{i}{b} \\
+      & - \sum_{\substack{
+          c \in \Contigs{} \\
+          b \in K
+      }} \dcgcscore{c}{b}\ctggc{c}{b} \\
+      & - \sum_{\substack{
+          \text{share } j \in \Fragments{} \\
+          b \in K
+      }} \sgcbonus{j}{b}
+    \end{split}
+  \end{align}
+\end{definition}

@@ -4,13 +4,13 @@ The third binning stage consists in finding a flow maximizing the plasmidness sc
 We refer to this subproblem as the \enquote{Maximum Plasmidness Score} problem (\MPS{}).
 In the following we describe the MILP model.
 
-\begin{definition}{\MPS{} MILP variables}{milp:mps_variables}
-  We complete \Cref{definition:milp:mgc_variables} with the following variables:
+\begin{definition}{\MPS{} MILP variables}{milp:mps:variables}
+  We complete \Cref{definition:milp:mgc:variables} with the following variables:
   \(\frag{i} \in [0, 1] \, \forall i \in \Fragments{}\) denoting whether fragment \(i\) is active or not. With the constraint it acts as a binary.
 \end{definition}
 
-\begin{definition}{\MGC{} MILP constraints}{milp:mps_constraints}
-  To the constraints in \Cref{definition:milp:mgc_constraints} we add the following:
+\begin{definition}{\MGC{} MILP constraints}{milp:mps:constraints}
+  To the constraints in \Cref{definition:milp:mgc:constraints} we add the following:
 
   The total GC probability score value must be near to the total GC probability score value \(\Psi{}\) found in \MGC{}:
   \begin{equation}
@@ -26,7 +26,7 @@ In the following we describe the MILP model.
   \end{align}
 \end{definition}
 
-\begin{definition}{\MGC{} MILP objective function}{milp:mps_objective}
+\begin{definition}{\MGC{} MILP objective function}{milp:mps:objective}
   \begin{newfeatbox}
     Here the plasmidness either act as a bonus if they are more than 0.5, or a penalty if they are less than 0.5.
   \end{newfeatbox}
