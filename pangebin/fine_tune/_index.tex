@@ -4,16 +4,20 @@
   This part is in development
 \end{warningbox}
 
-\begin{fixmebox}
-  Do not use alpha as an example, because it is already a MILP variable.
-\end{fixmebox}
+\begin{todobox}
+  Describe fine-tuning for:
+  \begin{CheckList}{Task}
+    \Task{open}{The GC content penalty}
+    \Task{open}{The plasmidness}
+  \end{CheckList}
+\end{todobox}
+
 Because of the fragmentation, for a given attribute, we do not have a strict attribute-equivalence between each contig and its corresponding fragment path in the pan-assembly graph.
-Formally, if \(\alpha{}\) is an attribute defined either for the contigs and the fragments,
-\(\exists c \in \Contigs{} \text{ s.t. } \alpha_c \neq \sum_{i \in \Fragments{}(c)} \alpha_i\).
-Especially when \(\alpha_c\) is inferior than the sum, if the flow passes through the fragment path corresponding to this contig, we would like to positively correct the sum to obtain \(\alpha_c\).
+Formally, if \(\omega{}\) is an attribute defined either for the contigs and the fragments, \(\forall c \in \Contigs{}\) the statement \(\omega_c = \sum_{i \in \Fragments{}(c)} \omega_i\) does not necessarily hold.
+We interpret this issue differencially in the GC content case (\MGC{} problem) and the plasmidness case (\MPS{} problem).
+\Cref{sec:method:mgc:fine_tuned,sec:method:mps:fine_tuned} respectively detail the two issues and propose corrective approaches.
 
-In what follows, we associate new attributes to the fragments corresponding to the possible positive correction we may add to the objective values.
-We then adapt the MILP formulations for the corrections.
+Given a contig \(c \in \Contigs{}\), we say it is active if and only if either for its forward or its reverse the link-arcs defining them in the network are active.
 
-\input{pangebin/fine_tune/attributes}
-% \input{pangebin/milp_fine_tune/mcf}
+\input{pangebin/fine_tune/mgc.tex}
+\input{pangebin/fine_tune/mps.tex}
