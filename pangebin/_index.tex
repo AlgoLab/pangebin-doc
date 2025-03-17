@@ -47,7 +47,7 @@ We model these three subproblems as dedicated flow formulations in the panassemb
     \item \(A_\Links{} = \bigcup_{e \in E_\Links{}} etoa(e) \cup \Set{(s, v) \given v \in \VSeed{}} \cup \Set{(v, t) \given v \in V}\) is the set of link-arcs augmented with the seed-arcs and the sink-arcs;
     \item \(\cov{\Fragments{}} \colon \Fragments{} \to \Reals{}_{> 0}\) is the coverage function;
     \item \(\gcscore{\Fragments{}}{K} \colon \Fragments{} \times K \to [-1, 1]\) is the GC score function;
-    \item \(\plm{\Fragments{}} \colon \Fragments{} \to [0, 1]\) is the plasmidness function.
+    \item \(\plm{\Fragments{}} \colon \Fragments{} \to [-1, 1]\) is the plasmidness function.
   \end{itemize}
 \end{definition}
 

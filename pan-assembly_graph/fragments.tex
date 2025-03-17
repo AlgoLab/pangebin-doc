@@ -72,7 +72,7 @@ Each fragment is associated with three properties: its coverage, its plasmidness
 
 \begin{definition}{Fragment plasmidness}{fragment_plasmidness}
   Let \(i \in \Fragments{}\) be a fragment.
-  By \(\plm{i} \in [0, 1]\) we denote its plasmidness score, such that:
+  By \(\plm{i} \in [-1, 1]\) we denote its plasmidness score, such that:
   \[
     \plm{i} = \frac{ 1 }{ |\Contigs{}(i)| } \sum_{c \in \Contigs{}(i)} \frac{ |i| }{ |c| }\plm{c}
   \]
