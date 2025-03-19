@@ -35,3 +35,31 @@ In the following we describe the MILP model.
   \end{equation}
   where \(\displaystyle PlasmidnessScore = \sum_{i \in \Fragments{}} \plm{i}\frag{i}\).
 \end{definition}
+
+\subsubsection{Find a solution of \MPS{} maximizing the coverage score and then the GC score}\label{sec:method:mps:refinement}
+
+The solution set \(S_\MPS{}\) for \MPS{} contains solution with the same value of \(PlasmidnessScore\) and different values for \(CoverageFlow\) and \(GCScore\) because of~\Cref{mgc:cst:coverage_score_near_optimal,mps:cst:gc_probability_score_near_optimal}.
+The final refinement stage consists in fixing the value of \(PlasmidnessScore\) and finding the subset of \(S_\MPS{}\) maximizing first \(CoverageFlow\) and then \(GCScore\).
+It results in a last MILP formulation \(\MPS{}'\):
+
+\begin{definition}{\MPS{}' MILP variables}{milp:mpsprime:variables}
+  The varibales of \MPS{} are kept.
+\end{definition}
+
+\begin{definition}{\MPS{}' MILP constraints}{milp:mpsprime:constraints}
+  To the constraints in \Cref{definition:milp:mps:constraints} we add the following:
+
+  The plasmidness score must be equal to the plasmidness score \(P\) found in \MPS{}:
+  \begin{equation}
+    PlasmidnessScore = P
+    \cstlabel{mpsprime:cst:fixed_plasmidness_score} % chktex 25
+  \end{equation}
+\end{definition}
+
+\begin{definition}{\MPS{}' MILP objective function}{milp:mpsprime:objective}
+  The objective function aims to maximize the coverage flow prior to the GC score:
+  \begin{equation}
+    \max ~ |\Fragments{}| CoverageFlow + GCScore
+    \objlabel{mpsprime:obj:max_coverage_flow_then_gc_probability_score} % chktex 25 % chktex 35
+  \end{equation}
+\end{definition}
