@@ -82,7 +82,7 @@ The calculation of the GC probability score for a fragment \(i \in \Fragments{}\
   \begin{itemize}
     \item \(x_c \in \Set{0, 1} \, \forall c \in \Contigs{}\) denoting whether the contig \(c\) is active or not.
     \item \(\ctggc{c}{b} \in \Set{0, 1} \, \forall (c, b) \in \Contigs{} \times K\) denoting whether the contig \(c\) participates in the solution and the plasmid GC content is in the interval \(b\) or not.
-    \item \(\sgcbonus{j}{b} \in \Reals_{>=0} \, \forall \text{ share } j \in \Fragments{}, \forall b \in K\) corresponding to the best GC bonus over the GC content penalty for the share \(j\) when several of its contigs are active, given a GC content interval \(b\).
+    \item \(\sgcbonus{j}{b} \in \Reals_{\geq 0} \, \forall \text{ share } j \in \Fragments{}, \forall b \in K\) corresponding to the best GC bonus over the GC content penalty for the share \(j\) when several of its contigs are active, given a GC content interval \(b\).
   \end{itemize}
 \end{definition}
 
