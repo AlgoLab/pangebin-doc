@@ -9,7 +9,7 @@ Bellow we describe the MILP model.
 
 \begin{definition}{\MCF{} MILP variables}{milp:mcf:variables}
   \begin{itemize}
-    \item \(x_v \in [0, 1] \, \forall v \in V \setminus \Set*{s, t}\) denoting whether the vertex \(v\) is active or not.
+    \item \(x_v \in \Reals_{\geq 0} \, \forall v \in V \setminus \Set*{s, t}\) denoting whether the vertex \(v\) is active or not.
       The vertex corresponding to the fragment tail is active if, and only if the fragment in forward direction is active. Respectively, the head vertex is active if, and only if the reverse fragment is active. With the constraints it acts as a binary.
     \item \(y_a \in \Set{0, 1} \, \forall a \in A_\Links{}\) denoting whether the link-arc \(a\) is active or not.
     \item \(f_a \in \Reals_{\geq 0} \, \forall a \in A_\Links{}\) corresponding to the flow amount passing through the link-arc \(a\).
@@ -33,21 +33,19 @@ Bellow we describe the MILP model.
   \end{equation}
 
   The flow through a link-arc \(a \in A_\Links{}\) is non-zero if \(a\) is active and cannot exceed its capacity:
-  \begin{equation}
+  \begin{align}
+    f_{uv} \leq
+    \begin{cases}
+      \cov{j} y_{uv} & \text{if \(u = s\)} \\
+      \cov{i} y_{uv} & \text{if \(v = t\)} \\
+      \min\Set*{\cov{i}, \cov{j}} y_{uv} & \text{otherwise}
+    \end{cases} &
     \begin{split}
-      f_{uv} \leq
-      \begin{cases}
-        \cov{j} y_{uv} & \text{if \(u = s\)} \\
-        \cov{i} y_{uv} & \text{if \(v = t\)} \\
-        \min\Set*{\cov{i}, \cov{j}} y_{uv} & \text{otherwise}
-      \end{cases} \quad
-      \begin{split}
-        \forall (u, v) \in A_\Links{} \\
-        i = vfrag(u) \\
-        j = vfrag(v)
-      \end{split}
-    \end{split}\cstlabel{mcf:cst:arc_flow_at_most_coverage} % chktex 25
-  \end{equation}
+      \forall (u, v) \in A_\Links{} \\
+      i = vfrag(u) \\
+      j = vfrag(v)
+    \end{split} \cstlabel{mcf:cst:arc_flow_at_most_coverage} % chktex 25
+  \end{align}
 
   The cumulative flow through a fragment \(i \in \Fragments{}\) cannot exceed its read coverage:
   \begin{equation}
