@@ -1,7 +1,7 @@
-\subsection{The Maximum GC Probability Score problem \MGC{}}\label{sec:method:mgc}
+\subsection{The Maximum GC Score problem \MGC{}}\label{sec:method:mgc}
 
-The second binning stage consists in finding a flow maximizing the GC probability scores, by fixing the coverage score flow.
-We refer to this subproblem as the \enquote{Maximum GC Probability Score} problem (\MGC{}).
+The second binning stage consists in finding a flow maximizing the GC scores, by fixing the coverage score flow.
+We refer to this subproblem as the \enquote{Maximum GC Score} problem (\MGC{}).
 In the following we describe the MILP model.
 
 \begin{definition}{\MGC{} MILP variables}{milp:mgc:variables}
@@ -38,13 +38,13 @@ In the following we describe the MILP model.
 \end{definition}
 
 \begin{definition}{\MGC{} MILP objective function}{milp:mgc:objective}
-  The objective function aims to maximize the GC probability score:
+  The objective function aims to maximize the GC score:
   \begin{equation}
-    \max ~ GCProbabilityScore
+    \max ~ GCScore
     \objlabel{mgc:obj:max_gc_probability_score} % chktex 25 % chktex 35
   \end{equation}
   where \(
-    \displaystyle GCProbabilityScore = \sum_{\substack{
+    \displaystyle GCScore = \sum_{\substack{
         i \in \Fragments{} \\
         b \in K
     }} \gcscore{i}{b} \fraggc{i}{b}%

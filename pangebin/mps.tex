@@ -1,6 +1,6 @@
 \subsection{The Maximum Plasmidness Score problem \MPS{}}\label{sec:method:mps}
 
-The third binning stage consists in finding a flow maximizing the plasmidness scores, by fixing both the coverage flow and the GC probability score.
+The third binning stage consists in finding a flow maximizing the plasmidness scores, by fixing both the coverage flow and the GC score.
 We refer to this subproblem as the \enquote{Maximum Plasmidness Score} problem (\MPS{}).
 In the following we describe the MILP model.
 
@@ -12,9 +12,9 @@ In the following we describe the MILP model.
 \begin{definition}{\MPS{} MILP constraints}{milp:mps:constraints}
   To the constraints in \Cref{definition:milp:mgc:constraints} we add the following:
 
-  The total GC probability score value must be near to the total GC probability score value \(\Psi{}\) found in \MGC{}:
+  The total GC score value must be near to the total GC score value \(\Psi{}\) found in \MGC{}:
   \begin{equation}
-    \gamma_2 \Psi \leq GCProbabilityScore \quad \gamma_2 \in (0.5, 1] % chktex 9
+    \gamma_2 \Psi \leq GCScore \quad \gamma_2 \in (0.5, 1] % chktex 9
     \cstlabel{mps:cst:gc_probability_score_near_optimal} % chktex 25
   \end{equation}
 

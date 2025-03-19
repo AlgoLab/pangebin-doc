@@ -1,17 +1,17 @@
 \subsubsection{Correct the GC content score}\label{sec:method:mgc:fine_tuned}
 
-The calculation of the GC probability score for a fragment \(i \in \Fragments{}\) does not rely to the belonging of \(i\) in its contigs \(c \in \Contigs{}(i)\).
+The calculation of the GC score for a fragment \(i \in \Fragments{}\) does not rely to the belonging of \(i\) in its contigs \(c \in \Contigs{}(i)\).
 
 \begin{questionbox}
   The plasmidness correction is simpler (see~\Cref{sec:method:mps:fine_tuned}) because in we just want to add a bonus.
-  Here the question is: if the GC probability scores of the contigs have to be considered, can we choose one or a subset of contigs from those active to correct the GC content score?
+  Here the question is: if the GC scores of the contigs have to be considered, can we choose one or a subset of contigs from those active to correct the GC content score?
   \begin{itemize}
-    \item The contig with the highest absolute GC probability score difference?
+    \item The contig with the highest absolute GC score difference?
     \item The contig with the highest GC Penalties probability score (bonus)?
     \item The contig with the lowest GC Penalties probability score (penalty)?
   \end{itemize}
   On related issue here is: should we choose only one difference, or a subset?
-  The sum of relative GC probability score differences?
+  The sum of relative GC score differences?
 
   \begin{todobox}
     Choose one and fix what follows
@@ -22,11 +22,11 @@ The calculation of the GC probability score for a fragment \(i \in \Fragments{}\
   Because of the new attributes definitions, the corrections introductions and definitions must be adapted.
 \end{fixmebox}
 
-\begin{definition}{GC probability score bonus}{frag_gc_bonus}
+\begin{definition}{GC score bonus}{frag_gc_bonus}
   \begin{fixmebox}
     The GC penalty has became a GC prob.\ score: adapt the following definition.
   \end{fixmebox}
-  Given a contig \(c \in \Contigs{}\) and a GC content interval \(b \in K\), we define \(\dcgcscore{c}{b}\) as the as a positive GC probability score bonus for the subcontigs of \(c\):
+  Given a contig \(c \in \Contigs{}\) and a GC content interval \(b \in K\), we define \(\dcgcscore{c}{b}\) as the as a positive GC score bonus for the subcontigs of \(c\):
   \[
     \dcgcscore{c}{b} = \max \Set*{
       0,
@@ -94,7 +94,7 @@ The calculation of the GC probability score for a fragment \(i \in \Fragments{}\
   \end{align}
 
   \begin{questionbox}
-    Depending of the question (bonus, penalty, relative correction), modelling the \enquote{if and only if} statement may be required.
+    Depending on the question (bonus, penalty, relative correction), modelling the \enquote{if and only if} statement may be required.
   \end{questionbox}
 
   For each contig \(c \in \Contigs{}\), for each GC content interval \(b \in K\), \(\ctggc{c}{b} = 1\) if and only if contig \(c\) is active and the \(b\) is the solution GC content interval:
@@ -121,7 +121,7 @@ The calculation of the GC probability score for a fragment \(i \in \Fragments{}\
   \begin{fixmebox}
     Depending of the question (bonus, penalty, relative correction), the objective function must be adapted.
   \end{fixmebox}
-  The objective function aims to maximize the corrected GC probability score:
+  The objective function aims to maximize the corrected GC score:
   \begin{equation}
     \max ~ GCCorrectedScore
   \end{equation}

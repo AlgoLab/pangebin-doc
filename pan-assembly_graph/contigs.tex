@@ -26,12 +26,12 @@ In the following, \(c \in \Contigs{}\) is a contig.
   It corresponds to the average base coverage of the contig normalized by the median coverage of the contigs in the whole assembly.
 \end{definition}
 
-\begin{definition}{Contig GC probability score}{contig_GC_score}
+\begin{definition}{Contig GC score}{contig_GC_score}
   \begin{newfeatbox}
     We do not normalize the probabilities by the sum of the \(P(b|n,l)\) over all \(b \in K\) as in~\cite{manePlasBinflowFlowbasedMILP2023}. We normalize them according to the maximum among them.
   \end{newfeatbox}
   Let \(c \in \Contigs{}\) be a contig and \(b\) be a GC content interval.
-  By \(\gcscore{c}{b} \in [-1, 1]\) we denote the GC probability score of the contig \(c\) according to the GC content interval \(b\):
+  By \(\gcscore{c}{b} \in [-1, 1]\) we denote the GC score of the contig \(c\) according to the GC content interval \(b\):
   \[
     \gcscore{c}{b} = 2 \frac{\Pr(n|b,l)\Pr(b)}{\max\limits_{b' \in K}\Set*{\Pr(n|b',l)\Pr(b')}} - 1
   \]
