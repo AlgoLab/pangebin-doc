@@ -4,37 +4,32 @@
 \subsection*{Aims}\label{sec:prelude:aims}
 \addcontentsline{toc}{subsection}{\nameref{sec:prelude:aims}}
 
-\begin{itemize}
-  \item Comparing PlasBin-flow and Pangebin:
+\begin{description}[style=nextline]
+  \item[Benchmarking]
+    Comparing PlasBin-flow and Pangebin:
     \begin{itemize}
       \item with only one assembler as input (contig binning)
       \item with two assemblers as inputs (pangenome fragment binning)
     \end{itemize}
-  \item Continue the idea of correcting the GC prob score and the plasmidness for the fragments if we pass through an entire contig.
+  \item[Binning panassembly graphs]
+    Continue the idea of correcting the GC prob score and the plasmidness for the fragments if we pass through an entire contig.
     \begin{itemize}
       \item GC prob score: relative correction, penalty, bonus?
       \item Plasmidness: the best bonus correction among the active contigs.
     \end{itemize}
-\end{itemize}
+\end{description}
 
 \begin{newfeatbox}
-  \textbf{2025--03--24} Done since last times:
+  \textbf{2025--04--07} Done since last times:
 
   \begin{CheckList}{Task}
-    \Task{done}{Propose a refinement of the \MPS{} problem (\Cref{sec:method:mps:refinement})}
-  \end{CheckList}
-\end{newfeatbox}
-
-\begin{newfeatbox}
-  \textbf{2025--03--17} Done since last times:
-
-  \begin{CheckList}{Task}
-    \Task{done}{Model a connected-flow in MILP to avoid iteratively resolving the problem until the solution subgraph has only one connected component. This answers one point of the PlasBin-flow discussion (\Cref{sec:method:mcf})}
-    \Task{done}{Formaly define the panassembly network (\Cref{definition:panassembly_network})}
-    \Task{done}{Simplify notations for the MILP}
-    \Task{done}{Add proofs for~\Cref{proposition:repeat_has_several_incoming_arcs} and~\Cref{proposition:inflow_is_not_multiple_of_total_flow}}
-    \Task{done}{Use plasmidness score instead of gene density}
-    \Task{done}{Propose a new objective function for the \MPS{} problem (\Cref{definition:milp:mps:objective_weigthed})}
+    \Task{done}{Describe three approaches for both a regular assembly graph (as PlasBin-flow) and for a panassembly graph}
+    \begin{description}
+      \item[\texttt{decomp}] Hierarchical MILP decomposition (\MCF{} --- \MGC{} --- \MPS{} --- \MRCF{})
+      \item[\texttt{binlab}] Binning and labelling approach (\MBS{} --- \MLS{} --- \MRBS{})
+      \item[\texttt{once}] All in one: binning and GC labelling (\MGCLB{})
+    \end{description}
+    \Task{done}{Wrap Pangebin-flow to use and out the same input/output as PlasBin-flow for regular assembly graphs (binning contigs): new \texttt{pangebin asm-pbf \dots}} commands
   \end{CheckList}
 \end{newfeatbox}
 
@@ -42,15 +37,25 @@
 \addcontentsline{toc}{subsection}{\nameref{sec:prelude:to-dos}}
 
 \begin{todobox}
-  Adapt PlasBin-flow to have two main indoors: one for SKESA/Unicycler asm graphs and one for both
+  Concerning the panassembly graph:
+  \begin{CheckList}{Task}
+    \Task{open}{Discuss how to filter the panassembly graph as PlasBin-flow filters the assembly graph}
+    \Task{open}{Wrap Pangebin-flow to use and out the same input/output as PlasBin-flow for panassembly graphs (binning fragments)}
+  \end{CheckList}
 \end{todobox}
 
 \begin{todobox}
-  Generalize gene density to plasmidness score (the plasmidness):
-
-  \begin{CheckList}{Task}
-    \Task{done}{Change attribute definition}
-    \Task{open}{Give an example of how a plasidness score can be obtained}
-    \Task{open}{Justify why optmizing the plasmidness is the last problem to solve in the hiearchy}
-  \end{CheckList}
+  \begin{description}[style=nextline]
+    \item[Describe all the approaches and highlight the common parts]\mbox{}
+      \begin{CheckList}{Task}
+        \Task{open}{Combination of subsets of variables and constraints}
+        \Task{open}{Detail the terms in the objective functions}
+      \end{CheckList}
+    \item[Generalize gene density to plasmidness score (the plasmidness)]\mbox{}
+      \begin{CheckList}{Task}
+        \Task{done}{Change attribute definition}
+        \Task{open}{Give an example of how a plasmidness score can be obtained}
+        \Task{open}{Justify why optimizing the plasmidness is the last problem to solve in the hierarchy (for \texttt{decomp} approach)}
+      \end{CheckList}
+  \end{description}
 \end{todobox}
