@@ -1,0 +1,45 @@
+\subsection{Approach \texttt{binlab}}\label{sec:pbf_iterbin:binlab}
+
+The \texttt{binlab} approach tackles the binning of the fragments with a coarse-to-fine-grain approach in three stages (each one refering to an optimization problem):
+The ideas are quite similar to those in the \texttt{decomp} approach (\Cref{sec:pbf_iterbin:decomp}), except that here we combine the use of the coverage and the plasmidness in one objective function.
+
+\begin{enumerate}[label=\roman*.]
+  \item Find the maximum binning score (\MBS{} problem, \Cref{sec:pbf_iterbin:binlab:mbs})
+  \item Find the maximum labelling score (\MLS{} problem, \Cref{sec:pbf_iterbin:binlab:mls})
+  \item Refine the solution (\MRBS{} problem, \Cref{sec:pbf_iterbin:binlab:mrbs})
+\end{enumerate}
+
+\Cref{algo:pbf_iterbin:binlab} summarizes the \texttt{binlab} approach.
+
+\begin{tcbalgo}{\texttt{binlab} approach}{pbf_iterbin:binlab}
+  \begin{algorithmic}[1]
+    \Require{%
+      A network graph \(N\) as defined in \Cref{sec:pbf_iterbin:network}.
+    }
+    \Ensure{%
+      Extract the best bin from the network graph.
+    }
+    \Function{find\_best\_bin}{\( N \)}
+    \State{} Init \MBS{} and solve it
+    \If{\MBS{} is unfeasible}
+    \State{} \Return{}unfeasible message
+    \EndIf{}
+    \State{} Init \MLS{} from \MBS{} result and solve it
+    \If{\MLS{} is unfeasible}
+    \State{} \Return{}unfeasible message
+    \EndIf{}
+    \State{} Init \MRBS{} from \MLS{} result and solve it
+    \If{\MRBS{} is unfeasible}
+    \State{} \Return{}unfeasible message
+    \EndIf{}
+    \State{} \Return{}\MRBS{} bin result (defined by the MILP solution variables induced subgraph)
+    \EndFunction{}
+  \end{algorithmic}
+\end{tcbalgo}
+
+Between each step, we fix the objective value of the previous step.
+A final step refines the solution found in the \MLS{} step (\Cref{sec:pbf_iterbin:binlab:mrbs}).
+
+\input{pbf_iterbin/binlab/mbs.tex}
+\input{pbf_iterbin/binlab/mls.tex}
+\input{pbf_iterbin/binlab/mrbs.tex}

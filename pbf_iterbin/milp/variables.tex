@@ -1,0 +1,49 @@
+\Cref{tab:pbf_iterbin:milp:variables} lists all the variables used in the MILP models.
+
+\begin{table}
+  \centering
+  \tablecaptionof{MILP variable set}{%
+    Each of the following variables participates in at least one of the MILP model.
+    Some of them participate in all the model, others are necessary for only one model.
+    For the ease of read, we categorize the variables in three categories.
+    Each section describing a model precise which variables are participating for each category.
+  }\label{tab:pbf_iterbin:milp:variables}
+
+  \begin{longtable}{@{}llp{0.5\textwidth}@{}}
+    \toprule
+    \tabhtxt{Variable} & \tabhtxt{Application set} & \tabhtxt{Meaning} \\
+    \midrule
+    %
+    \multicolumn{3}{@{}l@{}}{\tabhtxt{Decision variables}} \\
+    \addlinespace
+    \(x_v \in \Reals_{\geq 0}\) & \(\forall v \in V \setminus \Set*{s, t}\) & Denoting whether the vertex \(v\) is active or not. \\
+    \addlinespace
+    \(y_a \in \Set{0, 1}\) & \(\forall a \in A_\Links{}\) & Denoting whether the link-arc \(a\) is active or not. \\
+    \addlinespace
+    \(\frag{i} \in [0, 1] \) & \(\forall i \in \Fragments{}\) & Denoting whether fragment \(i\) is active or not. With the constraints it acts as a binary. \\
+    \addlinespace
+    \(GC_b \in \Set{0, 1}\) & \(\forall b \in K\) & Denoting whether the plasmid GC content is in the GC content interval \(b\) or not. \\
+    \addlinespace
+    \(\fraggc{i}{b} \in \Reals_{\geq 0}\) & \(\forall (i, b) \in \Fragments{} \times K\) & Denoting whether the fragment \(i\) is active and the plasmid GC content is in the interval \(b\) or not. With the constraints it acts as a binary. \\
+    %
+    \addlinespace
+    \multicolumn{3}{@{}l@{}}{\tabhtxt{Flow variables}} \\
+    \addlinespace
+    \(f_a \in \Reals_{\geq 0}\) & \(\forall a \in A_\Links{}\) & Corresponding to the flow amount passing through the link-arc \(a\). \\
+    \addlinespace
+    \(F \in \Reals_{\geq 0}\) & & Corresponding to the overall flow. \\
+    \addlinespace
+    \(F_a \in \Reals_{\geq 0}\) & \(\forall a \in A_\Links{}\) & Playing the role of an intermediary variable to force the flow on each link-arc to be equal to the total flow. \\
+    \addlinespace
+    \(\inflowgc{i}{b} \in \Reals_{\geq 0}\) & \(\forall (i, b) \in \Fragments{} \times K\) & Corresponding to the flow amount passing through the fragment \(i\) when the plasmid GC content is in the interval \(b\). \\
+    %
+    \addlinespace
+    \multicolumn{3}{@{}l@{}}{\tabhtxt{Connected component variables}} \\
+    \addlinespace
+    \(\alpha \in \Reals{}\) & & Is the number of \emph{oriented} fragments in the solution connected graph, plus the source and the sink. With the constraints it acts as a positive integer. \\
+    \addlinespace
+    \(\beta_a \in \Reals_{\leq 0}\) & \(\forall a \in A_\Links{}\) & Is strictly negative if the link-arc \(a\) participates in one of the solution subgraph's exploration tree. It acts as a negative integer, where the absolute value corresponds to the depth of the subtree defined by the successor. \\
+    %
+    \bottomrule
+  \end{longtable}
+\end{table}

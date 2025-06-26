@@ -1,0 +1,84 @@
+\subsubsection{The Maximum Coverage-likelihood Flow problem \MCF{}}\label{sec:pbf_iterbin:decomp:mcf}
+
+The first binning stage consists in finding a flow maximizing the use of fragment coverage.
+We refer to this subproblem as the \enquote{Maximum Coverage-likelihood Flow} problem (\MCF{}).
+As a coarse-grain strategy, it consists in finding a connected component explaining the coverages, large enough to contain all the fragments of the in-building solution bin.
+Indeed, passing through a loop or a cycle will not change the flow value. Only maximizing the flow can lead to use a minimum of fragments.
+To overcome this bias, we score the use of the fragment coverages and maximize their total.
+Below we describe the MILP model.
+
+\begin{table}[h!]
+  \centering
+  \tablecaption{\MCF{} MILP constraints}{}\label{tab:decomp:mcf:cst}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \tabhtxt{Category} & \tabhtxt{Constraints} \\
+    \midrule
+    Decision & \Cref{%
+      pbf_iterbin:milp:cst:dvar:active_extremity_implies_active_fragment,%
+      pbf_iterbin:milp:cst:dvar:active_fragment_implies_active_extremity,%
+      pbf_iterbin:milp:cst:dvar:active_link_arc_active_fragments,%
+      pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs%
+    } \\
+    Flow & \Cref{%
+      pbf_iterbin:milp:cst:flow:arc_flow_at_most_coverage,%
+      pbf_iterbin:milp:cst:flow:inflow_at_most_coverage,%
+      pbf_iterbin:milp:cst:flow:inflow_equals_outflow_forward,%
+      pbf_iterbin:milp:cst:flow:inflow_equals_outflow_reverse,%
+      pbf_iterbin:milp:cst:flow:total_flow_source,%
+      pbf_iterbin:milp:cst:flow:total_flow_sink,%
+      pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_1,%
+      pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_2,%
+      pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_3%
+    } \\
+    Connected component & \Cref{%
+      pbf_iterbin:milp:cst:ccomp:one_outgoing_arc_from_source,%
+      pbf_iterbin:milp:cst:ccomp:positive_flow_incident_vertices_in_component,%
+      pbf_iterbin:milp:cst:ccomp:depth_of_tree_source,%
+      pbf_iterbin:milp:cst:ccomp:depth_of_tree_incident_arcs,%
+      pbf_iterbin:milp:cst:ccomp:tree_arc_active,%
+      pbf_iterbin:milp:cst:ccomp:number_of_active_vertices%
+    } \\
+    GC & --- \\
+    Miscellaneous & \Cref{%
+      pbf_iterbin:milp:cst:misc:min_cumulative_fragment_length%
+    } \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{definition}{\MCF{} MILP objective function}{pbf_iterbin:decomp:mcf:obj}
+  \begin{newfeatbox}
+    Here we maximize the coverage scores, not only the coverage flow.
+  \end{newfeatbox}
+  The objective function aims to maximize the total coverage scores:
+  \begin{equation}
+    \max ~ CoverageScore
+    \objlabel{pbf_iterbin:decomp:mcf:obj:max_coverage_score} % chktex 25 % chktex 35
+  \end{equation}
+  where \(
+    \displaystyle CoverageScore = %
+    \sum_{i \in \Fragments{}} \fzeta{i} \parenth*{ inflow(i) - (\cov{i}\frag{i} - inflow(i)) }
+  \) and \( \displaystyle \fzeta{i} = \frac{ |i| }{ \max_{j \in \Fragments{}} |j| } \).
+
+  \begin{notebox}
+    Before we had \(
+      \displaystyle CoverageScore = %
+      \sum_{i \in \Fragments{}} \parenth*{2 \frac{inflow(i)}{\cov{i}} - 1}
+    \)
+  \end{notebox}
+
+  \begin{ideabox}
+    You can get inspired from the future multi-flow ideas and define the coverage score to be:
+    \[
+      CoverageScore = \sum_{
+        \substack{
+          i \in \Fragments{} \\
+          \plm{i} > 0
+        }
+      } |i| \parenth*{ inflow(i) - \cov{i} }
+    \]
+    where we focus on the use of positive plasmidness fragments, and try to minimize the penalty of not using their coverage.
+    Multipliying by the fragment length keep the things robust against the fragmentation of the sequences (good property for the pan-assembly fragments).
+  \end{ideabox}
+\end{definition}

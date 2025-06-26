@@ -1,0 +1,53 @@
+\subsection{Approach \texttt{decomp}}\label{sec:pbf_iterbin:decomp}
+
+\begin{newfeatbox}
+  At the opposite of PlasBin-flow, we split each objective expression into different mono-objective functions that define different optimization problems.
+\end{newfeatbox}
+The \texttt{decomp} approach tackles the binning of the fragments with a coarse-to-fine-grain approach in four stages (each one refering to an optimization problem):
+
+\begin{enumerate}[label=\roman*.]
+  \item Find the maximum coverage flow (\MCF{} problem, \Cref{sec:pbf_iterbin:decomp:mcf})
+  \item Find the maximum GC score (\MGC{} problem, \Cref{sec:pbf_iterbin:decomp:mgc})
+  \item Find the maximum plasmidness score (\MPS{} problem, \Cref{sec:pbf_iterbin:decomp:mps})
+  \item Refine the solution (\MRCF{} problem, \Cref{sec:pbf_iterbin:decomp:mrcf})
+\end{enumerate}
+
+\Cref{algo:pbf_iterbin:decomp} summarizes the \texttt{decomp} approach.
+
+\begin{tcbalgo}{\texttt{decomp} approach}{pbf_iterbin:decomp}
+  \begin{algorithmic}[1]
+    \Require{%
+      A network graph \(N\) as defined in \Cref{sec:pbf_iterbin:network}.
+    }
+    \Ensure{%
+      Extract the best bin from the network graph.
+    }
+    \Function{find\_best\_bin}{\( N \)}
+    \State{} Init \MCF{} and solve it
+    \If{\MCF{} is unfeasible}
+    \State{} \Return{}unfeasible message
+    \EndIf{}
+    \State{} Init \MGC{} from \MCF{} result and solve it
+    \If{\MGC{} is unfeasible}
+    \State{} \Return{}unfeasible message
+    \EndIf{}
+    \State{} Init \MPS{} from \MGC{} result and solve it
+    \If{\MPS{} is unfeasible}
+    \State{} \Return{}unfeasible message
+    \EndIf{}
+    \State{} Init \MRCF{} from \MPS{} result and solve it
+    \If{\MRCF{} is unfeasible}
+    \State{} \Return{}unfeasible message
+    \EndIf{}
+    \State{} \Return{}\MRCF{} bin result (defined by the MILP solution variables induced subgraph)
+    \EndFunction{}
+  \end{algorithmic}
+\end{tcbalgo}
+
+Between each step, we fix the objective value of the previous step.
+A final step refines the solution found in the \MPS{} step (\Cref{sec:pbf_iterbin:decomp:mrcf}).
+
+\input{pbf_iterbin/decomp/mcf.tex}
+\input{pbf_iterbin/decomp/mgc.tex}
+\input{pbf_iterbin/decomp/mps.tex}
+\input{pbf_iterbin/decomp/mrcf.tex}

@@ -1,0 +1,9 @@
+lists = ["If"]
+
+[[blocks]]
+
+    [[blocks.IfElseIfElse]]
+
+        begin = "If"
+        middle = ["ElseIf", "Else"]
+        end = "EndIf"

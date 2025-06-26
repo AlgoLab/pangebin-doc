@@ -11,13 +11,13 @@ One would want to propose to weigth the \(\plm{i}\) with the incoing flow normal
 But this expression is non-linear because \(F\) is a variable.
 
 One idea is to aproximate \(F\).
-For this purpose, we can use constraint~\Cref{mgc:cst:coverage_score_near_optimal} forcing \(F\) to be in an interval given by the objective value of \MCF{}, and propose a constant \(F'\):
+For this purpose, we can use constraint~\Cref{pbf_iterbin:decomp:mgc:cst:fix_mcf_obj} forcing \(F\) to be in an interval given by the objective value of \MCF{}, and propose a constant \(F'\):
 \[
   F' = \frac{ (1 + \gamma_1) \Phi }{2}
 \]
 We can now propose a new objective function:
 
-\begin{definition}{\MPS{} MILP alternative objective function}{milp:mps:objective_weigthed}
+\begin{definition}{\MPS{} MILP alternative objective function}{pbf_iterbin:decomp:mps:obj_weigthed}
   The objective function aims to maximize the weighted plasmidness scores:
   \begin{equation}
     \max ~ WeightedPlasmidnessScore

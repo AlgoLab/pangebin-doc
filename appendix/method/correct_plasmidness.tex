@@ -1,12 +1,12 @@
 \subsection{Correct shared fragment plasmidness}
 
 \begin{refactorbox}
-    The idea of correction/bonus is shared between the GC penalties and the plasmidness.
-    Restructure to show the common parts and argue in favour of the bonuses. 
+  The idea of correction/bonus is shared between the GC penalties and the plasmidness.
+  Restructure to show the common parts and argue in favour of the bonuses.
 \end{refactorbox}
 
 \begin{fixmebox}
-    Argument order for plasmidness bonus
+  Argument order for plasmidness bonus
 \end{fixmebox}
 
 Let \(c_1\) and \(c_2\) be two contigs that share a fragment \(j\), where \(\frac{ |j| }{ |c_1| } \rho_{c_1} \geq \frac{ |j| }{ |c_2| } \rho_{c_2}\)
@@ -34,11 +34,11 @@ For all share \(j \in \Fragments{}\), we can define a correction constant relati
 If the flow passes through all the link-arcs defining \(c\) (or its reverse), we positively correct the objective value by \(\dplm{c}{j}\).
 When the flow passes through several contigs in \(\Contigs(j)\), we only add once this bonus to the objective value, and this bonus is the best of the \(\dplm{c}{j}\) among the \(c \in \Contigs(j)\), represented by the variable \(\rho cor_j\).
 
-\Cref{fig:correct_share_plasmidness} illustrates the values of the share plasmidness correction variables. 
+\Cref{fig:correct_share_plasmidness} illustrates the values of the share plasmidness correction variables.
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=0.6\linewidth]{pangebin/plasmid-properties_guided_flow/img/constraints-correct_plasmidness_example.pdf}
+  \includegraphics[width=0.6\linewidth]{pbf_iterbin/plasmid-properties_guided_flow/img/constraints-correct_plasmidness_example.pdf}
   \figurecaption{Differential correction of share fragment plasmidness.}{%
     Let assume the flow passes through all the link-arcs defining contigs \(U\), \(S_1\) and \(S_2\) (or their reverse).
     Because of the inequalities between the plasmidness, the objective function is corrected by \(\dplm{U}{c}\) for the share \(c\), and by \(\dplm{S_2}{g}\) for the share \(g\).

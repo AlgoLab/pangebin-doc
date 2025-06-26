@@ -1,0 +1,65 @@
+\section{Iterative PlasBin-flow binning method}
+
+In the following, a fragment can refer to both a pangenome fragment or a contig.
+As an abuse of notation, we use in the whole section the set \Fragments{} to denote either the pan-assembly fragment set or the contig set.
+
+The here presented Iterative PlasBin-flow binning method is an adaptation of the original PlasBin-flow method~\cite{manePlasBinflowFlowbasedMILP2023}.
+
+The binning method consists in iteratively find the best bin by solving a flow-based combinatorial optimization problem on a network graph (defined in \Cref{sec:pbf_iterbin:network}).
+Once a bin is found, we extract it from the network and continue the search until some criterion are not met.
+For a given bin, each fragment is associated with a use of its coverage.
+Extracting the bin from the network graph means decreasing the fragment coverages in the graph.
+When the coverage a fragment in the network falls to zero, the fragment and its arcs are removed from graph.
+\Cref{algo:pbf_iterbin} details the iterative binning process.
+
+\begin{tcbalgo}{Iterative PlasBin-flow binning}{pbf_iterbin}
+  \begin{algorithmic}[1]
+    \Require{%
+      A network graph \(N\) as defined in \Cref{sec:pbf_iterbin:network}.
+    }
+    \Ensure{%
+      Extract bins from the network graph.
+    }
+    \Function{extract\_bins}{\( N \)}
+    \While{There are seeds in \(N\) and the previous model was feasible}
+    \State{} \( find\_result \gets \Call{find\_best\_bin}{ N } \)
+    \If{\( find\_result.\Call{feasibility\_message}{  } \) is a feasible message}
+    \State{} Output \( find\_result.\Call{bin}{ } \)
+    \State{} Extract the bin from the network graph \(N\) by updating the coverages.
+    \EndIf{}
+    \EndWhile{}
+    \EndFunction{}
+  \end{algorithmic}
+\end{tcbalgo}
+
+We propose three Mixed Integer Linear Programming (MILP) approaches to find the best bin (\( \Call{find\_best\_bin}{} \) subfunction, \Cref{sec:pbf_iterbin:decomp,sec:pbf_iterbin:binlab,sec:pbf_iterbin:once})
+Each of them tries to answer to the PlasBin-flow discussion.
+
+\begin{newfeatbox}
+  Comparing to PlasBin-flow, we directly model the flow connectivity in the MILP models.
+\end{newfeatbox}
+
+The MILP models share subsets of variables and constraints we detail in \Cref{sec:pbf_iterbin:milp}.
+
+%
+% Common parts among the approaches
+%
+\input{pbf_iterbin/network.tex}
+
+\input{pbf_iterbin/milp/_index.tex}
+
+%
+% Approaches
+%
+\input{pbf_iterbin/decomp/_index.tex}
+
+\input{pbf_iterbin/binlab/_index.tex}
+
+\input{pbf_iterbin/once/_index.tex}
+
+%
+% Miscellaneous
+%
+\input{pbf_iterbin/fine_tune/_index}
+
+% \input{pbf_iterbin/plasmid-properties_guided_flow/_index}

@@ -1,4 +1,4 @@
-\subsubsection{Positively correct the plasmidness}\label{sec:method:mps:fine_tuned}
+\subsubsection{Positively correct the plasmidness}\label{sec:pbf_iterbin:decomp:mps:fine_tuned}
 
 Especially when \(\omega_c\) is inferior than the sum, if the flow passes through the fragment path corresponding to this contig, we would like to positively correct the sum to obtain \(\omega_c\).
 
@@ -43,7 +43,7 @@ When the flow passes through several contigs in \(\Contigs(j)\), we only add onc
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=0.6\linewidth]{pangebin/fine_tune/img/constraints-correct_plasmidness_example.pdf}
+  \includegraphics[width=0.6\linewidth]{pbf_iterbin/fine_tune/img/constraints-correct_plasmidness_example.pdf}
   \figurecaption{Differential correction of share fragment plasmidness.}{%
     Let assume the flow passes through all the link-arcs defining contigs \(U\), \(S_1\) and \(S_2\) (or their reverse).
     Because of the inequalities between the plasmidness, the objective function is corrected by \(\dplm{U}{c}\) for the share \(c\), and by \(\dplm{S_2}{g}\) for the share \(g\).

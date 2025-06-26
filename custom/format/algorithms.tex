@@ -1,0 +1,37 @@
+% ============================================================================ %
+%                                   PACKAGES                                   %
+% ============================================================================ %
+\usepackage[indLines=false]{algpseudocodex}
+
+% ============================================================================ %
+%                            CUSTOM SIMPLE STATEMENT                           %
+% ============================================================================ %
+\newcommand{\Assert}{\textbf{\sffamily{assert}} }
+
+% ============================================================================ %
+%                                     LOOP                                     %
+% ============================================================================ %
+% ---------------------------------------------------------------------------- %
+%                                    FromTo                                    %
+% ---------------------------------------------------------------------------- %
+\algnewcommand\algorithmicfromto{\textbf{for}}%
+
+\makeatletter
+\algdef{SE}[FROMTO]{FromTo}{EndFromTo}[3]{\algpx@startIndent\algpx@startCodeCommand\algorithmicfromto\ #1\ \textbf{from}\ #2\ \textbf{to}\ #3\ \algorithmicdo}{\algpx@endIndent\algpx@startCodeCommand\algorithmicend\ \algorithmicfromto}%
+
+\ifbool{algpx@noEnd}{%
+  \algtext*{EndFromTo}%
+  %
+  % end indent line after (not before), to get correct y position for multiline text in last command
+  \apptocmd{\EndFromTo}{\algpx@endIndent}{}{}%
+}{}%
+
+\pretocmd{\FromTo}{\algpx@endCodeCommand}{}{}
+
+% for end commands that may not be printed, tell endCodeCommand whether we are using noEnd
+\ifbool{algpx@noEnd}{%
+  \pretocmd{\EndFromTo}{\algpx@endCodeCommand[1]}{}{}%
+}{%
+  \pretocmd{\EndFromTo}{\algpx@endCodeCommand[0]}{}{}%
+}%
+\makeatother
