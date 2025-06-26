@@ -1,19 +1,19 @@
-\subsubsection{Refining the \MLS{} solution}\label{sec:pbf_iterbin:binlab:mrbs}
+\subsubsection{The Maximum Refining the \MLS{} solution}\label{sec:pbf_iterbin:binlab:mrbs}
 
-The solution set \(S_\MLS{}\) for \MLS{} contains solutions with the same value of \(LabellingScore\) and different values for \(BinningScore\) and \(LabellingScore\) because of \Cref{pbf_iterbin:binlab:mls:cst:fix_mbs_obj}.
+The solution set \(S_\MLS{}\) for \MLS{} contains solutions with the same value of \(LabellingScore\) and different values for \(BinningScore\) because of \Cref{pbf_iterbin:binlab:mls:cst:fix_mbs_obj}.
 The final refinement stage consists in fixing the value of \(LabellingScore\) and finding the subset of \(S_\MLS{}\) maximizing \(BinningScore\).
-It results in a last MILP formulation \(\MRCF{}\):
+It results in a last MILP formulation \(\MRBS{}\):
 
 \begin{table}[h!]
   \centering
-  \tablecaption{\MRCF{} MILP constraints}{}\label{tab:binlab:mrcf:cst}
+  \tablecaption{\MRBS{} MILP constraints}{}\label{tab:binlab:mrbs:cst}
   \begin{tabular}{@{}ll@{}}
     \toprule
     \tabhtxt{Category} & \tabhtxt{Constraints} \\
     \midrule
     \multicolumn{2}{@{}l@{}}{Constraints in \Cref{tab:binlab:mls:cst}} \\
     \addlinespace
-    \MRCF{} dedicated & \Cref{pbf_iterbin:binlab:mrcf:cst:fix_mls_obj} \\
+    \MRBS{} dedicated & \Cref{pbf_iterbin:binlab:mrbs:cst:fix_mls_obj} \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -21,13 +21,13 @@ It results in a last MILP formulation \(\MRCF{}\):
 The labelling score must be equal to the labelling score \(\Lambda{}\) found in \MLS{}:
 \begin{equation}
   LabellingScore = \Lambda
-  \cstlabel{pbf_iterbin:binlab:mrcf:cst:fix_mls_obj} % chktex 25
+  \cstlabel{pbf_iterbin:binlab:mrbs:cst:fix_mls_obj} % chktex 25
 \end{equation}
 
-\begin{definition}{\MRCF{} MILP objective function}{pbf_iterbin:binlab:mrcf:obj}
+\begin{definition}{\MRBS{} MILP objective function}{pbf_iterbin:binlab:mrbs:obj}
   The objective function aims to maximize the binning score:
   \begin{equation}
     \max ~ BinningScore
-    \objlabel{pbf_iterbin:binlab:mrcf:max_coverage_and_gc_score} % chktex 25 % chktex 35
+    \objlabel{pbf_iterbin:binlab:mrbs:obj:max_binning_score} % chktex 25 % chktex 35
   \end{equation}
 \end{definition}
