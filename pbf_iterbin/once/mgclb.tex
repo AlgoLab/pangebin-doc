@@ -1,13 +1,21 @@
-\subsubsection{The Maximum Binning Score problem \MBS{}}\label{sec:pbf_iterbin:binlab:mbs}
+\subsubsection{The Maximum GC-Labelled Bin problem \MGCLB{}}\label{sec:pbf_iterbin:once:mgclb}
 
 The first binning stage consists in finding a flow maximizing the use of fragment coverage and the plasmidness.
-We refer to this subproblem as the \enquote{Maximum Binning Score} problem (\MBS{}).
-As a coarse-grain strategy, it consists in finding a connected component explaining both the coverages and the plasmidness.
+We refer to this subproblem as the \enquote{Maximum GC-Labelled Bin} problem (\MGCLB{}).
+In the opposite of \texttt{decomp} and \texttt{binlab}, here we mix the GC scores with the other bin properties.
+In order  balance the weight of the different semantic terms, we multiply by the incoming flow.
+The more a fragment participates in terms of its coverage in the bin, the more its properties are amplified.
+The length of the fragments also enable to balance the usage of the fragments in the bin.
+It is also robust to the fragmentation (linear decomposition).
 Below we describe the MILP model.
+
+\begin{todobox}
+  CONTINUE HERE % #TODO CONTINUE HERE (change constraint list, they differ from decomp and binlab quite a lot)
+\end{todobox}
 
 \begin{table}[h!]
   \centering
-  \tablecaption{\MBS{} MILP constraints}{}\label{tab:binlab:mbs:cst}
+  \tablecaption{\MGCLB{} MILP constraints}{}\label{tab:once:mgclb:cst}
   \begin{tabular}{@{}ll@{}}
     \toprule
     \tabhtxt{Category} & \tabhtxt{Constraints} \\
@@ -37,7 +45,14 @@ Below we describe the MILP model.
       pbf_iterbin:milp:cst:ccomp:tree_arc_active,%
       pbf_iterbin:milp:cst:ccomp:number_of_active_vertices%
     } \\
-    GC & --- \\
+    \addlinespace
+    GC & \Cref{%
+      pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval,%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_1,%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_2,%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_3,%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_4%
+    } \\
     Miscellaneous & \Cref{%
       pbf_iterbin:milp:cst:misc:min_cumulative_fragment_length%
     } \\
@@ -45,27 +60,26 @@ Below we describe the MILP model.
   \end{tabular}
 \end{table}
 
-\begin{definition}{\MBS{} MILP objective function}{pbf_iterbin:binlab:mbs:obj}
+\begin{definition}{\MGCLB{} MILP objective function}{pbf_iterbin:once:mgclb:obj}
   The objective function aims to maximize the total coverage scores:
   \begin{equation}
-    \max ~ BinningScore
-    \objlabel{pbf_iterbin:binlab:mbs:obj:max_coverage_score} % chktex 25 % chktex 35
+    \max ~ CoveragePenaly + PlasmidnessScore + GCScore
+    \objlabel{pbf_iterbin:once:mgclb:obj:max_coverage_score} % chktex 25 % chktex 35
   \end{equation}
-  where \(
-    \displaystyle BinningScore = %
-    \sum_{i \in \Fragments{}} \fzeta{i} \parenth[\big]{ inflow(i) - (\cov{i}\frag{i} - inflow(i)) + \plm{i} inflow(i)}
-  \) and \( \displaystyle \fzeta{i} = \frac{ |i| }{ \max_{j \in \Fragments{}} |j| } \).
+  where:
+  \begin{align*}
+    CoveragePenaly &= %
+    \sum_{i \in \Fragments{}} |i| \parenth*{ inflow(i) - \cov{i}\frag{i} } \\
+    PlasmidnessScore &= %
+    \sum_{i \in \Fragments{}} |i| \plm{i} inflow(i) \\
+    GCScore &= %
+    \sum_{\substack{
+        i \in \Fragments{} \\
+        b \in K
+    }} |i| \gcscore{i}{b} \fraggc{i}{b}
+  \end{align*}
 
   \begin{ideabox}
-    Perhaps we should use the coverage as a penalty and only on positive plasmidness, and replace \fzeta{} by the fragment length, i.e.:
-    \[
-      BinningScore =  \sum_{
-        \substack{
-          i \in \Fragments{} \\
-          \plm{i} > 0
-        }
-      } |i| \parenth*{ inflow(i) - \cov{i} }
-      + \sum_{i \in \Fragments{}} |i| \plm{i} inflow(i)
-    \]
+    Perhaps we should use the penalty coverage on only fragments with positive plasmidness.
   \end{ideabox}
 \end{definition}
