@@ -1,0 +1,25 @@
+\subsection{Method overview}
+
+\begin{tcbalgo}{PlasBin-multiflow binning}{pbmf}
+  \begin{algorithmic}[1]
+    \Require{%
+      A network graph \(N\) as defined in \Cref{sec:pbmf:network}.
+    }
+    \Ensure{%
+      Extract bins from the network graph.
+    }
+    \Function{extract\_bins}{\( N \)}
+    \State{} \( ccomps \gets \Call{connected\_components}{ N } \)
+    \For{\( ccomp \) in \( ccomps \)}
+    \EndFor{}
+    %
+    % \While{There are seeds in \(N\) and the previous model was feasible}
+    % \State{} \( find\_result \gets \Call{find\_best\_bin}{ N } \)
+    % \If{\( find\_result.\Call{feasibility\_message}{  } \) is a feasible message}
+    % \State{} Output \( find\_result.\Call{bin}{ } \)
+    % \State{} Extract the bin from the network graph \(N\) by updating the coverages.
+    % \EndIf{}
+    % \EndWhile{}
+    \EndFunction{}
+  \end{algorithmic}
+\end{tcbalgo}
