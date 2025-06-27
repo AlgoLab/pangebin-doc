@@ -19,20 +19,6 @@
     \end{itemize}
 \end{description}
 
-\begin{newfeatbox}
-  \textbf{2025--04--07} Done since last times:
-
-  \begin{CheckList}{Task}
-    \Task{done}{Describe three approaches for both a regular assembly graph (as PlasBin-flow) and for a panassembly graph}
-    \begin{description}
-      \item[\texttt{decomp}] Hierarchical MILP decomposition (\MCF{} --- \MGC{} --- \MPS{} --- \MRCF{})
-      \item[\texttt{binlab}] Binning and labelling approach (\MBS{} --- \MLS{} --- \MRBS{})
-      \item[\texttt{once}] All in one: binning and GC labelling (\MGCLB{})
-    \end{description}
-    \Task{done}{Wrap Pangebin-flow to use and out the same input/output as PlasBin-flow for regular assembly graphs (binning contigs): new \texttt{pangebin asm-pbf \dots}} commands
-  \end{CheckList}
-\end{newfeatbox}
-
 \subsection*{To-dos}\label{sec:prelude:to-dos}
 \addcontentsline{toc}{subsection}{\nameref{sec:prelude:to-dos}}
 
@@ -40,22 +26,5 @@
   Concerning the panassembly graph:
   \begin{CheckList}{Task}
     \Task{open}{Discuss how to filter the panassembly graph as PlasBin-flow filters the assembly graph}
-    \Task{open}{Wrap Pangebin-flow to use and out the same input/output as PlasBin-flow for panassembly graphs (binning fragments)}
   \end{CheckList}
-\end{todobox}
-
-\begin{todobox}
-  \begin{description}[style=nextline]
-    \item[Describe all the approaches and highlight the common parts]\mbox{}
-      \begin{CheckList}{Task}
-        \Task{open}{Combination of subsets of variables and constraints}
-        \Task{open}{Detail the terms in the objective functions}
-      \end{CheckList}
-    \item[Generalize gene density to plasmidness score (the plasmidness)]\mbox{}
-      \begin{CheckList}{Task}
-        \Task{done}{Change attribute definition}
-        \Task{open}{Give an example of how a plasmidness score can be obtained}
-        \Task{open}{Justify why optimizing the plasmidness is the last problem to solve in the hierarchy (for \texttt{decomp} approach)}
-      \end{CheckList}
-  \end{description}
 \end{todobox}
