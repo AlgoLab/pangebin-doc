@@ -1,0 +1,34 @@
+\subsection{Results and conclusions}\label{sec:pbf_iterbin:conclusions}
+
+I tested the three approaches on 12 samples from 4 different bacteria read samples, assembled by Unicycler, and where the contigs of size less than 100 were replaced by links in the assembly graph.
+This subset covers several scenarios:
+
+\begin{itemize}
+  \item Some instances have connected components with only one contig looping on itself --- corresponding to circular plasmids (with, or without seeds);
+  \item Some plasmids correspond to subgraph where a circular topology can be found (with or without seeds);
+  \item Some plasmids correspond to subgraph where it is not possible to find a circular topology (missing links, with or without seeds).
+\end{itemize}
+
+\begin{warningbox}
+  The Unicycler assembly graphs were malformed: some of the link definition were reversed (not in the sense of the reverse symmetry equivalence of defining one link and its reverse).
+  This created many tips in the graph and denatured the cyclicity of subgraph corresponding to circular plasmids.
+  However, many observations remain correct.
+\end{warningbox}
+
+\paragraph{The iterative binning process over-optimizes the first bin scores}
+The first bin was mainly often the most difficult one to obtain.
+In any case, the first bin is the largest one.
+Each approach in the iterative binning process over-optimizes the scores of the first bin.
+One of the main consequence is the first bin contains too much contigs, leading to remove contigs needed to get the next plasmids.
+Thus, the next remain of plasmids are dispatched in several bins.
+
+\paragraph{The MILP solving time is too long for a poor quality}
+As described above, finding the first bin is the most difficult one to obtain, especially about time performance.
+The MIP gap is sometimes really near to 0\% (optimal criterion) but slightly decreases.
+Finding a MIP gap threshold for which we accept the feasible solution is not as easy, and no satisfying threshold was found (no more than 5\%).
+
+\paragraph{Connecting the source only to the seeds does not able to get a plasmid if the seed is in the middle of the corresponding plasmid subgraph}
+All the three approaches are based on a network graph where the source is only connected to the seeds.
+Also, as in PlasBin-flow, we require the flow on each arc to be at least equal to the total flow (i.e.\ the sum of the flow outgoing from the source).
+In these conditions, given a subgraph corresponding to a true plasmid, if we are not able to complete the circularity of the plasmid (especially here we do not force the flow to describe something circular), and if the seed is after (in directed walks in the subgraph) some non-seed contigs that should participate in the plasmid, then we are not able to take these last.
+As a consequence, these last non-seed contigs are not participating in the current bin (lower recall), and may participate in other bins (especially if they have a positive plasmidness, making the model trying to pass through them --- lower precision).
