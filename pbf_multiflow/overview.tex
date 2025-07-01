@@ -1,5 +1,12 @@
 \subsection{Method overview}
 
+The multi-flow binning approach search several bins with the same properties at the same time.
+The properties are of two types:
+\begin{description}
+  \item[Topology] The bin is circular, otherwise partially circular
+  \item[Seed constraint] Each bin must contain at least one seed, otherwise they can or not contain any.
+\end{description}
+
 \begin{tcbalgo}{PlasBin-multiflow binning}{pbmf}
   \begin{algorithmic}[1]
     \Require{%
@@ -9,17 +16,32 @@
       Extract bins from the network graph.
     }
     \Function{extract\_bins}{\( N \)}
-    \State{} \( ccomps \gets \Call{connected\_components}{ N } \)
-    \For{\( ccomp \) in \( ccomps \)}
+    \State{} \( bin\_properties \gets (\mathsf{circular}, \mathsf{must\_have\_a\_seed}) \)
+    \State{} \( ccomps\_with\_bin\_prop \gets \Call{connected\_components}{ N } \) product with copy of \( bin\_properties \)
+    \For{\( ccomp \) with \( bin\_prop \) in \( ccomps\_with\_bin\_prop \)}
+    \State{} \( binning\_result \gets \Call{find\_best\_bins\_with\_properties}{ ccomp, bin\_prop } \)
+    \If{\( binning\_result.\Call{feasibility\_message}{  } \) is a feasible message}
+    \State{} Output \( binning\_result.\Call{bins}{ } \)
+    \State{} Extract the bins from the network graph \(N(ccomp)\) by updating the coverages.
+    \State{} \( next\_prop \gets \Call{next\_properties}{ bin\_prop } \)
+    \If{\( next\_prop \) is not Nill}
+    \State{Extend \( ccomps\_with\_bin\_prop \) with each new connected components given by \( \Call{connected\_components}{ N(ccomp) }\) product with copy of \( next\_prop \)}
+    \EndIf{}
+    \EndIf{}
     \EndFor{}
-    %
-    % \While{There are seeds in \(N\) and the previous model was feasible}
-    % \State{} \( find\_result \gets \Call{find\_best\_bin}{ N } \)
-    % \If{\( find\_result.\Call{feasibility\_message}{  } \) is a feasible message}
-    % \State{} Output \( find\_result.\Call{bin}{ } \)
-    % \State{} Extract the bin from the network graph \(N\) by updating the coverages.
-    % \EndIf{}
-    % \EndWhile{}
     \EndFunction{}
   \end{algorithmic}
 \end{tcbalgo}
+
+Function \(\Call{next\_properties}{ bin\_prop }\) gives the next couple of bin properties.
+The bin properties are following the below order:
+\begin{enumerate}
+  \item Circular with seeds
+  \item Circular without any obligation of seeds (free of seeds)
+  \item Partially circular with seeds
+  \item Partially circular without any obligation of seeds
+\end{enumerate}
+
+\begin{todobox}
+  CONTINUE HERE
+\end{todobox}
