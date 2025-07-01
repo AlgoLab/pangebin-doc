@@ -15,7 +15,7 @@ Below we describe the MILP model.
 
 \begin{table}[h!]
   \centering
-  \tablecaption{\MGCLB{} MILP constraints}{}\label{tab:once:mgclb:cst}
+  \tablecaption{\MGCLB{} MILP constraints}{What is new here comparing to the two previous approaches is we need to define variables \(\inflowgc{i}{b}\) for all fragments \(i \in \Fragments{}\) and GC content interval \(b \in K\).}\label{tab:once:mgclb:cst}
   \begin{tabular}{@{}ll@{}}
     \toprule
     \tabhtxt{Category} & \tabhtxt{Constraints} \\
@@ -51,7 +51,10 @@ Below we describe the MILP model.
       pbf_iterbin:milp:cst:gc:active_fragment_gc_1,%
       pbf_iterbin:milp:cst:gc:active_fragment_gc_2,%
       pbf_iterbin:milp:cst:gc:active_fragment_gc_3,%
-      pbf_iterbin:milp:cst:gc:active_fragment_gc_4%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_4,%
+      pbf_iterbin:milp:cst:gc:inflowgc_1,%
+      pbf_iterbin:milp:cst:gc:inflowgc_2,%
+      pbf_iterbin:milp:cst:gc:inflowgc_3%
     } \\
     Miscellaneous & \Cref{%
       pbf_iterbin:milp:cst:misc:min_cumulative_fragment_length%
@@ -76,7 +79,7 @@ Below we describe the MILP model.
     \sum_{\substack{
         i \in \Fragments{} \\
         b \in K
-    }} |i| \gcscore{i}{b} \fraggc{i}{b}
+    }} |i| \gcscore{i}{b} \inflowgc{i}{b}
   \end{align*}
 
   \begin{ideabox}

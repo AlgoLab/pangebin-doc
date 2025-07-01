@@ -104,7 +104,7 @@ A positive flow implies the two incident vertices are in the component:
   \cstlabel{pbf_iterbin:milp:cst:ccomp:positive_flow_incident_vertices_in_component} % chktex 25
 \end{equation}
 \begin{questionbox}
-  potentially redondant with \Cref{pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs}
+  potentially redundant with \Cref{pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs}
 \end{questionbox}
 
 The cumulative depth of the subtree in the exploration tree from the source equals at least the number of active vertices minus 1.
@@ -148,6 +148,13 @@ For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K
   \fraggc{i}{b} & \leq GC_b & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:active_fragment_gc_2} \\ % chktex 25
   \fraggc{i}{b} & \geq x_{i_t} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:active_fragment_gc_3} \\ % chktex 25
   \fraggc{i}{b} & \geq x_{i_h} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:active_fragment_gc_4} % chktex 25
+\end{align}
+
+For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\inflowgc{i}{b}\) is the flow into fragment \(i\) when \(b\) is the chosen GC content interval:
+\begin{align}
+  \inflowgc{i}{b} & \leq \frag{i} * \cov{i} & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_1}  \\ % chktex 25
+  \inflowgc{i}{b} & \leq \frag{i} * GC_b & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_2}  \\ % chktex 25
+  \inflowgc{i}{b} & \geq inflow(i)  - (2 - \frag{i} - GC_b) \cov{i} & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_3} % chktex 25
 \end{align}
 
 \paragraph{Plasmid constraints}
