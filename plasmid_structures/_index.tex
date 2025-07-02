@@ -47,9 +47,20 @@ Several concerns raise:
     For the ease of read, we do not show other links between other plasmids or chromosomes and suppose we cannot merge \(\mathsf{C}\), \(\mathsf{D}\) and \(\mathsf{E}\) in one unitig.
     The links are oriented according to the orientation of the flow.
     %
-    \Subref{subfig:plasmid_structure:circular} No link is missing: there exist a flow from the source \(\mathsf{S}\) to the seed \(\mathsf{D}\) such that the subgraph resulted in a circular plasmid. However, as the cover of \(\mathsf{D}\) is \(2X\), because the flow on arc must be at least equal to the total flow, the total flow can equal to maximum \(X\) because of sequences \(\mathsf{A}\) and \(\mathsf{B}\) (coverages equal to \(X\)).
+    \Subref{subfig:plasmid_structure:circular}
+    No link is missing.
+    To properly model the circularity, the flow through the source-link and the sink-link must equal to zero.
+    It is also sufficient to assume one arbitrary orientation of the seed connects either the source and the sink.
+    It is thus not necessary to connect the other fragments to the sink.
+    The circularity topology and the flow conservation constraints enable to use the full coverage of the plasmid fragments.
+    We must constraint on the circularity: for each active oriented fragment, there is at least one incoming link and one outgoing link (without conting the source and the sink links).
     %
-    \Subref{subfig:plasmid_structure:pc_multi_t} --- \Subref{subfig:plasmid_structure:pc_multi_s} Dashed links are not in the graph. If the source must connect a seed, then some sequences are missing in the bin. The source should be able to connect several sequences, at the condition that the solution subnetwork graph without \(\mathsf{S}\) and \(\mathsf{T}\) must be connected and contain a seed.
+    \Subref{subfig:plasmid_structure:pc_multi_t} --- \Subref{subfig:plasmid_structure:pc_multi_s}
+    Dashed links are not in the graph.
+    If the source must connect a seed, then some sequences are missing in the bin.
+    The source should be able to connect several sequences, at the condition that the solution subnetwork graph without \(\mathsf{S}\) and \(\mathsf{T}\) must be connected and contain a seed.
+    Also, the active oriented fragments that connect the source cannot have other incoming links.
+    Analogously, the active oriented fragments that connect the sink cannot have other outgoing links.
   }%
   \label{fig:plasmid_structure}
 
