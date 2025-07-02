@@ -19,19 +19,24 @@ In the following we describe the MILP model.
 \end{table}
 
 The total GC score value must be near to the total GC score best value \(\Psi{}\) previously found in \MGC{}:
-\begin{equation}
-  \gamma_2 \Psi \leq GCScore \quad \gamma_2 \in (0.5, 1] % chktex 9
-  \cstlabel{pbf_iterbin:decomp:mps:cst:fix_mgc_obj} % chktex 25
-\end{equation}
+\begin{Constraint}
+  \begin{equation}
+    \gamma_2 \Psi \leq GCScore \quad \gamma_2 \in (0.5, 1] % chktex 9
+    \cstlabel{pbf_iterbin:decomp:mps:cst:fix_mgc_obj} % chktex 25
+  \end{equation}
+\end{Constraint}
 
 \begin{definition}{\MPS{} MILP objective function}{pbf_iterbin:decomp:mps:obj}
   \begin{newfeatbox}
     While in the original PlasBin-flow method the plasmidness is positive, here the it either acts as a bonus or a penalty (\( \plm{i} \in [-1, 1] \)).
   \end{newfeatbox}
+  %
   The objective function aims to maximize the plasmidness scores:
-  \begin{equation}
-    \max ~ PlasmidnessScore
-    \objlabel{pbf_iterbin:decomp:mps:obj:max_plasmidness_score} % chktex 25 % chktex 35
-  \end{equation}
+  \begin{Objective}
+    \begin{equation}
+      \max ~ PlasmidnessScore
+      \objlabel{pbf_iterbin:decomp:mps:obj:max_plasmidness_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
   where \(\displaystyle PlasmidnessScore = \sum_{i \in \Fragments{}} \fzeta{i} \plm{i} \frag{i}\).
 \end{definition}

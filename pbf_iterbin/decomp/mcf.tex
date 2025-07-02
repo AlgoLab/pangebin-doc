@@ -25,6 +25,7 @@ Below we describe the MILP model.
       pbf_iterbin:milp:cst:flow:inflow_at_most_coverage,%
       pbf_iterbin:milp:cst:flow:inflow_equals_outflow_forward,%
       pbf_iterbin:milp:cst:flow:inflow_equals_outflow_reverse,%
+      pbf_iterbin:milp:cst:flow:total_flow_strictly_positive,%
       pbf_iterbin:milp:cst:flow:total_flow_source,%
       pbf_iterbin:milp:cst:flow:total_flow_sink,%
       pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_1,%
@@ -51,11 +52,14 @@ Below we describe the MILP model.
   \begin{newfeatbox}
     Here we maximize the coverage scores, not only the coverage flow.
   \end{newfeatbox}
+  %
   The objective function aims to maximize the total coverage scores:
-  \begin{equation}
-    \max ~ CoverageScore
-    \objlabel{pbf_iterbin:decomp:mcf:obj:max_coverage_score} % chktex 25 % chktex 35
-  \end{equation}
+  \begin{Objective}
+    \begin{equation}
+      \max ~ CoverageScore
+      \objlabel{pbf_iterbin:decomp:mcf:obj:max_coverage_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
   where \(
     \displaystyle CoverageScore = %
     \sum_{i \in \Fragments{}} \fzeta{i} \parenth*{ inflow(i) - (\cov{i}\frag{i} - inflow(i)) }

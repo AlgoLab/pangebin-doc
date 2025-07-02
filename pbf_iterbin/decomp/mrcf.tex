@@ -26,8 +26,10 @@ The plasmidness score must be equal to the plasmidness score \(P\) found in \MPS
 
 \begin{definition}{\MRCF{} MILP objective function}{pbf_iterbin:decomp:mrcf:obj}
   The objective function aims to maximize the coverage flow prior to the GC score:
-  \begin{equation}
-    \max ~ |\Fragments{}| CoverageFlow + GCScore
-    \objlabel{pbf_iterbin:decomp:mrcf:max_coverage_and_gc_score} % chktex 25 % chktex 35
-  \end{equation}
+  \begin{Constraint}
+    \begin{equation}
+      \max ~ |\Fragments{}| CoverageFlow + GCScore
+      \objlabel{pbf_iterbin:decomp:mrcf:max_coverage_and_gc_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Constraint}
 \end{definition}
