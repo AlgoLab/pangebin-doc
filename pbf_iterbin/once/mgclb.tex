@@ -9,10 +9,6 @@ The length of the fragments also enable to balance the usage of the fragments in
 It is also robust to the fragmentation (linear decomposition).
 Below we describe the MILP model.
 
-\begin{todobox}
-  CONTINUE HERE % #TODO CONTINUE HERE (change constraint list, they differ from decomp and binlab quite a lot)
-\end{todobox}
-
 \begin{table}[h!]
   \centering
   \tablecaption{\MGCLB{} MILP constraints}{What is new here comparing to the two previous approaches is we need to define variables \(\inflowgc{i}{b}\) for all fragments \(i \in \Fragments{}\) and GC content interval \(b \in K\).}\label{tab:once:mgclb:cst}
@@ -48,10 +44,6 @@ Below we describe the MILP model.
     \addlinespace
     GC & \Cref{%
       pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval,%
-      pbf_iterbin:milp:cst:gc:active_fragment_gc_1,%
-      pbf_iterbin:milp:cst:gc:active_fragment_gc_2,%
-      pbf_iterbin:milp:cst:gc:active_fragment_gc_3,%
-      pbf_iterbin:milp:cst:gc:active_fragment_gc_4,%
       pbf_iterbin:milp:cst:gc:inflowgc_1,%
       pbf_iterbin:milp:cst:gc:inflowgc_2,%
       pbf_iterbin:milp:cst:gc:inflowgc_3%
