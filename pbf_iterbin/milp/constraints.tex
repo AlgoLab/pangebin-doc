@@ -152,7 +152,7 @@ For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K
 
 For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\inflowgc{i}{b}\) is the flow into fragment \(i\) when \(b\) is the chosen GC content interval:
 \begin{align}
-  \inflowgc{i}{b} & \leq \cov{i} \frag{i} *  & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_1}  \\ % chktex 25
+  \inflowgc{i}{b} & \leq \cov{i} \frag{i} & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_1}  \\ % chktex 25
   \inflowgc{i}{b} & \leq \cov{i} GC_b & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_2}  \\ % chktex 25
   \inflowgc{i}{b} & \geq inflow(i)  - (2 - \frag{i} - GC_b) \cov{i} & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_3} % chktex 25
 \end{align}
