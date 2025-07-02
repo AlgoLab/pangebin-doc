@@ -92,7 +92,7 @@ If this (positive plasmidness) fragment can be reached from another seed of anot
     %
     \Subref{subfig:pbf_iterbin:circularity_artefact}
     %
-    Suppose now we face the same situation as in \subref{subfig:pbf_iterbin:middle_seed_splits_partially_circular_plasmid} but fragment \(\mathsf{D}\) enables the circularity and is a fragment that does not belong to the orange plasmid.
+    Suppose now we face the same situation as in \subref{subfig:pbf_iterbin:middle_seed_splits_partially_circular_plasmid} but fragment \(\mathsf{D}\) --- which does not belong to the orange plasmid, enables the circularity.
     Under some circumstances, passing through this fragment can improve the objective function value because it enables to retrieve \(\mathsf{A}\).
     If \(b \in K\) is the GC content interval associated with the orange plasmid, then it is sufficient to have \( inflow(\mathsf{D}) (1 + \plm{\mathsf{D}} + \gcscore{\mathsf{D}}{b}) - \cov{\mathsf{D}} \geq 0\) to retrieve \(\mathsf{A}\) through \(\mathsf{D}\).
 
@@ -111,7 +111,7 @@ Also, it is the occasion to better model the circularity.
 \begin{figure}
   \centering
   \includegraphics{pbf_iterbin/img/pbf_iterbin-implicit_circularity.pdf}
-  \figurecaption{A repeated seed can split a bin}{%
+  \figurecaption{The circularity multiplies the number of equivalent solutions}{%
     Suppose we have a plasmid with three fragments, where \(\mathsf{A}\) is the seed and also a repeated sequence in the plasmid genome, such that its coverage is twice the ones of \(\mathsf{B}\) and \(\mathsf{C}\).
     Dashed links are not active.
     Active links are associated with a flow number.
