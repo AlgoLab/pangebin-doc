@@ -11,7 +11,10 @@ Below we describe the MILP model.
 
 \begin{table}[h!]
   \centering
-  \tablecaption{\MGCLB{} MILP constraints}{What is new here comparing to the two previous approaches is we need to define variables \(\inflowgc{i}{b}\) for all fragments \(i \in \Fragments{}\) and GC content interval \(b \in K\).}\label{tab:once:mgclb:cst}
+  \tablecaption{\MGCLB{} MILP constraints}{%
+    What is new here comparing to the two previous approaches is we need to define variables \(\inflowgc{i}{b}\) for all fragments \(i \in \Fragments{}\) and GC content interval \(b \in K\).
+    Also, we do not need to define the \(\fraggc{\Fragments}{K}\) binary variables.
+  }\label{tab:once:mgclb:cst}
   \begin{tabular}{@{}ll@{}}
     \toprule
     \tabhtxt{Category} & \tabhtxt{Constraints} \\
@@ -41,9 +44,10 @@ Below we describe the MILP model.
       pbf_iterbin:milp:cst:ccomp:tree_arc_active,%
       pbf_iterbin:milp:cst:ccomp:number_of_active_vertices%
     } \\
-    \addlinespace
     GC & \Cref{%
-      pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval,%
+      pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval%
+    } \\
+    & \Cref{%
       pbf_iterbin:milp:cst:gc:inflowgc_1,%
       pbf_iterbin:milp:cst:gc:inflowgc_2,%
       pbf_iterbin:milp:cst:gc:inflowgc_3%
