@@ -38,7 +38,18 @@
 % Objective functions
 %
 \newcounter{objective}
+
 \crefalias{objective}{obj}
 \creflabelformat{obj}{#2#1#3}
 \crefname{obj}{objective}{objectives}
-\newcommand{\objlabel}[1]{\refstepcounter{objective}\tag{\text{O\theobjective}}\label[obj]{#1}} % chktex 10 % chktex 9
+
+\newcommand{\objlabel}[1]{\label[obj]{#1}} % chktex 10 % chktex 9
+
+\newtagform{Obj}{(O}{)}
+
+\makeatletter
+\NewDocumentEnvironment{Objective}{}{%
+  \usetagform{Obj}%
+  \let\c@equation\c@objective\def\theequation{\theobjective}%
+}{}
+\makeatother
