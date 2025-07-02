@@ -68,6 +68,11 @@ The total flow is strictly positive:
   F \geq \epsilon_F \quad \epsilon_F > 0 \cstlabel{pbf_iterbin:milp:cst:flow:total_flow_strictly_positive} % chktex 25
 \end{equation}
 
+An active arc has a strictly positive flow:
+\begin{equation}
+  y_a \leq \frac{1}{\epsilon_F} f_a \quad \forall a \in A_\Links{} \cstlabel{pbf_iterbin:milp:cst:flow:arc_flow_strictly_positive} % chktex 25
+\end{equation}
+
 An active link-arc has a flow at least \(F\).
 \begin{align}
   F_a & \geq F - (1 - y_a) \max_{i \in \SeedFrags{}}\Set{\cov{i}} & \forall a \in A_\Links{} \cstlabel{pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_1} \\ % chktex 25
