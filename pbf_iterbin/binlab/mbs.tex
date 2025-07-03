@@ -25,6 +25,7 @@ Below we describe the MILP model.
       pbf_iterbin:milp:cst:flow:inflow_equals_outflow_reverse,%
       pbf_iterbin:milp:cst:flow:total_flow_source,%
       pbf_iterbin:milp:cst:flow:total_flow_sink,%
+      pbf_iterbin:milp:cst:flow:total_flow_strictly_positive,%
       pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_1,%
       pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_2,%
       pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_3%
@@ -47,10 +48,12 @@ Below we describe the MILP model.
 
 \begin{definition}{\MBS{} MILP objective function}{pbf_iterbin:binlab:mbs:obj}
   The objective function aims to maximize the total coverage scores:
-  \begin{equation}
-    \max ~ BinningScore
-    \objlabel{pbf_iterbin:binlab:mbs:obj:max_coverage_score} % chktex 25 % chktex 35
-  \end{equation}
+  \begin{Objective}
+    \begin{equation}
+      \max ~ BinningScore
+      \objlabel{pbf_iterbin:binlab:mbs:obj:max_coverage_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
   where \(
     \displaystyle BinningScore = %
     \sum_{i \in \Fragments{}} \fzeta{i} \parenth[\big]{ inflow(i) - (\cov{i}\frag{i} - inflow(i)) + \plm{i} inflow(i)}

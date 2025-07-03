@@ -27,19 +27,23 @@ In the following we describe the MILP model.
 
 In addition to the constraints in \Cref{tab:binlab:mls:cst}, we constraint the coverage score to be near to the optimal coverage score \(\Phi{}\) previously found in \MBS{}:
 %
-\begin{equation}
-  \Phi - (1 - \gamma_1) | \Phi | \leq BinningScore \quad \gamma_1 \in (0.5, 1] % chktex 9
-  \cstlabel{pbf_iterbin:binlab:mls:cst:fix_mbs_obj} % chktex 25
-\end{equation}
+\begin{Constraint}
+  \begin{equation}
+    \Phi - (1 - \gamma_1) | \Phi | \leq BinningScore \quad \gamma_1 \in (0.5, 1] % chktex 9
+    \cstlabel{pbf_iterbin:binlab:mls:cst:fix_mbs_obj} % chktex 25
+  \end{equation}
+\end{Constraint}
 
 \begin{definition}{\MLS{} MILP objective function}{pbf_iterbin:binlab:mls:obj}
 
   The objective function aims to maximize the GC score:
   %
-  \begin{equation}
-    \max ~ LabellingScore
-    \objlabel{pbf_iterbin:binlab:mls:obj:max_labelling_score} % chktex 25 % chktex 35
-  \end{equation}
+  \begin{Objective}
+    \begin{equation}
+      \max ~ LabellingScore
+      \objlabel{pbf_iterbin:binlab:mls:obj:max_labelling_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
   %
   where \(
     \displaystyle LabellingScore = \sum_{\substack{

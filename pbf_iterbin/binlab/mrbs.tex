@@ -19,15 +19,19 @@ It results in a last MILP formulation \(\MRBS{}\):
 \end{table}
 
 The labelling score must be equal to the labelling score \(\Lambda{}\) found in \MLS{}:
-\begin{equation}
-  LabellingScore = \Lambda
-  \cstlabel{pbf_iterbin:binlab:mrbs:cst:fix_mls_obj} % chktex 25
-\end{equation}
+\begin{Constraint}
+  \begin{equation}
+    LabellingScore = \Lambda
+    \cstlabel{pbf_iterbin:binlab:mrbs:cst:fix_mls_obj} % chktex 25
+  \end{equation}
+\end{Constraint}
 
 \begin{definition}{\MRBS{} MILP objective function}{pbf_iterbin:binlab:mrbs:obj}
   The objective function aims to maximize the binning score:
-  \begin{equation}
-    \max ~ BinningScore
-    \objlabel{pbf_iterbin:binlab:mrbs:obj:max_binning_score} % chktex 25 % chktex 35
-  \end{equation}
+  \begin{Objective}
+    \begin{equation}
+      \max ~ BinningScore
+      \objlabel{pbf_iterbin:binlab:mrbs:obj:max_binning_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
 \end{definition}

@@ -32,6 +32,7 @@ Below we describe the MILP model.
       pbf_iterbin:milp:cst:flow:inflow_equals_outflow_reverse,%
       pbf_iterbin:milp:cst:flow:total_flow_source,%
       pbf_iterbin:milp:cst:flow:total_flow_sink,%
+      pbf_iterbin:milp:cst:flow:total_flow_strictly_positive,%
       pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_1,%
       pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_2,%
       pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_3%
@@ -45,9 +46,7 @@ Below we describe the MILP model.
       pbf_iterbin:milp:cst:ccomp:number_of_active_vertices%
     } \\
     GC & \Cref{%
-      pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval%
-    } \\
-    & \Cref{%
+      pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval,%
       pbf_iterbin:milp:cst:gc:inflowgc_1,%
       pbf_iterbin:milp:cst:gc:inflowgc_2,%
       pbf_iterbin:milp:cst:gc:inflowgc_3%
@@ -61,10 +60,12 @@ Below we describe the MILP model.
 
 \begin{definition}{\MGCLB{} MILP objective function}{pbf_iterbin:once:mgclb:obj}
   The objective function aims to maximize the total coverage scores:
-  \begin{equation}
-    \max ~ CoveragePenaly + PlasmidnessScore + GCScore
-    \objlabel{pbf_iterbin:once:mgclb:obj:max_coverage_score} % chktex 25 % chktex 35
-  \end{equation}
+  \begin{Objective}
+    \begin{equation}
+      \max ~ CoveragePenaly + PlasmidnessScore + GCScore
+      \objlabel{pbf_iterbin:once:mgclb:obj:max_coverage_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
   where:
   \begin{align*}
     CoveragePenaly &= %
