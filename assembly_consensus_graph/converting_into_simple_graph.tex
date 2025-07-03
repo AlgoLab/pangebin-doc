@@ -1,12 +1,12 @@
 \subsection{Converting the multigraph to a simple graph}
 
-We can convert the original pan-assembly graph, which is a multigraph, to a simple graph by merging all the multi-edges in one.
+We can convert the original assembly-consensus graph, which is a multigraph, to a simple graph by merging all the multi-arcs in one.
 
 It consists in a priori merging all the multi-links between the fragments.
 When the multi-links are of different types, we choose to type the link resulting from the merge as an assembly link.
 
 \begin{notebox}
-  Now, for each contig \(c \in \mathcal{C}\), the sets \(A_\Links{}(c)\) and \(A_\Links{}(\rev{c})\) do not contain the multi-edges but only the edges resulting from the merge of them, so that \(|A_\Links{}(c)| = |A_\Links{}(\rev{c})| = |\Fragments{}(c)| - 1\).
+  Now, for each contig \(c \in \mathcal{C}\), the sets \(A(c)\) and \(A(\rev{c})\) do not contain the multi-arcs but only the arcs resulting from the merge of them, so that \(|A(c)| = |A(\rev{c})| = |\Fragments{}(c)| - 1\).
 \end{notebox}
 
-In the following, we consider \(PG\) to be the simple graph resulting from the merge of the multi-edges in \ELinks{}.
+In the following, we consider \(ACG\) to be the simple graph resulting from the merge of the multi-arcs.

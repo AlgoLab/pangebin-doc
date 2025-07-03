@@ -3,10 +3,6 @@
 Given a contig \(c\) in the set of contigs \(\Contigs{} = \Contigs{}_1 \cup \Contigs{}_2\) from the two assemblers (by \(\rev{c}\) we denote the reverse).
 In the assembly-consensus graph \(ACG\), there exists a unique sequence \(p_c\) of vertices in \(V\) corresponding to the contig \(c\).
 
-We denote by \(A_\Links{}(p_c)\) or \(A_\Links{}(c)\) the set of directed link-edges (link-arcs) composing contig \(c\).
+We respectively denote by \(\Links{}(c)\) and \(A(p_c)\) or \(A(c)\) the set of links in \Links{}, respectively of arcs in \(ACG\) representing contig \(c\).
 
-\begin{notebox}
-  By \(A_\Links{}(\rev{c})\) we denote the set of link-arcs composing the reverse of \(c\).
-\end{notebox}
-
-For a contig \(c \in \Contigs{}\), \(\Fragments{}(c) \subset \Fragments{}\) is the set of all fragments of \(c\).
+For a contig \(c \in \Contigs{}\), \(\Fragments{}(c) \subset \Fragments{}\) is the set of all fragments of \(c\), while \(V(c)\) is the set of vertices in \(V\) representing \(c\).

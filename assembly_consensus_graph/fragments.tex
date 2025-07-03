@@ -16,8 +16,11 @@ A pangenome fragment can come from:
 
 In cases 1 and 2, the fragment is defined as a \emph{subcontig}, while in case 3 it is defined as a shared subcontig (\emph{a share}).
 
-For a fragment \(i \in \Fragments{}\), \(\Contigs{}(i) \subset \Contigs{}\) denotes the set of contigs from which \(i\) comes from. The fragment \(i\) is a subcontig if and only if \(|\Contigs{}(i)| = 1\), otherwise \(i\) is a share if and only if \(|\Contigs{}(i)| > 1\).
-The extremity vertices in \(V\) of a fragment \(i \in \Fragments{}\) are provided by \(i_t \in V_t\) and \(i_h \in V_h\) (note that \(\Set{i_t, i_h} \in \EFrags{}\)). Reversely, \(vfrag \colon V \tosur \Fragments{}\) gives the fragment associated to one of its extremity vertices.
+For a fragment \(i \in \Fragments{}\), \(\Contigs{}(i) \subset \Contigs{}\) denotes the set of contigs from which \(i\) comes from.
+The fragment \(i\) is a subcontig if and only if \(|\Contigs{}(i)| = 1\), otherwise \(i\) is a share if and only if \(|\Contigs{}(i)| > 1\).
+To each of the two orientated version of a fragment \(i \in \Fragments{}\) there is one vertex in \(V\).
+Let \(fragv \colon \Fragments{} \toinj V^2\) be the injective function that maps a fragment \(i \in \Fragments{}\) to its associated couple of vertices (the forward, then the reverse).
+Reversely, \(vfrag \colon V \tosur \Fragments{}\) gives the fragment associated to a given vertex.
 
 \subsubsection{Fragment properties}
 
