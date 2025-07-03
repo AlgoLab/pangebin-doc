@@ -1,0 +1,23 @@
+\section{Supplementary definitions}
+
+\begin{definition}
+  {Sequence graph (UG version)}{sequence_graph_ug} Let
+  \(G = (V_{t} \cup V_{h}, E_{\Sequences{}} \cup \ELinks{})\) be a multi-undirected
+  graph (multigraph) where:
+
+  \begin{itemize}
+    \item \(\Sequences{}\) is the set of sequences
+
+    \item \(\Links{}\) is the multiset of links between oriented sequences
+
+    \item vertices from \(V_{t}\) and \(V_{h}\) represent respectively the tails
+      and heads of the sequences
+
+    \item sequence-edges from \(E_{\Sequences{}}\) represent the sequences and connect
+      two extremities of the same sequence (\(E_{\Sequences{}}\) is a perfect
+      matching of the vertices)
+
+    \item link-edges from the multi-link-edge set \(\ELinks{}\) represent
+      the links between the sequences
+  \end{itemize}
+\end{definition}
