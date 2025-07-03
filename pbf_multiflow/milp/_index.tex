@@ -1,0 +1,15 @@
+\section{Mixed Integer Linear Programming model}
+
+In this section we present the MILP model for the multi-binning flow approach.
+It consists in a set of constraints where the right inequality constant arm can change to make correspond the model to the bin properties.
+Let \(n \in \Naturals{}\) be the maximum number of flow we can or want to model, and \(1 \leq b \leq n\) thus representing the \(b\)\textsuperscript{th} flow.
+One flow represents one bin.
+The changes of the constraints' constant parts must cover the following state:
+
+\begin{itemize}
+  \item The bin \(b\) is active or not (\mfbOn{} or \mfbOff{}).
+  \item The bin \(b\) is circular or not (\mfbC{} or \mfbPC{}).
+  \item The bin \(b\) contains at least one seed or can be free of seeds (\mfbS{} or \mfbFS{}).
+\end{itemize}
+
+\input{pbf_multiflow/milp/variables.tex}
