@@ -52,8 +52,8 @@ Note that GplasCC is updating the plasmid statistics each time it extends a walk
 All the three approaches are based on a network graph where the source only connects the seeds.
 When a link miss to satisfy the plasmid circularity, the recall and the precision become highly sensitive to the position of the seeds in the plasmid corresponding subgraph walk.
 \Cref{fig:pbf_iterbin:seed_position_robustness} illustrates this issue.
-As in \Cref{subfig:pbf_iterbin:middle_seed_splits_partially_circular_plasmid}, the recall decrease because we miss a fragment before the seed in the walk.
-If this (positive plasmidness) fragment can be reached from another seed of another plasmid, it can appear in a different and wrong bin because it will enable to improve the objective function value at the time of this future bin search, resulting in a loss of precision.
+As in \Cref{subfig:pbf_iterbin:middle_seed_splits_partially_circular_plasmid}, the recall decreases because we miss a fragment before the seed in the walk.
+If this (positive plasmidness) fragment can be reached from another seed of another plasmid, it would appear in a different and wrong bin because it would enable the improvement of the objective function value at the time of this future bin search, resulting in a loss of precision.
 
 \begin{figure}
   \centering
