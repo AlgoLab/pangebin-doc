@@ -1,23 +1,11 @@
-\subsection{Contigs in the pan-assembly graph}
+\subsection{Assembly plasmid binning input data}
 
-Given a contig \(c\) in the set of contigs \(\Contigs{} = \Contigs{}_1 \cup \Contigs{}_2\) from the two assemblers (by \(c^-\) we denote the reverse).
-In the pan-assembly graph \(PG\), there exists a unique sequence \(p_c\) of vertices in \(V\) corresponding to the contig \(c\).
+\begin{definition}{Contig set}{contig_set}
+  Let \Contigs{} be the contig set.
+  A contig is a sequence resulting from a read assembly process.
+\end{definition}
 
-\begin{notebox}
-  Each sequence \(p_c\) can be decomposed as a fragment-edge --- link-edge alternate, beginning from and ending to a fragment-edge.
-\end{notebox}
-
-We denote by \(A_\Links{}(p_c)\) or \(A_\Links{}(c)\) the set of directed link-edges (link-arcs) composing contig \(c\).
-
-\begin{notebox}
-  By \(A_\Links{}(c^-)\) we denote the set of link-arcs composing the reverse of \(c\).
-\end{notebox}
-
-For a contig \(c \in \Contigs{}\), \(\Fragments{}(c) \subset \Fragments{}\) is the set of all fragments of \(c\).
-
-\subsubsection{Contig properties}
-
-Each contig is associated with three properties: its coverage, its plasmidness and a set of GC penalties depending on GC content intervals.
+Each contig is associated with three properties: its coverage, its plasmidness and a list of GC scores depending on GC content intervals.
 
 In the following, \(c \in \Contigs{}\) is a contig.
 

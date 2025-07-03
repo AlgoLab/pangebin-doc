@@ -37,7 +37,7 @@
     \multicolumn{3}{@{}l@{}}{\tabhtxt{Connected component variables}} \\
     \addlinespace
     %
-    \(\beta_a \in [0, ]\) & \(\forall a \in A_\Links{}\) & Is strictly negative if the link-arc \(a\) participates in one of the solution subgraph's exploration tree. It acts as a negative integer, where the absolute value corresponds to the depth of the subtree defined by the successor. \\
+    \(\beta_a \in [ 0, |V| ]\) & \(\forall a \in A_\Links{}\) & Is strictly negative if the link-arc \(a\) participates in one of the solution subgraph's exploration tree. It acts as a negative integer, where the absolute value corresponds to the depth of the subtree defined by the successor. \\
     \addlinespace
     \(r_v \in \Set{0, 1}\) & \(\forall v \in V \setminus \Set*{s, t}\) & Denoting whether the vertex \(v\) connects the source in the tree or not. \\
     %

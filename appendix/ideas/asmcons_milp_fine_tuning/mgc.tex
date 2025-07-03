@@ -90,7 +90,7 @@ The calculation of the GC score for a fragment \(i \in \Fragments{}\) does not r
   A contig \(c \in \Contigs{}\), is active if and only if all the link-arcs defining \(c\) (or its reverse) are active:
   \begin{align}
     |A_\Links{}(c)|x_c & \leq \sum_{a \in A_\Links{}(c)} y_a \\
-    |A_\Links{}(c^-)|x_c & \leq \sum_{a \in A_\Links{}(c^-)} y_a
+    |A_\Links{}(\rev{c})|x_c & \leq \sum_{a \in A_\Links{}(\rev{c})} y_a
   \end{align}
 
   \begin{questionbox}

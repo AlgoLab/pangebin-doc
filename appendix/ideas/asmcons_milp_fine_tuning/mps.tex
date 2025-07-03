@@ -26,7 +26,7 @@ The difference between the two inequality parts equals to:
   \rho_{c_1} - \sum_{i \in \Fragments{}(c_1) } \rho_{i} = \frac{ |j| }{2} \left(\frac{ \rho_{c_1} }{ |c_1| } - \frac{ \rho_{c_2} }{ |c_2| } \right) \geq 0
 \]
 
-If the flow passes through all the link-arcs that define \(c_1\) (links in \(A_\Links{}(c_1)\) or links in \(A_\Links{}(c_1^-)\) for the reverse of \(c_1\)), the plasmidness is penalized because of the fragmentation of \(c_1\), particularly because of the plasmidness of the share \(j\).
+If the flow passes through all the link-arcs that define \(c_1\) (links in \(A_\Links{}(c_1)\) or links in \(A_\Links{}(\rev{c_1})\) for the reverse of \(c_1\)), the plasmidness is penalized because of the fragmentation of \(c_1\), particularly because of the plasmidness of the share \(j\).
 Without the fragmentation of the contig \(c_1\), the plasmidness would have been higher by the difference.
 
 In the following we present a way to solve this issue.
@@ -43,7 +43,7 @@ When the flow passes through several contigs in \(\Contigs(j)\), we only add onc
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=0.6\linewidth]{appendix/ideas/panasm_milp_fine_tuning/img/constraints-correct_plasmidness_example.pdf}
+  \includegraphics[width=0.6\linewidth]{appendix/ideas/asmcons_milp_fine_tuning/img/constraints-correct_plasmidness_example.pdf}
   \figurecaption{Differential correction of share fragment plasmidness.}{%
     Let assume the flow passes through all the link-arcs defining contigs \(U\), \(S_1\) and \(S_2\) (or their reverse).
     Because of the inequalities between the plasmidness, the objective function is corrected by \(\dplm{U}{c}\) for the share \(c\), and by \(\dplm{S_2}{g}\) for the share \(g\).

@@ -61,7 +61,7 @@ The cumulative flow through a fragment \(i \in \Fragments{}\) cannot exceed its 
 \end{Constraint}
 Where \(\displaystyle inflow(i) = \sum_{(u, i_t) \in A_\Links{}} f_{ui_t} + \sum_{(u, i_h) \in A_\Links{}} f_{ui_h}\) where \(i_t\) and \(i_h\) respectively stand for the tail and the head vertices of fragment \(i\).
 
-The cumulative flow into a fragment \(i\) should be equal to the cumulative flow out of it. Same for the reverse \(i^-\):
+The cumulative flow into a fragment \(i\) should be equal to the cumulative flow out of it. Same for the reverse \(\rev{i}\):
 \begin{Constraint}
   \begin{align}
     \sum_{(u, i_t) \in A_\Links{}} f_{u i_t} & = \sum_{(i_h, w) \in A_\Links{}} f_{i_h w} & \forall i \in \Fragments{} \cstlabel{pbf_iterbin:milp:cst:flow:inflow_equals_outflow_forward} \\ % chktex 25

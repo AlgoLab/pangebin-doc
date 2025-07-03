@@ -1,0 +1,21 @@
+\section{The assembly-consensus graph}
+
+Let \(Asm_{1}\) and \(Asm_{2}\) be two assembly methods, their respective contig set \(\Contigs{}_{1}\) and \(\Contigs{}_{2}\) and their respective link set \(\Links{}_{1}\) and \(\Links{}_{2}\).
+\(G_{1}= (V_1, A_1)\) and \(G_{2}= (V_2, A_2)\) respectively denote the assembly graphs of \(Asm_{1}\) and \(Asm_{2}\). By \(\Contigs{} = \Contigs{}_1 \cup \Contigs{}_2\) we denote the set of all the contigs.
+
+The assembly-consensus returns fragments of the contigs.
+Let \Fragments{} be the set of fragments.
+
+We denote by the sequence graph \(ACG = (V, A)\) the pan-assembly graph, where:
+\begin{itemize}
+  \item \(V\) represents the oriented fragments in \(\Fragments{}\)
+  \item \(A\) represents the links between the fragments
+\end{itemize}
+
+\input{assembly_consensus_graph/contigs}
+
+\input{assembly_consensus_graph/fragments}
+
+\input{assembly_consensus_graph/links}
+
+\input{assembly_consensus_graph/converting_into_simple_graph}
