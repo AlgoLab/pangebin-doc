@@ -1,0 +1,55 @@
+\subsubsection{The Maximum Labelling Score problem \MLS{}}\label{sec:pbf_iterbin:binlab:mls}
+
+The second binning stage consists in finding the best GC bin label, for a bin with a binning score lower bound.
+We refer to this subproblem as the \enquote{Maximum Labelling Score} problem (\MLS{}).
+In the following we describe the MILP model.
+
+\begin{table}[!htbp]
+  \centering
+  \tablecaption{\MLS{} MILP constraints}{}\label{tab:binlab:mls:cst}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \tabhtxt{Category} & \tabhtxt{Constraints} \\
+    \midrule
+    \multicolumn{2}{@{}l@{}}{Constraints in \zcref[S]{tab:binlab:mbs:cst}} \\
+    \addlinespace
+    GC & \zcref[S]{%
+      pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval,%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_1,%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_2,%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_3,%
+      pbf_iterbin:milp:cst:gc:active_fragment_gc_4%
+    } \\
+    \MLS{} dedicated & \zcref[S]{pbf_iterbin:binlab:mls:cst:fix_mbs_obj} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+In addition to the constraints in \zcref[S]{tab:binlab:mls:cst}, we constraint the coverage score to be near to the optimal coverage score \(\Phi{}\) previously found in \MBS{}:
+%
+\begin{Constraint}
+  \begin{equation}
+    \Phi - (1 - \gamma_1) | \Phi | \leq BinningScore \quad \gamma_1 \in (0.5, 1] % chktex 9
+    \cstlabel{pbf_iterbin:binlab:mls:cst:fix_mbs_obj} % chktex 25
+  \end{equation}
+\end{Constraint}
+
+\begin{definition}{\MLS{} MILP objective function}{pbf_iterbin:binlab:mls:obj}
+
+  The objective function aims to maximize the GC score:
+  %
+  \begin{Objective}
+    \begin{equation}
+      \max ~ LabellingScore
+      \objlabel{pbf_iterbin:binlab:mls:obj:max_labelling_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
+  %
+  where \(
+    \displaystyle LabellingScore = \sum_{\substack{
+        i \in \Fragments{} \\
+        b \in K
+    }} \gcscore{i}{b} \fraggc{i}{b}%
+  \).
+
+\end{definition}

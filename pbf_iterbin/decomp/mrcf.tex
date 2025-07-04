@@ -1,0 +1,37 @@
+\subsubsection{The Maximum Refined Coverage-likelihood Flow problem \MRCF{}}\label{sec:pbf_iterbin:decomp:mrcf}
+
+The solution set \(S_\MPS{}\) for \MPS{} contains solutions with the same value of \(PlasmidnessScore\) and different values for \(CoverageFlow\) and \(GCScore\) because of \zcref[S]{pbf_iterbin:decomp:mgc:cst:fix_mcf_obj,pbf_iterbin:decomp:mps:cst:fix_mgc_obj}.
+The final refinement stage consists in fixing the value of \(PlasmidnessScore\) and finding the subset of \(S_\MPS{}\) maximizing first \(CoverageFlow\) and then \(GCScore\).
+It results in a last MILP formulation \(\MRCF{}\):
+
+\begin{table}[!htbp]
+  \centering
+  \tablecaption{\MRCF{} MILP constraints}{}\label{tab:decomp:mrcf:cst}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \tabhtxt{Category} & \tabhtxt{Constraints} \\
+    \midrule
+    \multicolumn{2}{@{}l@{}}{Constraints in \zcref[S]{tab:decomp:mps:cst}} \\
+    \addlinespace
+    \MRCF{} dedicated & \zcref[S]{pbf_iterbin:decomp:mrcf:cst:fix_mps_obj} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The plasmidness score must be equal to the plasmidness score \(P\) found in \MPS{}:
+\begin{Constraint}
+  \begin{equation}
+    PlasmidnessScore = P
+    \cstlabel{pbf_iterbin:decomp:mrcf:cst:fix_mps_obj} % chktex 25
+  \end{equation}
+\end{Constraint}
+
+\begin{definition}{\MRCF{} MILP objective function}{pbf_iterbin:decomp:mrcf:obj}
+  The objective function aims to maximize the coverage flow prior to the GC score:
+  \begin{Objective}
+    \begin{equation}
+      \max ~ |\Fragments{}| CoverageFlow + GCScore
+      \objlabel{pbf_iterbin:decomp:mrcf:max_coverage_and_gc_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
+\end{definition}

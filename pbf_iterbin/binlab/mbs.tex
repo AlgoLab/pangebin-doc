@@ -1,0 +1,74 @@
+\subsubsection{The Maximum Binning Score problem \MBS{}}\label{sec:pbf_iterbin:binlab:mbs}
+
+The first binning stage consists in finding a flow maximizing the use of fragment coverage and the plasmidness.
+We refer to this subproblem as the \enquote{Maximum Binning Score} problem (\MBS{}).
+As a coarse-grain strategy, it consists in finding a connected component explaining both the coverages and the plasmidness.
+Below we describe the MILP model.
+
+\begin{table}[h!]
+  \centering
+  \tablecaption{\MBS{} MILP constraints}{}\label{tab:binlab:mbs:cst}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \tabhtxt{Category} & \tabhtxt{Constraints} \\
+    \midrule
+    Decision & \zcref[S]{%
+      pbf_iterbin:milp:cst:dvar:active_extremity_implies_active_fragment,%
+      pbf_iterbin:milp:cst:dvar:active_fragment_implies_active_extremity,%
+      pbf_iterbin:milp:cst:dvar:active_link_arc_active_fragments,%
+      pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs%
+    } \\
+    Flow & \zcref[S]{%
+      pbf_iterbin:milp:cst:flow:arc_flow_at_most_coverage,%
+      pbf_iterbin:milp:cst:flow:inflow_at_most_coverage,%
+      pbf_iterbin:milp:cst:flow:inflow_equals_outflow_forward,%
+      pbf_iterbin:milp:cst:flow:inflow_equals_outflow_reverse,%
+      pbf_iterbin:milp:cst:flow:total_flow_source,%
+      pbf_iterbin:milp:cst:flow:total_flow_sink,%
+      pbf_iterbin:milp:cst:flow:total_flow_strictly_positive,%
+      pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_1,%
+      pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_2,%
+      pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_3%
+    } \\
+    Connected component & \zcref[S]{%
+      pbf_iterbin:milp:cst:ccomp:one_outgoing_arc_from_source,%
+      pbf_iterbin:milp:cst:ccomp:positive_flow_incident_vertices_in_component,%
+      pbf_iterbin:milp:cst:ccomp:depth_of_tree_source,%
+      pbf_iterbin:milp:cst:ccomp:depth_of_tree_incident_arcs,%
+      pbf_iterbin:milp:cst:ccomp:tree_arc_active,%
+      pbf_iterbin:milp:cst:ccomp:number_of_active_vertices%
+    } \\
+    GC & --- \\
+    Miscellaneous & \zcref[S]{%
+      pbf_iterbin:milp:cst:misc:min_cumulative_fragment_length%
+    } \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{definition}{\MBS{} MILP objective function}{pbf_iterbin:binlab:mbs:obj}
+  The objective function aims to maximize the total coverage scores:
+  \begin{Objective}
+    \begin{equation}
+      \max ~ BinningScore
+      \objlabel{pbf_iterbin:binlab:mbs:obj:max_coverage_score} % chktex 25 % chktex 35
+    \end{equation}
+  \end{Objective}
+  where \(
+    \displaystyle BinningScore = %
+    \sum_{i \in \Fragments{}} \fzeta{i} \parenth[\big]{ inflow(i) - (\cov{i}\frag{i} - inflow(i)) + \plm{i} inflow(i)}
+  \) and \( \displaystyle \fzeta{i} = \frac{ |i| }{ \max_{j \in \Fragments{}} |j| } \).
+
+  \begin{ideabox}
+    Perhaps we should use the coverage as a penalty and only on positive plasmidness, and replace \fzeta{} by the fragment length, i.e.:
+    \[
+      BinningScore =  \sum_{
+        \substack{
+          i \in \Fragments{} \\
+          \plm{i} > 0
+        }
+      } |i| \parenth*{ inflow(i) - \cov{i} }
+      + \sum_{i \in \Fragments{}} |i| \plm{i} inflow(i)
+    \]
+  \end{ideabox}
+\end{definition}
