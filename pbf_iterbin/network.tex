@@ -1,6 +1,6 @@
 \subsection{The network graph}\label{sec:pbf_iterbin:network}
 
-All the MILP flow-based approaches are built on the top of a flow network:
+All the MILP flow-based approaches are built on the top of a flow network, seen as a wrapper around the assembly graph \(G_{asm} = (V_\Contigs{}, A_\Links)\) (\zcref[S]{definition:assembly_graph}):
 
 \begin{itemize}
   \item We add two vertices, \source{} and \sink{}, that are respectively the source and the sink vertices.
@@ -17,7 +17,7 @@ All the MILP flow-based approaches are built on the top of a flow network:
 
   \begin{itemize}
     \item \( V = V_\Contigs{} \cup \Set*{\source{}, \sink{}} \) is the set of vertices with the source \(\source{}\) and the sink \(\sink{}\);
-    \item \( A = A_\Links{} \cup \Set{(\source, v) \given v \in \VSeeds{}} \cup \Set{(v, \sink) \given v \in V} \) is the set of link-arcs augmented with the source-arcs and the sink-arcs;
+    \item \( A = A_\Links{} \cup \Set{(\source, v) \given v \in \VSeeds{}} \cup \Set{(v, \sink) \given v \in V_\Contigs{}} \) is the set of link-arcs augmented with the source-arcs and the sink-arcs;
     \item \( \cov{\Contigs{}} \colon \Contigs{} \to \Reals{}_{> 0} \) is the coverage function;
     \item \( \gcscore{\Contigs{}}{K} \colon \Contigs{} \times K \to [-1, 1] \) is the GC score function;
     \item \( \plm{\Contigs{}} \colon \Contigs{} \to [-1, 1] \) is the plasmidness function.

@@ -1,28 +1,26 @@
 \subsection{The network graph}\label{sec:pbmf:network}
 
-All the MILP flow-based approaches are built on the top of a flow network:
+All the MILP flow-based approaches are built on the top of a flow network, seen as a wrapper around the assembly graph \(G_{asm} = (V_\Contigs{}, A_\Links)\) (\zcref[S]{definition:assembly_graph}):
 
 \begin{itemize}
-  \item To keep the direction of the flow along the link-edges in \(E_\Links{}\), we transform each link-edge to two link-arcs with the function \(etoa \colon \Set*{u, v} \mapsto \Set*{(u, v), (v, u)}\).
-  \item We add two vertices, \(s\) and \(t\) that are respectively the source and the sink vertices.
-  \item The set \(\VSeeds{}\) contains the vertices associated with the seed fragments in \ContigSeeds{}.
-  \item The source goes into all the vertices \(V_t \cup V_h\), and each of these vertices goes into the sink.
+  \item We add two vertices, \source{} and \sink{}, that are respectively the source and the sink vertices.
+  \item The set \(\VSeeds{}\) contains the vertices associated with the seed contigs in \ContigSeeds{}.
+  \item The source goes into all the vertices in \(V_{asm}\), and each of these vertices goes into the sink.
 \end{itemize}
 
 The main differences with the previous network graph in \zcref[S]{definition:pbf_iterbin:network_graph} are:
 \begin{itemize}
-  \item the source now connects all the fragment vertices \(V_t \cup V_h\);
+  \item the source now connects all the vertices in \(V_{asm}\) and not only those of \(VSeeds{}\);
   \item there is no coverage score
 \end{itemize}
 
 \begin{definition}{Network graph}{pbmf:network_graph}
-  Let \(N = (V, A_\Fragments{} \cup A_\Links{}, s, t, \cov{\Fragments{}}, \plm{\Fragments{}})\) be the network graph, where:
+  Let \(N = (V, A, \source{}, \sink{}, \cov{\Contigs{}}, \plm{\Contigs{}})\) be the network graph, where:
 
   \begin{itemize}
-    \item \( V = V_t \cup V_h \cup \Set*{s, t} \) is the set of vertices with the source \(s\) and the sink \(t\);
-    \item \( A_\Fragments{} = \bigcup_{e \in E_\Fragments{}} etoa(e) \) is the set of fragment-arcs;
-    \item \( A_\Links{} = \bigcup_{e \in E_\Links{}} etoa(e) \cup \Set{(s, v) \given v \in V_t \cup V_h} \cup \Set{(v, t) \given v \in V_t \cup V_h} \) is the set of link-arcs augmented with the source-arcs and the sink-arcs;
-    \item \( \cov{\Fragments{}} \colon \Fragments{} \to \Reals{}_{> 0} \) is the coverage function;
-    \item \( \plm{\Fragments{}} \colon \Fragments{} \to [-1, 1] \) is the plasmidness function.
+    \item \( V = V_\Contigs{} \cup \Set*{\source{}, \sink{}} \) is the set of vertices with the source \(\source{}\) and the sink \(\sink{}\);
+    \item \( A = A_\Links{} \cup \Set{(\source, v) \given v \in V_\Contigs{}} \cup \Set{(v, \sink) \given v \in V_\Contigs{}} \) is the set of link-arcs augmented with the source-arcs and the sink-arcs;
+    \item \( \cov{\Contigs{}} \colon \Contigs{} \to \Reals{}_{> 0} \) is the coverage function;
+    \item \( \plm{\Contigs{}} \colon \Contigs{} \to [-1, 1] \) is the plasmidness function.
   \end{itemize}
 \end{definition}
