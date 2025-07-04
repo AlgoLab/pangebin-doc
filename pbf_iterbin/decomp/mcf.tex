@@ -1,10 +1,10 @@
 \subsubsection{The Maximum Coverage-likelihood Flow problem \MCF{}}\label{sec:pbf_iterbin:decomp:mcf}
 
-The first binning stage consists in finding a flow maximizing the use of fragment coverage.
+The first binning stage consists in finding a flow maximizing the use of contig coverage.
 We refer to this subproblem as the \enquote{Maximum Coverage-likelihood Flow} problem (\MCF{}).
-As a coarse-grain strategy, it consists in finding a connected component explaining the coverages, large enough to contain all the fragments of the in-building solution bin.
-Indeed, passing through a loop or a cycle will not change the flow value. Only maximizing the flow can lead to use a minimum of fragments.
-To overcome this bias, we score the use of the fragment coverages and maximize their total.
+As a coarse-grain strategy, it consists in finding a connected component explaining the coverages, large enough to contain all the contigs of the in-building solution bin.
+Indeed, passing through a loop or a cycle will not change the flow value. Only maximizing the flow can lead to use a minimum of contigs.
+To overcome this bias, we score the use of the contig coverages and maximize their total.
 Below we describe the MILP model.
 
 \begin{table}[h!]
@@ -59,15 +59,16 @@ Below we describe the MILP model.
       \label{pbf_iterbin:decomp:mcf:obj:max_coverage_score} % chktex 25 % chktex 35
     \end{equation}
   \end{Objective}
-  where \(
-    \displaystyle CoverageScore = %
-    \sum_{i \in \Fragments{}} \fzeta{i} \parenth*{ inflow(i) - (\cov{i}\frag{i} - inflow(i)) }
-  \) and \( \displaystyle \fzeta{i} = \frac{ |i| }{ \max_{j \in \Fragments{}} |j| } \).
+  where
+  \begin{align*}
+    CoverageScore & = \sum_{i \in \Contigs{}} \fzeta{i} \parenth*{ inflow(i) - (\cov{i}\contig{i} - inflow(i)) } \\
+    \fzeta{i} & = \frac{ |i| }{ \max_{j \in \Contigs{}} |j| }
+  \end{align*}
 
   \begin{notebox}
     Before we had \(
       \displaystyle CoverageScore = %
-      \sum_{i \in \Fragments{}} \parenth*{2 \frac{inflow(i)}{\cov{i}} - 1}
+      \sum_{i \in \Contigs{}} \parenth*{2 \frac{inflow(i)}{\cov{i}} - 1}
     \)
   \end{notebox}
 
@@ -76,12 +77,12 @@ Below we describe the MILP model.
     \[
       CoverageScore = \sum_{
         \substack{
-          i \in \Fragments{} \\
+          i \in \Contigs{} \\
           \plm{i} > 0
         }
       } |i| \parenth*{ inflow(i) - \cov{i} }
     \]
-    where we focus on the use of positive plasmidness fragments, and try to minimize the penalty of not using their coverage.
-    Multipliying by the fragment length keep the things robust against the fragmentation of the sequences (good property for the pan-assembly fragments).
+    where we focus on the use of positive plasmidness contigs, and try to minimize the penalty of not using their coverage.
+    Multipliying by the contig length keep the things robust against the fragmentation of the sequences (good property for the assembly-consensus fragments).
   \end{ideabox}
 \end{definition}

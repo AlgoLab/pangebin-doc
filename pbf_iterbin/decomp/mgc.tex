@@ -41,14 +41,15 @@ In addition to the constraints in \zcref[S]{tab:decomp:mgc:cst}, we constraint t
       \label{pbf_iterbin:decomp:mgc:obj:max_gc_probability_score} % chktex 25 % chktex 35
     \end{equation}
   \end{Objective}
-  where \(
-    \displaystyle GCScore = \sum_{\substack{
-        i \in \Fragments{} \\
-        b \in K
-    }} \gcscore{i}{b} \fraggc{i}{b}%
-  \).
+  where
+  \begin{equation*}
+    GCScore = \sum_{\substack{
+        i \in \Contigs{} \\
+        k \in K
+    }} \gcscore{i}{k} \contiggc{i}{k}
+  \end{equation*}
 
   \begin{notebox}
-    In the opposite of the other \texttt{decomp} models, in \MGC{} the GC score does not depend on the fragment coefficient \fzeta{i}.
+    In the opposite of the other \texttt{decomp} models, in \MGC{} the GC score does not depend on the contig coefficient \fzeta{i}.
   \end{notebox}
 \end{definition}

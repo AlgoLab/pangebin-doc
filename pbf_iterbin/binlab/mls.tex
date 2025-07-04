@@ -45,11 +45,12 @@ In addition to the constraints in \zcref[S]{tab:binlab:mls:cst}, we constraint t
     \end{equation}
   \end{Objective}
   %
-  where \(
-    \displaystyle LabellingScore = \sum_{\substack{
-        i \in \Fragments{} \\
-        b \in K
-    }} \gcscore{i}{b} \fraggc{i}{b}%
-  \).
+  where
+  \begin{equation*}
+    LabellingScore = \sum_{\substack{
+        i \in \Contigs{} \\
+        k \in K
+    }} \gcscore{i}{k} \contiggc{i}{k}
+  \end{equation*}
 
 \end{definition}
