@@ -51,15 +51,15 @@ Several concerns raise:
     No link is missing.
     To properly model the circularity, the flow through the source-link and the sink-link must equal to zero.
     It is also sufficient to assume one arbitrary orientation of the seed connects either the source and the sink.
-    It is thus not necessary to connect the other fragments to the sink.
-    The circularity topology and the flow conservation constraints enable to use the full coverage of the plasmid fragments.
-    We must constrain on the circularity: for each active oriented fragment, there is at least one incoming link and one outgoing link (without counting the source and the sink links).
+    It is thus not necessary to connect the other contigs to the sink.
+    The circularity topology and the flow conservation constraints enable to use the full coverage of the plasmid contigs.
+    We must constrain on the circularity: for each active oriented contig, there is at least one incoming link and one outgoing link (without counting the source and the sink links).
     %
     \Subref{subfig:plasmid_structure:pc_multi_t} --- \Subref{subfig:plasmid_structure:pc_multi_s}
     Dashed links are not in the graph.
     If the source must connect a seed, then some sequences are missing in the bin.
     The source should be able to connect several sequences, at the condition that the solution subnetwork graph without \(\mathsf{S}\) and \(\mathsf{T}\) must be connected and contains a seed.
-    Also, the active oriented fragments connecting the source cannot have other incoming links.
+    Also, the active oriented contigs connecting the source cannot have other incoming links.
     Analogously, those connecting the sink cannot have other outgoing links.
   }%
   \label{fig:plasmid_structure}

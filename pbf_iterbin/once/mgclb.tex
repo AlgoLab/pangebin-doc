@@ -1,19 +1,19 @@
 \subsubsection{The Maximum GC-Labelled Bin problem \MGCLB{}}\label{sec:pbf_iterbin:once:mgclb}
 
-The first binning stage consists in finding a flow maximizing the use of fragment coverage and the plasmidness.
+The only one binning stage consists in finding a flow maximizing the use of contig coverage, the plasmidness and the GC scores.
 We refer to this subproblem as the \enquote{Maximum GC-Labelled Bin} problem (\MGCLB{}).
 In the opposite of \texttt{decomp} and \texttt{binlab}, here we mix the GC scores with the other bin properties.
-In order  balance the weight of the different semantic terms, we multiply by the incoming flow.
-The more a fragment participates in terms of its coverage in the bin, the more its properties are amplified.
-The length of the fragments also enable to balance the usage of the fragments in the bin.
+In order to balance the weight of the different semantic terms, we multiply by the incoming flow.
+The more a contig participates in terms of its coverage in the bin, the more its properties are amplified.
+The length of the contigs also enable to balance the usage of the contigs in the bin.
 It is also robust to the fragmentation (linear decomposition).
 Below we describe the MILP model.
 
 \begin{table}[h!]
   \centering
   \tablecaption{\MGCLB{} MILP constraints}{%
-    What is new here comparing to the two previous approaches is we need to define variables \(\inflowgc{i}{b}\) for all fragments \(i \in \Fragments{}\) and GC content interval \(b \in K\).
-    Also, we do not need to define the \(\fraggc{\Fragments}{K}\) binary variables.
+    What is new here comparing to the two previous approaches is we need to define variables \(\inflowgc{i}{k}\) for all contigs \(i \in \Contigs{}\) and GC content interval \(k \in K\).
+    Also, we do not need to define the \(\contiggc{\Contigs}{K}\) binary variables.
   }\label{tab:once:mgclb:cst}
   \begin{tabular}{@{}ll@{}}
     \toprule
@@ -68,17 +68,17 @@ Below we describe the MILP model.
   where:
   \begin{align*}
     CoveragePenaly &= %
-    \sum_{i \in \Fragments{}} |i| \parenth*{ inflow(i) - \cov{i}\frag{i} } \\
+    \sum_{i \in \Contigs{}} |i| \parenth*{ inflow(i) - \cov{i}\frag{i} } \\
     PlasmidnessScore &= %
-    \sum_{i \in \Fragments{}} |i| \plm{i} inflow(i) \\
+    \sum_{i \in \Contigs{}} |i| \plm{i} inflow(i) \\
     GCScore &= %
     \sum_{\substack{
-        i \in \Fragments{} \\
-        b \in K
-    }} |i| \gcscore{i}{b} \inflowgc{i}{b}
+        i \in \Contigs{} \\
+        k \in K
+    }} |i| \gcscore{i}{k} \inflowgc{i}{k}
   \end{align*}
 
   \begin{ideabox}
-    Perhaps we should use the penalty coverage on only fragments with positive plasmidness.
+    Perhaps we should use the penalty coverage on only contigs with positive plasmidness.
   \end{ideabox}
 \end{definition}
