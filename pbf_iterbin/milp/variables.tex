@@ -1,13 +1,13 @@
 \zcref[S]{tab:pbf_iterbin:milp:variables} lists all the variables used in the MILP models.
 
 \begin{center}
-  \begin{longtable}{%
+  \begin{xltabular}{\linewidth}{%
       @{}%
       l% Name of the variable
       l% Codomain of the variable
       l% Relaxed codomain of the variable
       l% Application set of the variable
-      p{0.5\textwidth}% Meaning
+      X% Meaning
       @{}%
     }
     \longtablecaption{MILP variables}{%
@@ -15,13 +15,6 @@
       Some of them participate in all the model, others are necessary for only one model.
       For the ease of read, we categorize the variables in three categories.
       Each section describing a model precise which variables are participating for each category.
-      % For each instance in the column \tabhtxt{Instance}:
-      % \tabhtxt{ILPs} provides the optimal (at most two) hierarchical problem successions;
-      % \tabhtxt{Total} reports the number of eulerian circuits in the region graph (genome forms);
-      % \tabhmath{SOC} is the number of oriented contig sequences that equal to the reference oriented contig sequence;
-      % \tabhmath{SOR} is the number of oriented region sequences in bijection with the reference oriented region sequence;
-      % \tabhtxt{\%gnm} is the genome fraction of the best sequence produced by one of the genome forms;
-      % \tabhtxt{\#mis} are the number of misassemblies (left) and of local misassemblies (right).%
     }\label{tab:pbf_iterbin:milp:variables}\\
 
     \toprule
@@ -79,5 +72,5 @@
     \(\alpha{}\) & & \(\Set{ 0 \ldots |V| }\) & \(\Reals{}\) & Is the number of \emph{oriented} fragments in the solution connected graph, plus the source and the sink. \\
     \addlinespace
     \(\beta_a\) & \(A\) & \(\Set{- |V| \ldots 0}\) & \(\Reals_{\leq 0}\) & Is strictly negative if the link-arc \(a\) participates in one of the solution subgraph's exploration tree. The absolute value corresponds to the depth of the subtree with root the successor. \\
-  \end{longtable}
+  \end{xltabular}
 \end{center}

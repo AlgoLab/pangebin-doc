@@ -1,50 +1,75 @@
 \zcref[S]{tab:mfb:milp:variables} lists all the variables used in the MILP model.
 
-\begin{table}
-  \centering
-  \tablecaptionof{MILP variable set}{%
-    Each of the following variables participates in at least one of the MILP model.
-    Some of them participate in all the model, others are necessary for only one model.
-    For the ease of read, we categorize the variables in three categories.
-    Each section describing a model precise which variables are participating for each category.
-  }\label{tab:mfb:milp:variables}
+\begin{todobox}
+  CONTINUE HERE % #TODO CONTINUE HERE
+\end{todobox}
 
-  \begin{longtable}{@{}llp{0.5\textwidth}@{}}
+\begin{center}
+  \begin{xltabular}{\linewidth}{%
+      @{}%
+      l% Name of the variable
+      l% Codomain of the variable
+      l% Relaxed codomain of the variable
+      l% Application set of the variable
+      X% Meaning
+      @{}%
+    }
+    \longtablecaption{MILP variables}{%
+      Each of the following variables participates in at least one of the MILP model.
+      Some of them participate in all the model, others are necessary for only one model.
+      For the ease of read, we categorize the variables in three categories.
+      Each section describing a model precise which variables are participating for each category.
+    }\label{tab:mfb:milp:variables}\\
+
     \toprule
-    \tabhtxt{Variable} & \tabhtxt{Application set} & \tabhtxt{Meaning} \\
+    {\tabhtxt{Variable}} & {\tabhtxt{Domain}} & \multicolumn{2}{c}{\tabhtxt{Codomains}} & {\tabhtxt{Meaning}} \\
+    \cmidrule(lr){3-4}
+    & & {\tabhtxt{Practice}} & {\tabhtxt{Relax}} & \\
     \midrule
-    %
-    \multicolumn{3}{@{}c@{}}{\tabhtxt{For one bin \(b \in \Set{1 \ldots n}\)}} \\
+
+    \endfirsthead%
+
+    \multicolumn{5}{@{}l}{\sffamily\footnotesize{\zcref[S]{tab:mfb:milp:variables}, continued}} \\
+    \addlinespace
+    \toprule
+    {\tabhtxt{Variable}} & {\tabhtxt{Domain}} & \multicolumn{2}{c}{\tabhtxt{Codomains}} & {\tabhtxt{Meaning}} \\
+    \cmidrule(lr){3-4}
+    & & {\tabhtxt{Practice}} & {\tabhtxt{Relax}} & \\
     \midrule
-    %
-    \multicolumn{3}{@{}l@{}}{\tabhtxt{Decision variables}} \\
-    \addlinespace
-    %
-    \(\contig{i}^b \in \Reals_{\geq 0} \) & \(\forall i \in \Fragments{}\) & Denoting whether fragment \(i\) is active or not. With the constraints it acts as a binary. \\
-    \addlinespace
-    \(x_v^b \in \Reals_{\geq 0}\) & \(\forall v \in V \setminus \Set*{s, t}\) & Denoting whether the vertex \(v\) is active or not. With the constraints it acts as a binary. \\
-    \addlinespace
-    \(y_a^b \in \Set{0, 1}\) & \(\forall a \in A_\Links{}\) & Denoting whether the link-arc \(a\) is active or not. \\
-    %
-    \addlinespace
-    \multicolumn{3}{@{}l@{}}{\tabhtxt{Flow variables}} \\
-    \addlinespace
-    %
-    \(f_a^b \in \Reals_{\geq 0}\) & \(\forall a \in A_\Links{}\) & Corresponding to the flow amount passing through the link-arc \(a\). \\
-    \addlinespace
-    %
-    \addlinespace
-    \multicolumn{3}{@{}l@{}}{\tabhtxt{Connected component variables}} \\
-    \addlinespace
-    %
-    \(\beta_a \in [ 0, |V| ]\) & \(\forall a \in A_\Links{}\) & Is strictly negative if the link-arc \(a\) participates in one of the solution subgraph's exploration tree. It acts as a negative integer, where the absolute value corresponds to the depth of the subtree defined by the successor. \\
-    \addlinespace
-    \(r_v \in \Set{0, 1}\) & \(\forall v \in V \setminus \Set*{s, t}\) & Denoting whether the vertex \(v\) connects the source in the tree or not. \\
-    %
+
+    \endhead%
+
     \midrule
-    \multicolumn{3}{@{}c@{}}{\tabhtxt{One flow-specific}} \\
-    \midrule
-    %
+
+    \multicolumn{5}{r@{}}{\sffamily\footnotesize{(the table continues on the next page)}}
+    \endfoot%
+
     \bottomrule
-  \end{longtable}
-\end{table}
+    \endlastfoot%
+
+    %
+    \multicolumn{5}{@{}c@{}}{\tabhtxt{For one bin \(b \in \Set{1 \ldots n}\)}} \\
+    \midrule
+    %
+    \multicolumn{5}{@{}l@{}}{\tabhtxt{Decision variables}} \\
+    \addlinespace
+    \(x_v^b\) & \(V \setminus \Set*{\source{}, \sink{}}\) & \(\Set{0, 1}\) & \(\Reals_{\geq 0}\) & Denoting whether the vertex \(v\) is active or not. \\
+    \addlinespace
+    \(y_a^b\) & \(A\) & \(\Set{0, 1}\) & & Denoting whether the arc \(a\) is active or not. \\
+    \addlinespace
+    \(\contig{i}^b\) & \(\Contigs{}\) & \(\Set{0, 1}\) & \([0, 1]\) & Denoting whether contig \(i\) is active or not. \\
+    %
+    \addlinespace
+    \multicolumn{5}{@{}l@{}}{\tabhtxt{Flow variables}} \\
+    \addlinespace
+    \(f_a^b\) & \(A\) & \(\Reals_{\geq 0}\) & & The flow amount passing through the arc \(a\). \\
+    \addlinespace
+    \(F^b\) & & \(\Reals_{\geq 0}\) & & The total flow. \\
+    %
+    \addlinespace
+    \multicolumn{5}{@{}l@{}}{\tabhtxt{Connected component variables}} \\
+    \addlinespace
+    \(\beta_a^b\) & \(A \cup A_{\Links}^{\leftarrow}\) & \(\Set{0 \ldots |V| }\) & \(\Reals_{\geq 0}\) & Is strictly positive if the link-arc \(a\) participates in one of the solution subgraph's exploration tree. The value corresponds to the depth of the subtree with root the successor. Note that here we consider the link-arcs undirected with \(A_{\Links}^{\leftarrow} = \Set{(v, u) \given (u, v) \in A_\Links{}}\). \\
+    \(r_v^b\) & \(V\) & \(\Set{0 \ldots |V| }\) & & Denoting whether the vertex \(v\) connects the source in the exploration tree or not. \\
+  \end{xltabular}
+\end{center}
