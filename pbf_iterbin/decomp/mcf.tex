@@ -15,16 +15,15 @@ Below we describe the MILP model.
     \tabhtxt{Category} & \tabhtxt{Constraints} \\
     \midrule
     Decision & \zcref[S]{%
-      pbf_iterbin:milp:cst:dvar:active_extremity_implies_active_fragment,%
-      pbf_iterbin:milp:cst:dvar:active_fragment_implies_active_extremity,%
-      pbf_iterbin:milp:cst:dvar:active_link_arc_active_fragments,%
+      pbf_iterbin:milp:cst:dvar:active_vertex_implies_active_contig,%
+      pbf_iterbin:milp:cst:dvar:active_contig_implies_active_vertex,%
+      pbf_iterbin:milp:cst:dvar:active_arc_active_vertices,%
       pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs%
     } \\
     Flow & \zcref[S]{%
       pbf_iterbin:milp:cst:flow:arc_flow_at_most_coverage,%
       pbf_iterbin:milp:cst:flow:inflow_at_most_coverage,%
-      pbf_iterbin:milp:cst:flow:inflow_equals_outflow_forward,%
-      pbf_iterbin:milp:cst:flow:inflow_equals_outflow_reverse,%
+      pbf_iterbin:milp:cst:flow:flow_conservation,%
       pbf_iterbin:milp:cst:flow:total_flow_strictly_positive,%
       pbf_iterbin:milp:cst:flow:total_flow_source,%
       pbf_iterbin:milp:cst:flow:total_flow_sink,%
@@ -57,7 +56,7 @@ Below we describe the MILP model.
   \begin{Objective}
     \begin{equation}
       \max ~ CoverageScore
-      \objlabel{pbf_iterbin:decomp:mcf:obj:max_coverage_score} % chktex 25 % chktex 35
+      \label{pbf_iterbin:decomp:mcf:obj:max_coverage_score} % chktex 25 % chktex 35
     \end{equation}
   \end{Objective}
   where \(

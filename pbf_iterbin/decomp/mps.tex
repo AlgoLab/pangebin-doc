@@ -22,7 +22,7 @@ The total GC score value must be near to the total GC score best value \(\Psi{}\
 \begin{Constraint}
   \begin{equation}
     \gamma_2 \Psi \leq GCScore \quad \gamma_2 \in (0.5, 1] % chktex 9
-    \cstlabel{pbf_iterbin:decomp:mps:cst:fix_mgc_obj} % chktex 25
+    \label{pbf_iterbin:decomp:mps:cst:fix_mgc_obj} % chktex 25
   \end{equation}
 \end{Constraint}
 
@@ -35,7 +35,7 @@ The total GC score value must be near to the total GC score best value \(\Psi{}\
   \begin{Objective}
     \begin{equation}
       \max ~ PlasmidnessScore
-      \objlabel{pbf_iterbin:decomp:mps:obj:max_plasmidness_score} % chktex 25 % chktex 35
+      \label{pbf_iterbin:decomp:mps:obj:max_plasmidness_score} % chktex 25 % chktex 35
     \end{equation}
   \end{Objective}
   where \(\displaystyle PlasmidnessScore = \sum_{i \in \Fragments{}} \fzeta{i} \plm{i} \frag{i}\).
