@@ -1,6 +1,6 @@
 \section{From iterative flow binning approachs to a multi-flow binning model}\label{sec:plasmid_structures}
 
-\Cref{sec:pbf_iterbin:conclusions} questions the relevance of the flow iterative binning strategy, generally if we consider enough the graph topology, combined with structural constraint like having a seed in the bin.
+\zcref[S]{sec:pbf_iterbin:conclusions} questions the relevance of the flow iterative binning strategy, generally if we consider enough the graph topology, combined with structural constraint like having a seed in the bin.
 Several concerns raise:
 
 \begin{itemize}
@@ -9,7 +9,7 @@ Several concerns raise:
   \item What happens if some links are missing, such that we are not able to find the circular plasmid?
 \end{itemize}
 
-\Cref{subfig:plasmid_structure:circular} illustrates the issue of a repeated seed in a circular plasmid, and \Cref{subfig:plasmid_structure:pc_multi_t} and \Cref{subfig:plasmid_structure:pc_multi_s} illustrate the issue of missing links to satisfy the circularity constraint.
+\zcref[S]{subfig:plasmid_structure:circular} illustrates the issue of a repeated seed in a circular plasmid, and \zcref[S]{subfig:plasmid_structure:pc_multi_t} and \zcref[S]{subfig:plasmid_structure:pc_multi_s} illustrate the issue of missing links to satisfy the circularity constraint.
 
 \begin{figure}
   %
@@ -69,12 +69,12 @@ Several concerns raise:
 The binning flow modelisation in a sequence network graph must be able to:
 
 \begin{itemize}
-  \item Find circular bins like in \Cref{subfig:plasmid_structure:circular}:
+  \item Find circular bins like in \zcref[S]{subfig:plasmid_structure:circular}:
     \begin{itemize}
       \item We cannot force each flow-arc to be lower-bounded by the total flow if we force the source to connect a seed.
       \item Forcing the source to be connected to a seed, and the sink to be connected to that same seed can be a performance-purpose constraint.
     \end{itemize}
-  \item Find partially circular bins like in \Cref{subfig:plasmid_structure:pc_multi_t} and \Cref{subfig:plasmid_structure:pc_multi_s}:
+  \item Find partially circular bins like in \zcref[S]{subfig:plasmid_structure:pc_multi_t} and \zcref[S]{subfig:plasmid_structure:pc_multi_s}:
     \begin{itemize}
       \item The source can be connected to any sequence.
       \item The source can be connected to several sequences.

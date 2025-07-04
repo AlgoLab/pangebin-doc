@@ -1,106 +1,107 @@
 Here we describe and categorize the set of constraints composing the different MILP models.
-In what follow, we define either a fragment, a contig or an arc to be \enquote{active} if it participates in the solution, i.e.\ the flow passes through it.
+In what follow, we define either a contig, a vertex or an arc to be \enquote{active} if it participates in the solution, i.e.\ the flow passes through it.
 
 \paragraph{Decision variables relationships}
 
-A fragment is active if, and only if at least one of its extremity vertices is active:
+A contig is active if, and only if at least one of its corresponding vertices is active:
 \begin{Constraint}
   \begin{align}
-    x_v & \leq \frag{i} & \forall v \in V \setminus \Set*{s, t}, i = vfrag(v) \cstlabel{pbf_iterbin:milp:cst:dvar:active_extremity_implies_active_fragment} \\ % chktex 25
-    \frag{i} & \leq x_u + x_v & \forall i \in \Fragments{}, \{u, v\} \in \EFrags{} \cstlabel{pbf_iterbin:milp:cst:dvar:active_fragment_implies_active_extremity} % chktex 25
+    x_v & \leq \contig{i} & \forall v \in V \setminus \Set*{\source{}, \sink{}}, \quad i = vcontig(v) \label{pbf_iterbin:milp:cst:dvar:active_vertex_implies_active_contig} \\ % chktex 25
+    \contig{i} & \leq x_v + x_{\rev{v}} & \forall i \in \Contigs{}, \quad (v, \rev{v}) = contigv(i) \label{pbf_iterbin:milp:cst:dvar:active_contig_implies_active_vertex} % chktex 25
   \end{align}
 \end{Constraint}
 
-The fragments involved in an active link-arc must also be active:
+The vertices involved in an active arc must also be active:
 \begin{Constraint}
   \begin{equation}
     y_{uv} \leq
     \begin{cases}
-      x_v & \text{if \(u = s\)} \\
-      x_u & \text{if \(v = t\)} \\
+      x_v & \text{if \(u = \source{}\)} \\
+      x_u & \text{if \(v = \sink{}\)} \\
       \min\Set{x_u, x_v} & \text{otherwise}
-    \end{cases} \quad \forall (u, v) \in A_\Links{} %
-    \cstlabel{pbf_iterbin:milp:cst:dvar:active_link_arc_active_fragments} % chktex 25
+    \end{cases} \quad \forall (u, v) \in A %
+    \label{pbf_iterbin:milp:cst:dvar:active_arc_active_vertices} % chktex 25
   \end{equation}
 \end{Constraint}
 
-An active vertex implies at least one active link-arc incoming to it:
+An active vertex implies at least one active arc incoming to it:
 \begin{questionbox}
   Are these constraints necessary?
 \end{questionbox}
 \begin{Constraint}
-  \begin{equation}
-    x_v \leq \sum_{(u, v) \in A_\Links{}} y_{u v} \quad \forall v \in V \setminus \Set{s, t} \cstlabel{pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs} % chktex 25
+  \begin{equation}\label{pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs} % chktex 25
+    x_v \leq \sum_{(u, v) \in A} y_{u v} \quad \forall v \in V \setminus \Set{\source{}, \sink{}}
   \end{equation}
 \end{Constraint}
 
 \paragraph{Flow constraints}
 
-The flow through a link-arc \(a \in A_\Links{}\) is non-zero if \(a\) is active and cannot exceed its capacity:
+The flow through an arc \(a \in A\) is non-zero if \(a\) is active and cannot exceed its capacity:
 \begin{Constraint}
   \begin{align}
     f_{uv} \leq
     \begin{cases}
-      \cov{j} y_{uv} & \text{if \(u = s\)} \\
-      \cov{i} y_{uv} & \text{if \(v = t\)} \\
+      \cov{j} y_{uv} & \text{if \(u = \source{}\)} \\
+      \cov{i} y_{uv} & \text{if \(v = \sink{}\)} \\
       \min\Set*{\cov{i}, \cov{j}} y_{uv} & \text{otherwise}
     \end{cases} &
     \begin{split}
-      \forall (u, v) \in A_\Links{} \\
-      i = vfrag(u) \\
-      j = vfrag(v)
-    \end{split} \cstlabel{pbf_iterbin:milp:cst:flow:arc_flow_at_most_coverage} % chktex 25
+      \forall (u, v) \in A \\
+      i = vcontig(u) \\
+      j = vcontig(v)
+    \end{split} \label{pbf_iterbin:milp:cst:flow:arc_flow_at_most_coverage} % chktex 25
   \end{align}
 \end{Constraint}
 
-The cumulative flow through a fragment \(i \in \Fragments{}\) cannot exceed its read coverage:
+The cumulative flow through a contig \(i \in \Contigs{}\) cannot exceed its coverage:
 \begin{Constraint}
   \begin{equation}
-    inflow(i) \leq \cov{i} \quad \forall i \in \Fragments{} \cstlabel{pbf_iterbin:milp:cst:flow:inflow_at_most_coverage} % chktex 25
+    inflow(i) \leq \cov{i} \quad \forall i \in \Contigs{} \label{pbf_iterbin:milp:cst:flow:inflow_at_most_coverage} % chktex 25
   \end{equation}
 \end{Constraint}
-Where \(\displaystyle inflow(i) = \sum_{(u, i_t) \in A_\Links{}} f_{ui_t} + \sum_{(u, i_h) \in A_\Links{}} f_{ui_h}\) where \(i_t\) and \(i_h\) respectively stand for the tail and the head vertices of fragment \(i\).
+Where \[
+  inflow(i) = \sum_{(u, v) \in A} f_{uv} + \sum_{(u, \rev{v}) \in A} f_{u\rev{v}} \quad (v, \rev{v}) = contigv(i)
+\]
 
-The cumulative flow into a fragment \(i\) should be equal to the cumulative flow out of it. Same for the reverse \(\rev{i}\):
+The cumulative flow into a contig \(i\) should be equal to the cumulative flow out of it. Same for the reverse \(\rev{i}\):
 \begin{Constraint}
-  \begin{align}
-    \sum_{(u, i_t) \in A_\Links{}} f_{u i_t} & = \sum_{(i_h, w) \in A_\Links{}} f_{i_h w} & \forall i \in \Fragments{} \cstlabel{pbf_iterbin:milp:cst:flow:inflow_equals_outflow_forward} \\ % chktex 25
-    \sum_{(u, i_h) \in A_\Links{}} f_{u i_h} & = \sum_{(i_t, w) \in A_\Links{}} f_{i_t w} & \forall i \in \Fragments{} \cstlabel{pbf_iterbin:milp:cst:flow:inflow_equals_outflow_reverse} % chktex 25
-  \end{align}
+  \begin{equation}
+    \sum_{(u, v) \in A} f_{u v} = \sum_{(v, w) \in A} f_{v w} \quad \forall v \in V \setminus \Set*{\source{}, \sink{}} \label{pbf_iterbin:milp:cst:flow:flow_conservation} % chktex 25
+  \end{equation}
 \end{Constraint}
 
-The total flow value \(F\) equals to the flow out of \(s\) and into \(t\):
+The total flow value \(F\) equals to the flow out of \(\source{}\) and into \(\sink{}\):
 \begin{Constraint}
   \begin{align}
-    F & = \sum_{(s, v) \in A_\Links{}} f_{sv} \cstlabel{pbf_iterbin:milp:cst:flow:total_flow_source} \\ % chktex 25
-    F & = \sum_{(v, t) \in A_\Links{}} f_{vt} \cstlabel{pbf_iterbin:milp:cst:flow:total_flow_sink} % chktex 25
+    F & = \sum_{(\source{}, v) \in A} f_{\source{} v} \label{pbf_iterbin:milp:cst:flow:total_flow_source} \\ % chktex 25
+    F & = \sum_{(v, \sink{}) \in A} f_{v \sink{}} \label{pbf_iterbin:milp:cst:flow:total_flow_sink} % chktex 25
   \end{align}
 \end{Constraint}
 
 The total flow is strictly positive:
 \begin{Constraint}
   \begin{equation}
-    F \geq \epsilon_F \quad \epsilon_F > 0 \cstlabel{pbf_iterbin:milp:cst:flow:total_flow_strictly_positive} % chktex 25
+    F \geq \epsilon_F \quad \epsilon_F > 0 \label{pbf_iterbin:milp:cst:flow:total_flow_strictly_positive} % chktex 25
   \end{equation}
 \end{Constraint}
 
 An active arc has a strictly positive flow:
 \begin{Constraint}
   \begin{equation}
-    y_a \leq \frac{1}{\epsilon_F} f_a \quad \forall a \in A_\Links{} \cstlabel{pbf_iterbin:milp:cst:flow:arc_flow_strictly_positive} % chktex 25
+    y_a \leq \frac{1}{\epsilon_F} f_a \quad \forall a \in A \label{pbf_iterbin:milp:cst:flow:arc_flow_strictly_positive} % chktex 25
   \end{equation}
 \end{Constraint}
 
-An active link-arc has a flow at least \(F\).
+An active arc has a flow at least \(F\).
 \begin{Constraint}
   \begin{align}
-    F_a & \geq F - (1 - y_a) \max_{i \in \SeedFrags{}}\Set{\cov{i}} & \forall a \in A_\Links{} \cstlabel{pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_1} \\ % chktex 25
-    F_a & \leq F & \forall a \in A_\Links{} \cstlabel{pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_2} \\ % chktex 25
-    F_a & \leq f_a & \forall a \in A_\Links{} \cstlabel{pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_3} % chktex 25
+    F_a & \geq F - (1 - y_a) \max_{i \in \ContigSeeds{}}\Set{\cov{i}} & \forall a \in A \label{pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_1} \\ % chktex 25
+    F_a & \leq F & \forall a \in A \label{pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_2} \\ % chktex 25
+    F_a & \leq f_a & \forall a \in A \label{pbf_iterbin:milp:cst:flow:arc_flow_at_least_total_flow_3} % chktex 25
   \end{align}
 \end{Constraint}
 \begin{infobox}
-  These constraints do not force the arc flows to be a multiple of \(F\), see~\Cref{proposition:inflow_is_not_multiple_of_total_flow}.
+  These constraints do not force the arc flows to be a multiple of \(F\), see~\zcref[S]{proposition:inflow_is_not_multiple_of_total_flow}.
 \end{infobox}
 \begin{missingproofbox}
   The above constraints minimize the number of out link-arcs for each fragment.
@@ -112,10 +113,10 @@ An active link-arc has a flow at least \(F\).
 
 \paragraph{Connected component constraints}
 
-Exactly one link-arc outs of \(s\) is part of the solution (necessary to ensure the solution induced subgraph has only one connected component):
+Exactly one link-arc outs of \(\source{}\) is part of the solution (necessary to ensure the solution induced subgraph has only one connected component):
 \begin{Constraint}
   \begin{equation}
-    \sum_{(s, v) \in A_\Links{}} y_{sv} = 1 \cstlabel{pbf_iterbin:milp:cst:ccomp:one_outgoing_arc_from_source} % chktex 25
+    \sum_{(\source{}, v) \in A} y_{\source{} v} = 1 \label{pbf_iterbin:milp:cst:ccomp:one_outgoing_arc_from_source} % chktex 25
   \end{equation}
 \end{Constraint}
 
@@ -124,47 +125,47 @@ A positive flow implies the two incident vertices are in the component:
   \begin{equation}
     1 - y_{uv} \geq
     \begin{cases}
-      1 - x_v & \text{if \(u = s\)} \\
-      x_u - 1 & \text{if \(v = t\)} \\
+      1 - x_v & \text{if \(u = \source{}\)} \\
+      x_u - 1 & \text{if \(v = \sink{}\)} \\
       x_u - x_v & \text{otherwise}
     \end{cases}
-    \quad \forall (u, v) \in A_\Links{}
-    \cstlabel{pbf_iterbin:milp:cst:ccomp:positive_flow_incident_vertices_in_component} % chktex 25
+    \quad \forall (u, v) \in A
+    \label{pbf_iterbin:milp:cst:ccomp:positive_flow_incident_vertices_in_component} % chktex 25
   \end{equation}
 \end{Constraint}
 %
 \begin{questionbox}
-  potentially redundant with \Cref{pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs}
+  potentially redundant with \zcref[S]{pbf_iterbin:milp:cst:dvar:active_vertex_active_incoming_arcs}
 \end{questionbox}
 
 The cumulative depth of the subtree in the exploration tree from the source equals at least the number of active vertices minus 1.
 \begin{Constraint}
   \begin{align}
-    \alpha + \sum_{(s, w) \in A_\Links{}} \beta_{sw} \leq 1 \cstlabel{pbf_iterbin:milp:cst:ccomp:depth_of_tree_source} % chktex 25
+    \alpha + \sum_{(\source{}, w) \in A} \beta_{sw} \leq 1 \label{pbf_iterbin:milp:cst:ccomp:depth_of_tree_source} % chktex 25
   \end{align}
 \end{Constraint}
 
 Two incident arcs in the exploration tree are distanced by one.
 \begin{Constraint}
   \begin{align}
-    \sum_{(v, w) \in A_\Links{}} \beta_{vw} - \sum_{(u, v) \in A_\Links{}} \beta_{uv} \leq 1 \quad \forall v \in V \setminus \Set*{s}
-    \cstlabel{pbf_iterbin:milp:cst:ccomp:depth_of_tree_incident_arcs} % chktex 25
+    \sum_{(v, w) \in A} \beta_{vw} - \sum_{(u, v) \in A} \beta_{uv} \leq 1 \quad \forall v \in V \setminus \Set*{\source{}}
+    \label{pbf_iterbin:milp:cst:ccomp:depth_of_tree_incident_arcs} % chktex 25
   \end{align}
 \end{Constraint}
 
 An arc participates in the exploration tree implies the arc is active.
 \begin{Constraint}
   \begin{align}
-    \beta_a \geq - y_a |V| \quad \forall a \in A_\Links{}
-    \cstlabel{pbf_iterbin:milp:cst:ccomp:tree_arc_active} % chktex 25
+    \beta_a \geq - y_a |V| \quad \forall a \in A
+    \label{pbf_iterbin:milp:cst:ccomp:tree_arc_active} % chktex 25
   \end{align}
 \end{Constraint}
 
 The number of active vertices equals \(\alpha{}\) (SAT constraint):
 \begin{Constraint}
   \begin{align}
-    2 + \sum_{v \in V \setminus \Set*{s, t}} x_v = \alpha
-    \cstlabel{pbf_iterbin:milp:cst:ccomp:number_of_active_vertices} % chktex 25
+    2 + \sum_{v \in V \setminus \Set*{\source{}, \sink{}}} x_v = \alpha
+    \label{pbf_iterbin:milp:cst:ccomp:number_of_active_vertices} % chktex 25
   \end{align}
 \end{Constraint}
 
@@ -178,26 +179,26 @@ Only one GC content interval \(b \in K\) labels the bin:
 \begin{Constraint}
   \begin{equation}
     \sum_{b \in K} GC_b = 1
-    \cstlabel{pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval} % chktex 25
+    \label{pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval} % chktex 25
   \end{equation}
 \end{Constraint}
 
-For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\fraggc{i}{b} = 1\) if and only if fragment \(i\) is active and the bin is labelled by the GC content interval \(b\):
+For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\contiggc{i}{b} = 1\) if and only if fragment \(i\) is active and the bin is labelled by the GC content interval \(b\):
 \begin{Constraint}
   \begin{align}
-    \fraggc{i}{b} & \leq x_{i_t} + x_{i_h} & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:active_fragment_gc_1} \\ % chktex 25
-    \fraggc{i}{b} & \leq GC_b & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:active_fragment_gc_2} \\ % chktex 25
-    \fraggc{i}{b} & \geq x_{i_t} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:active_fragment_gc_3} \\ % chktex 25
-    \fraggc{i}{b} & \geq x_{i_h} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:active_fragment_gc_4} % chktex 25
+    \contiggc{i}{b} & \leq x_{i_t} + x_{i_h} & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:active_fragment_gc_1} \\ % chktex 25
+    \contiggc{i}{b} & \leq GC_b & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:active_fragment_gc_2} \\ % chktex 25
+    \contiggc{i}{b} & \geq x_{i_t} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:active_fragment_gc_3} \\ % chktex 25
+    \contiggc{i}{b} & \geq x_{i_h} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:active_fragment_gc_4} % chktex 25
   \end{align}
 \end{Constraint}
 
 For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\inflowgc{i}{b}\) is the flow into fragment \(i\) when \(b\) is the chosen GC content interval:
 \begin{Constraint}
   \begin{align}
-    \inflowgc{i}{b} & \leq \cov{i} \frag{i} & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_1}  \\ % chktex 25
-    \inflowgc{i}{b} & \leq \cov{i} GC_b & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_2}  \\ % chktex 25
-    \inflowgc{i}{b} & \geq inflow(i)  - (2 - \frag{i} - GC_b) \cov{i} & \forall (i, b) \in \Fragments{} \times K \cstlabel{pbf_iterbin:milp:cst:gc:inflowgc_3} % chktex 25
+    \inflowgc{i}{b} & \leq \cov{i} \contig{i} & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_1}  \\ % chktex 25
+    \inflowgc{i}{b} & \leq \cov{i} GC_b & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_2}  \\ % chktex 25
+    \inflowgc{i}{b} & \geq inflow(i)  - (2 - \contig{i} - GC_b) \cov{i} & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_3} % chktex 25
   \end{align}
 \end{Constraint}
 
@@ -207,7 +208,7 @@ The cumulative fragment length is above a given threshold:
 %
 \begin{Constraint}
   \begin{equation}
-    \sum_{i \in \SeedFrags{}} |i| \geq L \quad L \geq 0 \cstlabel{pbf_iterbin:milp:cst:misc:min_cumulative_fragment_length} % chktex 25 chktex 35
+    \sum_{i \in \ContigSeeds{}} |i| \geq L \quad L \geq 0 \label{pbf_iterbin:milp:cst:misc:min_cumulative_fragment_length} % chktex 25 chktex 35
   \end{equation}
 \end{Constraint}
 %

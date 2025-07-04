@@ -1,49 +1,83 @@
-\Cref{tab:pbf_iterbin:milp:variables} lists all the variables used in the MILP models.
+\zcref[S]{tab:pbf_iterbin:milp:variables} lists all the variables used in the MILP models.
 
-\begin{table}
-  \centering
-  \tablecaptionof{MILP variable set}{%
-    Each of the following variables participates in at least one of the MILP model.
-    Some of them participate in all the model, others are necessary for only one model.
-    For the ease of read, we categorize the variables in three categories.
-    Each section describing a model precise which variables are participating for each category.
-  }\label{tab:pbf_iterbin:milp:variables}
+\begin{center}
+  \begin{longtable}{%
+      @{}%
+      l% Name of the variable
+      l% Codomain of the variable
+      l% Relaxed codomain of the variable
+      l% Application set of the variable
+      p{0.5\textwidth}% Meaning
+      @{}%
+    }
+    \longtablecaption{MILP variables}{%
+      Each of the following variables participates in at least one of the MILP model.
+      Some of them participate in all the model, others are necessary for only one model.
+      For the ease of read, we categorize the variables in three categories.
+      Each section describing a model precise which variables are participating for each category.
+      % For each instance in the column \tabhtxt{Instance}:
+      % \tabhtxt{ILPs} provides the optimal (at most two) hierarchical problem successions;
+      % \tabhtxt{Total} reports the number of eulerian circuits in the region graph (genome forms);
+      % \tabhmath{SOC} is the number of oriented contig sequences that equal to the reference oriented contig sequence;
+      % \tabhmath{SOR} is the number of oriented region sequences in bijection with the reference oriented region sequence;
+      % \tabhtxt{\%gnm} is the genome fraction of the best sequence produced by one of the genome forms;
+      % \tabhtxt{\#mis} are the number of misassemblies (left) and of local misassemblies (right).%
+    }\label{tab:pbf_iterbin:milp:variables}\\
 
-  \begin{longtable}{@{}llp{0.5\textwidth}@{}}
     \toprule
-    \tabhtxt{Variable} & \tabhtxt{Application set} & \tabhtxt{Meaning} \\
+    {\tabhtxt{Variable}} & {\tabhtxt{Domain}} & \multicolumn{2}{c}{\tabhtxt{Codomains}} & {\tabhtxt{Meaning}} \\
+    \cmidrule(lr){3-4}
+    & & {\tabhtxt{Practice}} & {\tabhtxt{Relax}} & \\
     \midrule
-    %
-    \multicolumn{3}{@{}l@{}}{\tabhtxt{Decision variables}} \\
+
+    \endfirsthead%
+
+    \multicolumn{5}{@{}l}{\sffamily\footnotesize{\zcref[S]{tab:pbf_iterbin:milp:variables}, continued}} \\
     \addlinespace
-    \(x_v \in \Reals_{\geq 0}\) & \(\forall v \in V \setminus \Set*{s, t}\) & Denoting whether the vertex \(v\) is active or not. \\
-    \addlinespace
-    \(y_a \in \Set{0, 1}\) & \(\forall a \in A_\Links{}\) & Denoting whether the link-arc \(a\) is active or not. \\
-    \addlinespace
-    \(\frag{i} \in [0, 1] \) & \(\forall i \in \Fragments{}\) & Denoting whether fragment \(i\) is active or not. With the constraints it acts as a binary. \\
-    \addlinespace
-    \(GC_b \in \Set{0, 1}\) & \(\forall b \in K\) & Denoting whether the plasmid GC content is in the GC content interval \(b\) or not. \\
-    \addlinespace
-    \(\fraggc{i}{b} \in \Reals_{\geq 0}\) & \(\forall (i, b) \in \Fragments{} \times K\) & Denoting whether the fragment \(i\) is active and the plasmid GC content is in the interval \(b\) or not. With the constraints it acts as a binary. \\
-    %
-    \addlinespace
-    \multicolumn{3}{@{}l@{}}{\tabhtxt{Flow variables}} \\
-    \addlinespace
-    \(f_a \in \Reals_{\geq 0}\) & \(\forall a \in A_\Links{}\) & Corresponding to the flow amount passing through the link-arc \(a\). \\
-    \addlinespace
-    \(F \in \Reals_{\geq 0}\) & & Corresponding to the overall flow. \\
-    \addlinespace
-    \(F_a \in \Reals_{\geq 0}\) & \(\forall a \in A_\Links{}\) & Playing the role of an intermediary variable to force the flow on each link-arc to be equal to the total flow. \\
-    \addlinespace
-    \(\inflowgc{i}{b} \in \Reals_{\geq 0}\) & \(\forall (i, b) \in \Fragments{} \times K\) & Corresponding to the flow amount passing through the fragment \(i\) when the plasmid GC content is in the interval \(b\). \\
-    %
-    \addlinespace
-    \multicolumn{3}{@{}l@{}}{\tabhtxt{Connected component variables}} \\
-    \addlinespace
-    \(\alpha \in \Reals{}\) & & Is the number of \emph{oriented} fragments in the solution connected graph, plus the source and the sink. With the constraints it acts as a positive integer. \\
-    \addlinespace
-    \(\beta_a \in \Reals_{\leq 0}\) & \(\forall a \in A_\Links{}\) & Is strictly negative if the link-arc \(a\) participates in one of the solution subgraph's exploration tree. It acts as a negative integer, where the absolute value corresponds to the depth of the subtree defined by the successor. \\
-    %
+    \toprule
+    {\tabhtxt{Variable}} & {\tabhtxt{Domain}} & \multicolumn{2}{c}{\tabhtxt{Codomains}} & {\tabhtxt{Meaning}} \\
+    \cmidrule(lr){3-4}
+    & & {\tabhtxt{Practice}} & {\tabhtxt{Relax}} & \\
+    \midrule
+
+    \endhead%
+
+    \midrule
+
+    \multicolumn{5}{r@{}}{\sffamily\footnotesize{(the table continues on the next page)}}
+    \endfoot%
+
     \bottomrule
+    \endlastfoot%
+
+    \multicolumn{5}{@{}l@{}}{\tabhtxt{Decision variables}} \\
+    \addlinespace
+    \(x_v\) & \(V \setminus \Set*{\source{}, \sink{}}\) & \(\Set{0, 1}\) & \(\Reals_{\geq 0}\) & Denoting whether the vertex \(v\) is active or not. \\
+    \addlinespace
+    \(y_a\) & \(A\) & \(\Set{0, 1}\) & & Denoting whether the arc \(a\) is active or not. \\
+    \addlinespace
+    \(\contig{i}\) & \(\Contigs{}\) & \(\Set{0, 1}\) & \([0, 1]\) & Denoting whether contig \(i\) is active or not. \\
+    \addlinespace
+    \(GC_k\) & \(K\) & \(\Set{0, 1}\) & & Denoting whether the plasmid GC content is in the GC content interval \(k\) or not. \\
+    \addlinespace
+    \(\contiggc{i}{k}\) & \(\Contigs{} \times K\) & \(\Set{0, 1}\) & \(\Reals_{\geq 0}\) & Denoting whether the contig \(i\) is active and the plasmid GC content is in the interval \(k\) or not. \\
+    %
+    \addlinespace
+    \multicolumn{5}{@{}l@{}}{\tabhtxt{Flow variables}} \\
+    \addlinespace
+    \(f_a\) & \(A\) & \(\Reals_{\geq 0}\) & & The flow amount passing through the arc \(a\). \\
+    \addlinespace
+    \(F\) & & \(\Reals_{\geq 0}\) & & The total flow. \\
+    \addlinespace
+    \(F_a\) & \(A\) & \(\Reals_{\geq 0}\) & & Intermediary variable to force the positive flows to be lower bound by the total flow. \\
+    \addlinespace
+    \(\inflowgc{i}{k}\) & \(\Contigs{} \times K\) & \(\Reals_{\geq 0}\) & & Flow amount passing through the contig \(i\) when the plasmid GC content is in the interval \(k\). \\
+    %
+    \addlinespace
+    \multicolumn{5}{@{}l@{}}{\tabhtxt{Connected component variables}} \\
+    \addlinespace
+    \(\alpha{}\) & & \(\Set{ 0 \ldots |V| }\) & \(\Reals{}\) & Is the number of \emph{oriented} fragments in the solution connected graph, plus the source and the sink. \\
+    \addlinespace
+    \(\beta_a\) & \(A\) & \(\Set{- |V| \ldots 0}\) & \(\Reals_{\leq 0}\) & Is strictly negative if the link-arc \(a\) participates in one of the solution subgraph's exploration tree. The absolute value corresponds to the depth of the subtree with root the successor. \\
   \end{longtable}
-\end{table}
+\end{center}

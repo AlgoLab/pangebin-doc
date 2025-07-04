@@ -5,11 +5,11 @@ All the MILP flow-based approaches are built on the top of a flow network:
 \begin{itemize}
   \item To keep the direction of the flow along the link-edges in \(E_\Links{}\), we transform each link-edge to two link-arcs with the function \(etoa \colon \Set*{u, v} \mapsto \Set*{(u, v), (v, u)}\).
   \item We add two vertices, \(s\) and \(t\) that are respectively the source and the sink vertices.
-  \item The set \(\VSeed{}\) contains the vertices associated with the seed fragments in \SeedFrags{}.
+  \item The set \(\VSeeds{}\) contains the vertices associated with the seed fragments in \ContigSeeds{}.
   \item The source goes into all the vertices \(V_t \cup V_h\), and each of these vertices goes into the sink.
 \end{itemize}
 
-The main differences with the previous network graph in \Cref{definition:pbf_iterbin:network_graph} are:
+The main differences with the previous network graph in \zcref[S]{definition:pbf_iterbin:network_graph} are:
 \begin{itemize}
   \item the source now connects all the fragment vertices \(V_t \cup V_h\);
   \item there is no coverage score

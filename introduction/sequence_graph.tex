@@ -19,15 +19,15 @@
   For each \(l = (a, b) \in \Links{}\), the reverse link also exists, i.e.\ \(\rev{l} = (\rev{b}, \rev{a}) \in \Links{} \). % chktex 21
 \end{definition}
 
-In this paper, we illustrate the sequences and their links with a figure like \Cref{subfig:sequence_graph:artistic_view}.
-However, to simplify the future mathematical models, we use the directed graph structure (\Cref{definition:sequence_graph_dg}) as \Cref{subfig:sequence_graph:dg} illustrates.
+In this paper, we illustrate the sequences and their links with a figure like \zcref[S]{subfig:sequence_graph:artistic_view}.
+However, to simplify the future mathematical models, we use the directed graph structure (\zcref[S]{definition:sequence_graph_dg}) as \zcref[S]{subfig:sequence_graph:dg} illustrates.
 
 \begin{definition}{Sequence graph}{sequence_graph_dg}
-  Let \(G = (V, A)\) be a directed graph where:
+  Let \(G = (V_{\Sequences{}}, A_{\Links{}})\) be a directed graph where:
 
   \begin{itemize}
-    \item \(V\) is the vertex set representing the oriented sequences (\(|V| = |\OrSeqs|\))
-    \item \(A\) is the set of arcs representing the links (\(|A| = |\Links|\))
+    \item \(V_{\Sequences{}}\) is the vertex set representing the oriented sequences (\(|V_{\Sequences{}}| = |\OrSeqs|\))
+    \item \(A_{\Links{}}\) is the set of arcs representing the links (\(|A_{\Links{}}| = |\Links|\))
   \end{itemize}
 \end{definition}
 
@@ -63,7 +63,7 @@ However, to simplify the future mathematical models, we use the directed graph s
     %
     The undirected graph structure visually closer to the artistic view than the directed graph in \subref{subfig:sequence_graph:dg}.
     Each vertex is representing the tail otherwise the head of the arrow, double edges maintain the integrity of the sequences while the simple edge represents the link.
-    \Cref{definition:sequence_graph_ug} formally describes the graph structure.
+    \zcref[S]{definition:sequence_graph_ug} formally describes the graph structure.
     %
     \Subref{subfig:sequence_graph:dg}
     %

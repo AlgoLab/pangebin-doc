@@ -3,8 +3,8 @@
 This section concerns the \texttt{decomp} approach and the \MGC{} problem.
 
 The plasmidness score do not consider the use of a fragment several times.
-From \Cref{proposition:repeat_has_several_incoming_arcs}, and the constraints forcing the active arc flow to be at least equals to \(F\), we would like to model the number of time a fragment is used according to the sum of incoming flows.
-However, the active arc flows are not necessary multiple of \(F\) (\Cref{proposition:inflow_is_not_multiple_of_total_flow}).
+From \zcref[S]{proposition:repeat_has_several_incoming_arcs}, and the constraints forcing the active arc flow to be at least equals to \(F\), we would like to model the number of time a fragment is used according to the sum of incoming flows.
+However, the active arc flows are not necessary multiple of \(F\) (\zcref[S]{proposition:inflow_is_not_multiple_of_total_flow}).
 
 One would want to propose to weight the \(\plm{i}\) with the incoming flow normalized by \(F\):
 \[
@@ -13,7 +13,7 @@ One would want to propose to weight the \(\plm{i}\) with the incoming flow norma
 But this expression is non-linear because \(F\) is a variable.
 
 One idea is to approximate \(F\).
-For this purpose, we can use constraint~\Cref{pbf_iterbin:decomp:mgc:cst:fix_mcf_obj} forcing \(F\) to be in an interval given by the objective value of \MCF{}, and propose a constant \(F'\):
+For this purpose, we can use constraint~\zcref[S]{pbf_iterbin:decomp:mgc:cst:fix_mcf_obj} forcing \(F\) to be in an interval given by the objective value of \MCF{}, and propose a constant \(F'\):
 \[
   F' = \frac{ (1 + \gamma_1) \Phi }{2}
 \]
@@ -23,7 +23,7 @@ We can now propose a new objective function:
   The objective function aims to maximize the weighted plasmidness scores:
   \begin{equation}
     \max ~ WeightedPlasmidnessScore
-    \objlabel{mps:obj:max_weighted_plasmidness_score} % chktex 25 % chktex 35
+    \label{mps:obj:max_weighted_plasmidness_score} % chktex 25 % chktex 35
   \end{equation}
   where \(\displaystyle WeigthedPlasmidnessScore = \sum_{i \in \Fragments{}} 2 (\plm{i} - 0.5) \frac{inflow(i)}{F'} \).
 \end{definition}

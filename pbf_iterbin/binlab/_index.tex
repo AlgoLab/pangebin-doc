@@ -1,20 +1,20 @@
 \subsection{Approach \texttt{binlab}}\label{sec:pbf_iterbin:binlab}
 
 The \texttt{binlab} approach tackles the binning of the fragments with a coarse-to-fine-grain approach in three stages (each one refering to an optimization problem):
-The ideas are quite similar to those in the \texttt{decomp} approach (\Cref{sec:pbf_iterbin:decomp}), except that here we combine the use of the coverage and the plasmidness in one objective function.
+The ideas are quite similar to those in the \texttt{decomp} approach (\zcref[S]{sec:pbf_iterbin:decomp}), except that here we combine the use of the coverage and the plasmidness in one objective function.
 
 \begin{enumerate}[label=\roman*.]
-  \item Find the maximum binning score (\MBS{} problem, \Cref{sec:pbf_iterbin:binlab:mbs})
-  \item Find the maximum labelling score (\MLS{} problem, \Cref{sec:pbf_iterbin:binlab:mls})
-  \item Refine the solution (\MRBS{} problem, \Cref{sec:pbf_iterbin:binlab:mrbs})
+  \item Find the maximum binning score (\MBS{} problem, \zcref[S]{sec:pbf_iterbin:binlab:mbs})
+  \item Find the maximum labelling score (\MLS{} problem, \zcref[S]{sec:pbf_iterbin:binlab:mls})
+  \item Refine the solution (\MRBS{} problem, \zcref[S]{sec:pbf_iterbin:binlab:mrbs})
 \end{enumerate}
 
-\Cref{algo:pbf_iterbin:binlab} summarizes the \texttt{binlab} approach.
+\zcref[S]{algo:pbf_iterbin:binlab} summarizes the \texttt{binlab} approach.
 
 \begin{tcbalgo}{\texttt{binlab} approach}{pbf_iterbin:binlab}
   \begin{algorithmic}[1]
     \Require{%
-      A network graph \(N\) as in \Cref{definition:pbf_iterbin:network_graph}.
+      A network graph \(N\) as in \zcref[S]{definition:pbf_iterbin:network_graph}.
     }
     \Ensure{%
       Extract the best bin from the network graph.
@@ -38,7 +38,7 @@ The ideas are quite similar to those in the \texttt{decomp} approach (\Cref{sec:
 \end{tcbalgo}
 
 Between each step, we fix the objective value of the previous step.
-A final step refines the solution found in the \MLS{} step (\Cref{sec:pbf_iterbin:binlab:mrbs}).
+A final step refines the solution found in the \MLS{} step (\zcref[S]{sec:pbf_iterbin:binlab:mrbs}).
 
 \input{pbf_iterbin/binlab/mbs.tex}
 \input{pbf_iterbin/binlab/mls.tex}

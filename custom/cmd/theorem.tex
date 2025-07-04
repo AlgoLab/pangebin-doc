@@ -5,59 +5,98 @@
 \usepackage{tcolorbox}
 \tcbuselibrary{theorems}
 % Need: \input{custom/format/tcolorbox}
+\usepackage{zref-clever}
 % ---------------------------------------------------------------------------- %
 %                                   Algorithm                                  %
 % ---------------------------------------------------------------------------- %
 \newtcbtheorem[
-  crefname={algorithm}{algorithms},
   list inside=algorithm,
-]{tcbalgo}{Algorithm}{booktabsindent,before upper*=\sf}{algo}
-% #XXX cleveref cannot ref a line in tcbalgo environment
+]{tcbalgo}{Algorithm}{booktabsindent,before upper*=\sf,label type=algo}{algo}
+\zcRefTypeSetup{algo}{
+  Name-sg=Algorithm,
+  name-sg=algorithm,
+  Name-pl=Algorithms,
+  name-pl=algorithms,
+}
 
 % ---------------------------------------------------------------------------- %
 %                                 Theorem Like                                 %
 % ---------------------------------------------------------------------------- %
 \newtcbtheorem[
   number within=section,
-  crefname={definition}{definitions},
   list inside=definition
-]{definition}{Definition}{leftlineindent}{definition}
-
+]{definition}{Definition}{leftlineindent,label type=definition}{definition}
+\zcRefTypeSetup{definition}{
+  Name-sg=Definition,
+  name-sg=definition,
+  Name-pl=Definitions,
+  name-pl=definitions,
+}
 \newtcbtheorem[
   number within=section,
-  crefname={property}{properties},
   list inside=property
-]{property}{Property}{leftlineindent}{property}
+]{property}{Property}{leftlineindent,label type=property}{property}
+\zcRefTypeSetup{property}{
+  Name-sg=Property,
+  name-sg=property,
+  Name-pl=Properties,
+  name-pl=properties,
+}
 
 \newtcbtheorem[
   number within=section,
-  crefname={axiom}{axioms},
   list inside=axiom
-]{axiom}{Axiom}{leftlineindent}{axiom}
+]{axiom}{Axiom}{leftlineindent,label type=axiom}{axiom}
+\zcRefTypeSetup{axiom}{
+  Name-sg=Axiom,
+  name-sg=axiom,
+  Name-pl=Axioms,
+  name-pl=axioms,
+}
 
 \newtcbtheorem[
   number within=section,
-  crefname={postulate}{postulates},
   list inside=postulate
-]{postulate}{Postulate}{leftlineindent}{postulate}
+]{postulate}{Postulate}{leftlineindent,label type=postulate}{postulate}
+\zcRefTypeSetup{postulate}{
+  Name-sg=Postulate,
+  name-sg=postulate,
+  Name-pl=Postulates,
+  name-pl=postulates,
+}
 
 \newtcbtheorem[
   number within=section,
-  crefname={theorem}{theorems},
   list inside=theorem
-]{theorem}{Theorem}{leftlineindent}{theorem}
+]{theorem}{Theorem}{leftlineindent,label type=theorem}{theorem}
+\zcRefTypeSetup{theorem}{
+  Name-sg=Theorem,
+  name-sg=theorem,
+  Name-pl=Theorems,
+  name-pl=theorems,
+}
 
 \newtcbtheorem[
   number within=section,
-  crefname={proposition}{propositions},
   list inside=proposition
-]{proposition}{Proposition}{leftlineindent}{proposition}
+]{proposition}{Proposition}{leftlineindent,label type=proposition}{proposition}
+\zcRefTypeSetup{proposition}{
+  Name-sg=Proposition,
+  name-sg=proposition,
+  Name-pl=Proposition,
+  name-pl=propositions,
+}
 
 \newtcbtheorem[
   number within=section,
-  crefname={lemma}{lemmas},
   list inside=lemma
-]{lemma}{Lemma}{leftlineindent}{lemma}
+]{lemma}{Lemma}{leftlineindent,label type=lemma}{lemma}
+\zcRefTypeSetup{lemma}{
+  Name-sg=Lemma,
+  name-sg=lemma,
+  Name-pl=Lemmas,
+  name-pl=lemmas,
+}
 
 % ---------------------------------------------------------------------------- %
 %                                     Proof                                    %

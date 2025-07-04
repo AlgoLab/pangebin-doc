@@ -6,18 +6,18 @@
 The \texttt{decomp} approach tackles the binning of the fragments with a coarse-to-fine-grain approach in four stages (each one refering to an optimization problem):
 
 \begin{enumerate}[label=\roman*.]
-  \item Find the maximum coverage flow (\MCF{} problem, \Cref{sec:pbf_iterbin:decomp:mcf})
-  \item Find the maximum GC score (\MGC{} problem, \Cref{sec:pbf_iterbin:decomp:mgc})
-  \item Find the maximum plasmidness score (\MPS{} problem, \Cref{sec:pbf_iterbin:decomp:mps})
-  \item Refine the solution (\MRCF{} problem, \Cref{sec:pbf_iterbin:decomp:mrcf})
+  \item Find the maximum coverage flow (\MCF{} problem, \zcref[S]{sec:pbf_iterbin:decomp:mcf})
+  \item Find the maximum GC score (\MGC{} problem, \zcref[S]{sec:pbf_iterbin:decomp:mgc})
+  \item Find the maximum plasmidness score (\MPS{} problem, \zcref[S]{sec:pbf_iterbin:decomp:mps})
+  \item Refine the solution (\MRCF{} problem, \zcref[S]{sec:pbf_iterbin:decomp:mrcf})
 \end{enumerate}
 
-\Cref{algo:pbf_iterbin:decomp} summarizes the \texttt{decomp} approach.
+\zcref[S]{algo:pbf_iterbin:decomp} summarizes the \texttt{decomp} approach.
 
 \begin{tcbalgo}{\texttt{decomp} approach}{pbf_iterbin:decomp}
   \begin{algorithmic}[1]
     \Require{%
-      A network graph \(N\) as in \Cref{definition:pbf_iterbin:network_graph}.
+      A network graph \(N\) as in \zcref[S]{definition:pbf_iterbin:network_graph}.
     }
     \Ensure{%
       Extract the best bin from the network graph.
@@ -45,7 +45,7 @@ The \texttt{decomp} approach tackles the binning of the fragments with a coarse-
 \end{tcbalgo}
 
 Between each step, we fix the objective value of the previous step.
-A final step refines the solution found in the \MPS{} step (\Cref{sec:pbf_iterbin:decomp:mrcf}).
+A final step refines the solution found in the \MPS{} step (\zcref[S]{sec:pbf_iterbin:decomp:mrcf}).
 
 \input{pbf_iterbin/decomp/mcf.tex}
 \input{pbf_iterbin/decomp/mgc.tex}

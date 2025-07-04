@@ -21,7 +21,7 @@ In any case, the first bin is the largest one.
 Each approach in the iterative binning process over-optimizes the scores of the first bin.
 One of the main consequence is the first bin contains too much contigs, leading to remove contigs needed to get the next plasmids.
 Thus, the next remain of plasmids are dispatched in several bins.
-\Cref{fig:pbf_iterbin:merge_trap} provides a simple instance for which the iterative approach over-optimizes the first bin by merging several plasmids.
+\zcref[S]{fig:pbf_iterbin:merge_trap} provides a simple instance for which the iterative approach over-optimizes the first bin by merging several plasmids.
 It also shows that additional bin topological constraint on the circularity does not solve the problem in the context of iterative binning.
 
 \begin{figure}
@@ -32,7 +32,7 @@ It also shows that additional bin topological constraint on the circularity does
     The number on links are their capacity in the network graph.
     As instance, let assume that the coverages of all the fragments equal \(1\), all the lengths equal \(100\), the plasmidness to be perfect (i.e.\ equal to \(1\) for plasmids' fragments and \(0\) for the others) as well as the seed set (containing only plasmids' fragments).
     Also, we consider only one GC content interval such that all the GC scores equal \(1\).
-    The best bin is a merge of plasmid \(\mathsf{P1}\) and \(\mathsf{P2}\), corresponding to the flow \(\mathsf{S} \to \mathsf{A_f} \to \mathsf{B_f} \to \mathsf{C_f} \to \mathsf{D_f} \to \mathsf{E_f} \to \mathsf{T}\) (with score in \Cref{pbf_iterbin:once:mgclb:obj:max_coverage_score} equals to \(900\), for a total flow of \(1\)).
+    The best bin is a merge of plasmid \(\mathsf{P1}\) and \(\mathsf{P2}\), corresponding to the flow \(\mathsf{S} \to \mathsf{A_f} \to \mathsf{B_f} \to \mathsf{C_f} \to \mathsf{D_f} \to \mathsf{E_f} \to \mathsf{T}\) (with score in \zcref[S]{pbf_iterbin:once:mgclb:obj:max_coverage_score} equals to \(900\), for a total flow of \(1\)).
     Unfortunately, forcing the model to find a flow which can correspond to a circuit (circular bin) does not solve the problem here (the best bin remains a merge of \(\mathsf{P1}\) and \(\mathsf{P2}\), containing all the fragments).
   }\label{fig:pbf_iterbin:merge_trap}
 \end{figure}
@@ -51,8 +51,8 @@ Note that GplasCC is updating the plasmid statistics each time it extends a walk
 \paragraph{Connecting the source only to the seeds can split plasmid into several bins}
 All the three approaches are based on a network graph where the source only connects the seeds.
 When a link miss to satisfy the plasmid circularity, the recall and the precision become highly sensitive to the position of the seeds in the plasmid corresponding subgraph walk.
-\Cref{fig:pbf_iterbin:seed_position_robustness} illustrates this issue.
-As in \Cref{subfig:pbf_iterbin:middle_seed_splits_partially_circular_plasmid}, the recall decreases because we miss a fragment before the seed in the walk.
+\zcref[S]{fig:pbf_iterbin:seed_position_robustness} illustrates this issue.
+As in \zcref[S]{subfig:pbf_iterbin:middle_seed_splits_partially_circular_plasmid}, the recall decreases because we miss a fragment before the seed in the walk.
 If this (positive plasmidness) fragment can be reached from another seed of another plasmid, it would appear in a different and wrong bin because it would enable the improvement of the objective function value at the time of this future bin search, resulting in a loss of precision.
 
 \begin{figure}
@@ -104,7 +104,7 @@ If this (positive plasmidness) fragment can be reached from another seed of anot
 As in PlasBin-flow, we require the flow on each arc to be at least equal to the total flow (i.e.\ the sum of the flow outgoing from the source).
 The total flow thus conveniently encodes the multiplicity of a unique region in the genome the bin represents.
 However, it increases the number of equivalent solutions in a circular plasmid context.
-\Cref{fig:pbf_iterbin:implicit_circularity} illustrates this phenomenon.
+\zcref[S]{fig:pbf_iterbin:implicit_circularity} illustrates this phenomenon.
 Removing this constraint can improve the performances.
 Also, it is the occasion to better model the circularity.
 
