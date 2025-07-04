@@ -63,7 +63,7 @@ Where \[
   inflow(i) = \sum_{(u, v) \in A} f_{uv} + \sum_{(u, \rev{v}) \in A} f_{u\rev{v}} \quad (v, \rev{v}) = contigv(i)
 \]
 
-The cumulative flow into a contig \(i\) should be equal to the cumulative flow out of it. Same for the reverse \(\rev{i}\):
+The cumulative flow into an oriented contig must be equal to the cumulative flow out of it:
 \begin{Constraint}
   \begin{equation}
     \sum_{(u, v) \in A} f_{u v} = \sum_{(v, w) \in A} f_{v w} \quad \forall v \in V \setminus \Set*{\source{}, \sink{}} \label{pbf_iterbin:milp:cst:flow:flow_conservation} % chktex 25
@@ -175,40 +175,40 @@ The following constraints define the GC content labelling of a bin.
 
 \phantom{text}
 
-Only one GC content interval \(b \in K\) labels the bin:
+Only one GC content interval \(k \in K\) labels the bin:
 \begin{Constraint}
   \begin{equation}
-    \sum_{b \in K} GC_b = 1
+    \sum_{k \in K} GC_k = 1
     \label{pbf_iterbin:milp:cst:gc:exactly_one_gc_content_interval} % chktex 25
   \end{equation}
 \end{Constraint}
 
-For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\contiggc{i}{b} = 1\) if and only if fragment \(i\) is active and the bin is labelled by the GC content interval \(b\):
+For each contig \(i \in \Contigs{}\), for each GC content interval \(k \in K\), \(\contiggc{i}{k} = 1\) if and only if contig \(i\) is active and the bin is labelled by the GC content interval \(k\):
 \begin{Constraint}
   \begin{align}
-    \contiggc{i}{b} & \leq x_{i_t} + x_{i_h} & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:active_fragment_gc_1} \\ % chktex 25
-    \contiggc{i}{b} & \leq GC_b & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:active_fragment_gc_2} \\ % chktex 25
-    \contiggc{i}{b} & \geq x_{i_t} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:active_fragment_gc_3} \\ % chktex 25
-    \contiggc{i}{b} & \geq x_{i_h} + GC_b - 1 & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:active_fragment_gc_4} % chktex 25
+    \contiggc{i}{k} & \leq x_{v} + x_{\rev{v}} & \forall (i, k) \in \Contigs{} \times K, (v, \rev{v}) = contigv(i) \label{pbf_iterbin:milp:cst:gc:active_contig_gc_1} \\ % chktex 25
+    \contiggc{i}{k} & \leq GC_k & \forall (i, k) \in \Contigs{} \times K \label{pbf_iterbin:milp:cst:gc:active_contig_gc_2} \\ % chktex 25
+    \contiggc{i}{k} & \geq x_{v} + GC_k - 1 & \forall (i, k) \in \Contigs{} \times K, (v, \rev{v}) = contigv(i) \label{pbf_iterbin:milp:cst:gc:active_contig_gc_3} \\ % chktex 25
+    \contiggc{i}{k} & \geq x_{\rev{v}} + GC_k - 1 & \forall (i, k) \in \Contigs{} \times K, (v, \rev{v}) = contigv(i) \label{pbf_iterbin:milp:cst:gc:active_contig_gc_4} % chktex 25
   \end{align}
 \end{Constraint}
 
-For each fragment \(i \in \Fragments{}\), for each GC content interval \(b \in K\), \(\inflowgc{i}{b}\) is the flow into fragment \(i\) when \(b\) is the chosen GC content interval:
+For each contig \(i \in \Contigs{}\), for each GC content interval \(k \in K\), \(\inflowgc{i}{k}\) is the flow into contig \(i\) when \(k\) is the chosen GC content interval:
 \begin{Constraint}
   \begin{align}
-    \inflowgc{i}{b} & \leq \cov{i} \contig{i} & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_1}  \\ % chktex 25
-    \inflowgc{i}{b} & \leq \cov{i} GC_b & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_2}  \\ % chktex 25
-    \inflowgc{i}{b} & \geq inflow(i)  - (2 - \contig{i} - GC_b) \cov{i} & \forall (i, b) \in \Fragments{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_3} % chktex 25
+    \inflowgc{i}{k} & \leq \cov{i} \contig{i} & \forall (i, k) \in \Contigs{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_1}  \\ % chktex 25
+    \inflowgc{i}{k} & \leq \cov{i} GC_k & \forall (i, k) \in \Contigs{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_2}  \\ % chktex 25
+    \inflowgc{i}{k} & \geq inflow(i)  - (2 - \contig{i} - GC_k) \cov{i} & \forall (i, k) \in \Contigs{} \times K \label{pbf_iterbin:milp:cst:gc:inflowgc_3} % chktex 25
   \end{align}
 \end{Constraint}
 
 \paragraph{Plasmid constraints}
 
-The cumulative fragment length is above a given threshold:
+The cumulative contig length is above a given threshold:
 %
 \begin{Constraint}
   \begin{equation}
-    \sum_{i \in \ContigSeeds{}} |i| \geq L \quad L \geq 0 \label{pbf_iterbin:milp:cst:misc:min_cumulative_fragment_length} % chktex 25 chktex 35
+    \sum_{i \in \ContigSeeds{}} |i| \geq L \quad L \geq 0 \label{pbf_iterbin:milp:cst:misc:min_cumulative_contig_length} % chktex 25 chktex 35
   \end{equation}
 \end{Constraint}
 %
